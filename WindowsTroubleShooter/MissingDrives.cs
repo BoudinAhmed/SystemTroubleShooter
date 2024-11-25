@@ -27,16 +27,16 @@ namespace WindowsTroubleShooter
            
 
             DoProcess("net", @$"use {driveLetter}: {networkPath}");
-            var dirs2 = Directory.GetDirectories($"{driveLetter}:");
 
         }
         
 
-        // Approach 3
+        
 
 
         static string DoProcess(string cmd, string argv)
         {
+            //open cmd and map network drive
             Process p = new Process();
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;

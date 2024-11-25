@@ -68,8 +68,9 @@ namespace WindowsTroubleShooter.View
             MissingDrives missingDrives = new MissingDrives(this);
             if (startView.MapDrives.IsChecked == true)
             {
-              await missingDrives.MapNetworkDrive("H", @"\\eprod-st-file01\public");
-              await missingDrives.MapNetworkDrive("J", @"\\eprod-st-file01\apps");
+              //replace letter and path per you internal network drive
+              await missingDrives.MapNetworkDrive("Letter", @"\\path\");
+              await missingDrives.MapNetworkDrive("Letter", @"\\path\");
 
                 //Displaying to the user the task
 

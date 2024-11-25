@@ -52,7 +52,6 @@ C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.AssemblyInfoInputs.cache
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.AssemblyInfo.cs
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.csproj.CoreCompileInputs.cache
-C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.csproj.CopyComplete
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.dll
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\refint\WindowsTroubleShooter.dll
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.pdb
@@ -61,3 +60,5 @@ C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Logging.dll
 C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Tokens.dll
+C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.sourcelink.json
+C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsT.1FB97CF4.Up2Date
