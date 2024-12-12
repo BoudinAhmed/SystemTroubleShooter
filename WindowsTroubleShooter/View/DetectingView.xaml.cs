@@ -69,8 +69,8 @@ namespace WindowsTroubleShooter.View
             if (startView.MapDrives.IsChecked == true)
             {
               //replace letter and path per you internal network drive
-              await missingDrives.MapNetworkDrive("Letter", @"\\path\");
-              await missingDrives.MapNetworkDrive("Letter", @"\\path\");
+              await missingDrives.MapNetworkDrive("Letter", @"\\");
+              await missingDrives.MapNetworkDrive("Letter", @"\\");
 
                 //Displaying to the user the task
 

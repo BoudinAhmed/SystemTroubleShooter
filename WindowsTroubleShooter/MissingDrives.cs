@@ -22,11 +22,20 @@ namespace WindowsTroubleShooter
             detectingIssue.repairs.Content = $"Searching for {driveLetter}: drive ";
             await Task.Delay(600);
             detectingIssue.repairs.Content = $"Mapping netword drive...";
+            await Task.Delay(600);
 
 
-           
 
-            DoProcess("net", @$"use {driveLetter}: {networkPath}");
+            if (NetworkCheck.IsInternetAvailable())
+            {
+                DoProcess("net", @$"use {driveLetter}: {networkPath}");
+            }
+            else
+            {
+                detectingIssue.repairs.Content = $"Please verify your internet connection and/or VPN if working from home";
+                await Task.Delay(600);
+            }
+            
 
         }
         
