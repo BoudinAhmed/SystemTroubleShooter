@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\downloads\\windowstroubleshooter-main\\windowstroubleshooter-main\\windowstroubleshooter-\\windowstroubleshooter\\view\\exitview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\exitview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\downloads\\windowstroubleshooter-main\\windowstroubleshooter-main\\windowstroubleshooter-\\windowstroubleshooter\\view\\detectingview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\detectingview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\downloads\\windowstroubleshooter-main\\windowstroubleshooter-main\\windowstroubleshooter-\\windowstroubleshooter\\view\\startview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\startview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\downloads\\windowstroubleshooter-main\\windowstroubleshooter-main\\windowstroubleshooter-\\windowstroubleshooter\\missingdrives.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\downloads\\windowstroubleshooter-main\\windowstroubleshooter-main\\windowstroubleshooter-\\windowstroubleshooter\\networkcheck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\networkcheck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\downloads\\windowstroubleshooter-main\\windowstroubleshooter-main\\windowstroubleshooter-\\windowstroubleshooter\\view\\startview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\startview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\downloads\\windowstroubleshooter-main\\windowstroubleshooter-main\\windowstroubleshooter-\\windowstroubleshooter\\searchbarissue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +50,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "ExitView.xaml",
+              "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\View\\ExitView.xaml",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\ExitView.xaml",
+              "ToolTip": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\View\\ExitView.xaml",
+              "RelativeToolTip": "WindowsTroubleShooter\\View\\ExitView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-12-12T16:36:22.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "NetworkCheck.cs",
               "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\NetworkCheck.cs",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\NetworkCheck.cs",
@@ -54,25 +70,23 @@
               "RelativeToolTip": "WindowsTroubleShooter\\NetworkCheck.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-11T15:55:53.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-11T15:55:53.615Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "StartView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\View\\StartView.xaml.cs",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\StartView.xaml.cs",
               "ToolTip": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\View\\StartView.xaml.cs",
               "RelativeToolTip": "WindowsTroubleShooter\\View\\StartView.xaml.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAADQAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-06-14T16:46:04.797Z",
-              "EditorCaption": ""
+              "WhenOpened": "2023-06-14T16:46:04.797Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "StartView.xaml",
               "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\View\\StartView.xaml",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\StartView.xaml",
@@ -83,33 +97,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "DetectingView.xaml.cs",
               "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\View\\DetectingView.xaml.cs",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\DetectingView.xaml.cs",
               "ToolTip": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\View\\DetectingView.xaml.cs",
               "RelativeToolTip": "WindowsTroubleShooter\\View\\DetectingView.xaml.cs",
-              "ViewState": "AQIAADYAAAAAAAAAAAAiwEgAAABAAAAA",
+              "ViewState": "AQIAACkAAAAAAAAAAAAwwEoAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-06-14T16:44:26.816Z",
-              "EditorCaption": ""
+              "WhenOpened": "2023-06-14T16:44:26.816Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MissingDrives.cs",
               "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\MissingDrives.cs",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\MissingDrives.cs",
               "ToolTip": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\MissingDrives.cs",
               "RelativeToolTip": "WindowsTroubleShooter\\MissingDrives.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAwwCIAAABeAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAABeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-06-14T16:05:37.876Z",
-              "EditorCaption": ""
+              "WhenOpened": "2023-06-14T16:05:37.876Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "SearchBarIssue.cs",
               "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\SearchBarIssue.cs",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\SearchBarIssue.cs",
@@ -117,12 +129,11 @@
               "RelativeToolTip": "WindowsTroubleShooter\\SearchBarIssue.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAIwBwAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-06-14T15:51:51.095Z",
-              "EditorCaption": ""
+              "WhenOpened": "2023-06-14T15:51:51.095Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Users\\aboudin\\Downloads\\WindowsTroubleShooter-main\\WindowsTroubleShooter-main\\WindowsTroubleShooter-\\WindowsTroubleShooter\\App.xaml",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\App.xaml",

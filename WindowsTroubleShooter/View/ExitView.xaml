@@ -28,7 +28,7 @@
 
             <!--Main section-->
             <Label Background="Transparent"  HorizontalAlignment="Left" Margin="81,-320,0,0" Content="TroubleShooting has completed" VerticalAlignment="Top" Width="332" FontSize="22" Foreground="White" BorderBrush="#00E4E8F5"/>
-            <Label HorizontalAlignment="Left" Margin="81,-258,0,0" Content="The troubleshooter made some changes to your system. Try attempting the &#10; task you were trying to do before." VerticalAlignment="Top" Width="571" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9" Height="76"/>
+            <Label HorizontalAlignment="Left" Name="Final_Message" Margin="81,-258,0,0" Content="The troubleshooter made some changes to your system. Try attempting the &#10; task you were trying to do before." VerticalAlignment="Top" Width="571" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9" Height="76"/>
 
             <!--bottom section-->
             <Button Content="Close" HorizontalAlignment="Left" Height="28" Margin="683,0,0,0" VerticalAlignment="Center" Width="84" Click="Button_Click"/>
