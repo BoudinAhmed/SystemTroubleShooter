@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\obj\Debug\net6.0-windows\
+C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\
 WindowsTroubleShooter
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-C:\Users\aboudin\Downloads\WindowsTroubleShooter-main\WindowsTroubleShooter-main\WindowsTroubleShooter-\WindowsTroubleShooter\App.xaml
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\App.xaml
 3520184640
 
-11-1712979350
-2011532134579
+12-1943623676
+201-1177625424
 View\DetectingView.xaml;View\ExitView.xaml;View\StartView.xaml;
 
-True
+False
 
