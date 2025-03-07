@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsTroubleShooter.Model
 {
-    internal class NetworkDriveModel
+    public class NetworkDriveModel
     {
         public string MapNetworkDrive(char letter, string path)
         {
@@ -28,12 +28,12 @@ namespace WindowsTroubleShooter.Model
                 string output = p.StandardOutput.ReadToEnd();
                 p.Dispose();
 
-                return $"Netword drive {letter} mapped ";
+                return $"Netword drive {letter} mapped successfully";
             }
 
             catch 
             {
-                return "Please verify your internet connection and/or VPN if working from home";
+                return $"Failed to map {letter}. Please verify your internet connection and/or VPN if working from home";
             }
         }
     }

@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Model\NetworkDriveModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\background.jfif" />
   </ItemGroup>
 
