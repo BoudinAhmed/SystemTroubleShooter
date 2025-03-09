@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WindowsTroubleShooter"
+        xmlns:local="clr-namespace:WindowsTroubleShooter.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStyle="None"
@@ -11,6 +11,7 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
+    
     <Border CornerRadius="20"
             BorderThickness="5">
         <Border.Background>
@@ -32,11 +33,11 @@
 
             <!--bottom section-->
             <Button Content="Cancel" HorizontalAlignment="Left" Height="28" Margin="683,0,0,0" VerticalAlignment="Center" Width="84" Click="Button_Click"/>
-            
+
 
         </Grid>
 
-
+    
     </Border>
 
 </Window>
