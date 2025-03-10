@@ -12,7 +12,7 @@
         Background="Transparent"
         AllowsTransparency="True">
     <Window.DataContext>
-        <local:NetworkDriveViewModel/>
+        <local:TroubleshootViewModel/>
     </Window.DataContext>
             <Border CornerRadius="20"
             BorderThickness="5">

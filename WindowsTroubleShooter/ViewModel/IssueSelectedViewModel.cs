@@ -14,28 +14,30 @@ namespace WindowsTroubleShooter.ViewModel
 {
     public class IssueSelectedViewModel : ObservableObject
     {
-        public ObservableCollection<string> SelectedIssues { get; } = new();
-        public ICommand StartTroubleshootingCommand { get; }
+        public ObservableCollection<string> SelectedIssues { get; set; } = new ObservableCollection<string>();
+        
+
         public ICommand NavigateToTroubleshootingCommand { get; }
 
         public IssueSelectedViewModel()
         {
-
-            //StartTroubleshootingCommand = new RelayCommand(StartTroubleshooting);
+            SelectedIssues.Add("NetworkDrive");
             NavigateToTroubleshootingCommand = new RelayCommand(NavigateToTroubleshooting);
-        }
-
-        private void StartTroubleshooting()
-        {
-
-            TroubleshootViewModel issues = new TroubleshootViewModel(SelectedIssues);
             
         }
 
+
+
         public void NavigateToTroubleshooting()
         {
-            DetectingIssue detectingIssue = new DetectingIssue();
-            detectingIssue.Show();
+            TroubleshootViewModel troubleshootViewModel = new TroubleshootViewModel(SelectedIssues);
+
+
+            DetectingIssue detectingIssueView = new DetectingIssue();
+            
+
+            detectingIssueView.DataContext = troubleshootViewModel;
+            detectingIssueView.Show();
             
 
         }

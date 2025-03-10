@@ -11,23 +11,18 @@ using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class NetworkDriveViewModel :INotifyPropertyChanged
+    public class NetworkDriveViewModel : IIssueViewModel
     {
         private readonly NetworkDriveModel _networkDriveModel;
 
-        private string _statusMessage;
-        public string StatusMessage
-        {
-            get { return _statusMessage; }
-            set { _statusMessage = value; OnPropertyChanged(); }
-        }
+        public string StatusMessage { get; set; }
 
-        public ICommand MapDriveCommandAsync { get; }
+
 
         // Constructor
         public NetworkDriveViewModel()
         {
-            _networkDriveModel = new NetworkDriveModel(); // Create instance of the model
+            _networkDriveModel = new NetworkDriveModel(); // Creating instance of the model
         }
 
         internal async Task MapNetworkDrive(char driveLetter, string networkPath)
@@ -41,10 +36,16 @@ namespace WindowsTroubleShooter.ViewModel
             StatusMessage = _networkDriveModel.MapNetworkDrive(driveLetter, networkPath);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        
+
+        public async Task RunDiagnosticsAsync()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            await MapNetworkDrive('J', @"\\eprod-st-file01");
+        }
+
+        Task IIssueViewModel.RunDiagnosticsAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

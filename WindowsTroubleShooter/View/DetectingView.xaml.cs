@@ -23,66 +23,25 @@ namespace WindowsTroubleShooter.View
     /// </summary>
     public partial class DetectingIssue : Window
     {
-        public StartView startView { get; set; }
+       
         public DetectingIssue()
         {
             InitializeComponent();
-           // this.startView = startView;
-            
-            
-            //Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { TroubleshootSearchBar(); }));
-            //Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { MapNetwordDrives(); }));
-        }
-        
 
-        
-        
+        }
+
+
+
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-     
 
-        //This is where the logic for the troubleshooting goes
 
-        //For the searchbar issue
-        protected async void TroubleshootSearchBar()
-        {
-            SearchBarIssue searchBarIssue = new SearchBarIssue(this);
 
-            //verifying if the registry contains the correct value
-            if (startView.SearchIssueOption.IsChecked == true)
-            {
-                await searchBarIssue.verifiyRegistry();
+    
 
-                //Navigate to the Exit page
-                ExitWindow exitWindow = new ExitWindow();
-                exitWindow.Show();
-                Close();
-            }
-        }
-
-        //To map the drives
-        protected async void MapNetwordDrives()
-        {
-            MissingDrives missingDrives = new MissingDrives(this);
-           /* if (startView.MapDrives.IsChecked == true)
-            {
-              //replace letter and path per you internal network drive
-              await missingDrives.MapNetworkDrive("Letter", @"\\");
-              await missingDrives.MapNetworkDrive("Letter", @"\\");
-
-                //Displaying to the user the task
-
-              await Task.Delay(800);
-              repairs.Content = "Mapping drives has been completed";
-              await Task.Delay(500);
-                ExitWindow exitWindow = new ExitWindow();
-              exitWindow.Show();
-              Close();
-            }*/
-        }
-        
 
 
     }
