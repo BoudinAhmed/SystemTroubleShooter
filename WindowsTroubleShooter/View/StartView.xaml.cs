@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WindowsTroubleShooter.ViewModel;
 
 namespace WindowsTroubleShooter.View
 {
@@ -19,9 +20,12 @@ namespace WindowsTroubleShooter.View
     /// </summary>
     public partial class StartView : Window
     {
+        private readonly IssueSelectedViewModel _issueSelectedViewModel;
         public StartView()
         {
             InitializeComponent();
+            _issueSelectedViewModel = new IssueSelectedViewModel();
+            DataContext = _issueSelectedViewModel;
 
         }
         
@@ -33,12 +37,12 @@ namespace WindowsTroubleShooter.View
         private void Button_Next(object sender, RoutedEventArgs e)
         {
 
-            if (SearchIssueOption.IsChecked == true || MapDrives.IsChecked == true || UnlockAccount.IsChecked == true)
+           /* if (SearchIssueOption.IsChecked == true || MapDrives.IsChecked == true || UnlockAccount.IsChecked == true)
             {
                 DetectingIssue detectingIssue = new DetectingIssue(this);
                 detectingIssue.Show();
                 Close();
-            }
+            }*/
             
         }
 

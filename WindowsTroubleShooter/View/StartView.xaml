@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WindowsTroubleShooter"
+        xmlns:local="clr-namespace:WindowsTroubleShooter.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStyle="None"
@@ -11,36 +11,26 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
-    <Border CornerRadius="20"
-            BorderThickness="5">
+    <Window.DataContext>
+        <local:IssueSelectedViewModel />
+    </Window.DataContext>
+    <Border CornerRadius="20" BorderThickness="5">
         <Border.Background>
             <ImageBrush ImageSource="/Images/background.jfif"/>
-
         </Border.Background>
 
-
-
-
-
-
         <Grid Margin="0,392,0,0" Background="#7b0d2d">
+            <!-- Main section -->
+            <Label Background="Transparent" HorizontalAlignment="Left" Margin="81,-327,0,0" Content="What problems do you notice?" VerticalAlignment="Top" Width="354" FontSize="24" Foreground="White" BorderBrush="#00E4E8F5"/>
+            <Label HorizontalAlignment="Left" Margin="81,-265,0,0" Content="Select all that apply" VerticalAlignment="Top" Width="166" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9"/>
+            <Rectangle HorizontalAlignment="Left" Height="197" Margin="81,-203,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="571" Fill="#9A9C113A"/>
+            <CheckBox Name="SearchIssueOption" Content="Can't start search window" HorizontalAlignment="Left" Margin="124,-203,0,0" VerticalAlignment="Top" Foreground="#FFF9F2F2" FontSize="14" BorderBrush="#FF777777" Background="#FFFDF9F9"/>
+            <CheckBox Name="MapDrives" Content="Drives are missing" HorizontalAlignment="Left" Margin="124,-180,0,0" VerticalAlignment="Top" Foreground="#FFF9F2F2" FontSize="14" BorderBrush="#FF777777" Background="#FFFDF9F9"/>
+            <CheckBox Name="UnlockAccount" Content="Account locked" HorizontalAlignment="Left" Margin="124,-157,0,0" VerticalAlignment="Top" Foreground="#FFF9F2F2" FontSize="14" BorderBrush="#FF777777" Background="#FFFDF9F9"/>
 
-            <!--Main section-->
-            <Label Background="Transparent"  HorizontalAlignment="Left" Margin="81,-327,0,0" Content="What problems do you notice?" VerticalAlignment="Top" Width="354" FontSize="24" Foreground="White" BorderBrush="#00E4E8F5"/>
-            <Label HorizontalAlignment="Left" Margin="81,-265,0,0"  Content="Select all that apply" VerticalAlignment="Top" Width="166" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9"/>
-             <Rectangle HorizontalAlignment="Left" Height="197" Margin="81,-203,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="571" Fill="#9A9C113A"/>
-            <CheckBox Name="SearchIssueOption" Content="Can't start search window" HorizontalAlignment="Left" Margin="124,-203,0,0" VerticalAlignment="Top" Foreground="#FFF9F2F2" FontSize="14" BorderBrush="#FF777777" Background="#FFFDF9F9" />
-            <CheckBox Name="MapDrives" Content="Drives are missing" HorizontalAlignment="Left" Margin="124,-180,0,0" VerticalAlignment="Top" Foreground="#FFF9F2F2" FontSize="14" BorderBrush="#FF777777" Background="#FFFDF9F9" />
-            <CheckBox Name="UnlockAccount" Content="Account locked" HorizontalAlignment="Left" Margin="124,-157,0,0" VerticalAlignment="Top" Foreground="#FFF9F2F2" FontSize="14" BorderBrush="#FF777777" Background="#FFFDF9F9" />
-
-            <!--bottom section-->
-            <Button Name="button_Next" Content="Next" HorizontalAlignment="Left" Height="28" Margin="568,0,0,0" VerticalAlignment="Center" Width="84" Click="Button_Next" />
+            <!-- Bottom section -->
+            <Button Name="button_Next" Content="Next" HorizontalAlignment="Left" Height="28" Margin="568,0,0,0" VerticalAlignment="Center" Width="84" Command="{Binding NavigateToTroubleshootingCommand}"/>
             <Button Name="button_Cancel" Content="Cancel" HorizontalAlignment="Left" Height="28" Margin="683,0,0,0" VerticalAlignment="Center" Width="84" Click="Button_Cancel" Background="#FFDDDDDD"/>
-            
-
         </Grid>
-
-
     </Border>
-
 </Window>

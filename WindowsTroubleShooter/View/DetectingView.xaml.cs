@@ -24,14 +24,14 @@ namespace WindowsTroubleShooter.View
     public partial class DetectingIssue : Window
     {
         public StartView startView { get; set; }
-        public DetectingIssue(StartView startView)
+        public DetectingIssue()
         {
             InitializeComponent();
-            this.startView = startView;
+           // this.startView = startView;
             
             
-            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { TroubleshootSearchBar(); }));
-            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { MapNetwordDrives(); }));
+            //Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { TroubleshootSearchBar(); }));
+            //Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { MapNetwordDrives(); }));
         }
         
 
@@ -66,7 +66,7 @@ namespace WindowsTroubleShooter.View
         protected async void MapNetwordDrives()
         {
             MissingDrives missingDrives = new MissingDrives(this);
-            if (startView.MapDrives.IsChecked == true)
+           /* if (startView.MapDrives.IsChecked == true)
             {
               //replace letter and path per you internal network drive
               await missingDrives.MapNetworkDrive("Letter", @"\\");
@@ -80,7 +80,7 @@ namespace WindowsTroubleShooter.View
                 ExitWindow exitWindow = new ExitWindow();
               exitWindow.Show();
               Close();
-            }
+            }*/
         }
         
 

@@ -11,8 +11,10 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
-    
-    <Border CornerRadius="20"
+    <Window.DataContext>
+        <local:NetworkDriveViewModel/>
+    </Window.DataContext>
+            <Border CornerRadius="20"
             BorderThickness="5">
         <Border.Background>
             <ImageBrush ImageSource="/Images/background.jfif"/>
@@ -28,7 +30,7 @@
 
             <!--Main section-->
             <Label Background="Transparent"  HorizontalAlignment="Left" Margin="81,-320,0,0"  Content="Detecting problems" VerticalAlignment="Top" Width="332" FontSize="24" Foreground="White" BorderBrush="#00E4E8F5"/>
-            <Label Name="repairs" HorizontalAlignment="Left" Margin="81,-258,0,0" Content="Check for registry values.." VerticalAlignment="Top" Width="571" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9"/>
+            <Label Name="repairs" HorizontalAlignment="Left" Margin="81,-258,0,0" Content="{Binding StatusMessage}" VerticalAlignment="Top" Width="571" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9"/>
             <ProgressBar   Name="ProgressBar" HorizontalAlignment="Left" Height="23" Margin="158,-191,0,0" VerticalAlignment="Top" Width="418" IsIndeterminate="True"/>
 
             <!--bottom section-->

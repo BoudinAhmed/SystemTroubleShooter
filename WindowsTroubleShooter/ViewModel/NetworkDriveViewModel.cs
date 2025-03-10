@@ -22,16 +22,15 @@ namespace WindowsTroubleShooter.ViewModel
             set { _statusMessage = value; OnPropertyChanged(); }
         }
 
-        public ICommand MapDriveCommand { get; }
+        public ICommand MapDriveCommandAsync { get; }
 
         // Constructor
         public NetworkDriveViewModel()
         {
             _networkDriveModel = new NetworkDriveModel(); // Create instance of the model
-            MapDriveCommand = new RelayCommand(async () => await MapNetworkDrive('Z', @"\\network\path"));
         }
 
-        private async Task MapNetworkDrive(char driveLetter, string networkPath)
+        internal async Task MapNetworkDrive(char driveLetter, string networkPath)
         {
             StatusMessage = $"Searching for {driveLetter}: drive...";
             await Task.Delay(600);
