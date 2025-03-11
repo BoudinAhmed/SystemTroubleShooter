@@ -1,34 +1,60 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    class TroubleshootViewModel
+    public class TroubleshootViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<string> _selectedIssues { get; set; }
-        private NetworkDriveViewModel _networkDriveViewModel { get; set; }
-        public TroubleshootViewModel(ObservableCollection<string> SelectedIssues)
+     
+        public List<IIssueViewModel> IssuesToTroubleshoot = new List<IIssueViewModel>();
+        
+        public ICommand RunDiagnosticsCommand { get; }
+
+
+        public TroubleshootViewModel(ObservableCollection<string> selectedIssues)
         {
-            this._selectedIssues = SelectedIssues;
-            _networkDriveViewModel = new NetworkDriveViewModel();
+            // Dynamically initialize ViewModels based on selected issues
+            foreach (var issue in selectedIssues)
+            {
+                switch (issue)
+                {
+                    case "NetworkDrive":
+                        IssuesToTroubleshoot.Add(new NetworkDriveViewModel());
+                        break;
+                    case "SearchBar":
+                        //_issuesToTroubleshoot.Add(new SearchBarViewModel());
+                        break;
+                        // Add cases for other issues...
+                }
+            }
+
+            RunDiagnosticsCommand = new RelayCommand(async () => await RunDiagnosticsAsync());
         }
 
-        private async Task RunDiagnosticsAsync()
-        {
-            foreach(var issue in _selectedIssues)
-            {
-                if(issue == "NetworkDrive")
-                {
-                    await _networkDriveViewModel.MapNetworkDrive('Z', @"\\network\path");
-                }
-                else if(issue == "SearchBar")
-                {
 
-                }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        public async Task RunDiagnosticsAsync()
+        {
+            foreach(var issue in IssuesToTroubleshoot)
+            {
+
+                await issue.RunDiagnosticsAsync();
             }
         }
     }
