@@ -42,3 +42,9 @@ and other typical computer-related problems. The project is structured using the
 
    ```bash
    git clone https://github.com/yourusername/WindowsTroubleshooter.git
+
+Open the project in Visual Studio.
+
+Build the project using the default settings.
+
+Run the application to start troubleshooting.
