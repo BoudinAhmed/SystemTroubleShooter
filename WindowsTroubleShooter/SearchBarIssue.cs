@@ -11,8 +11,8 @@ namespace WindowsTroubleShooter
 {
     class SearchBarIssue
     {
-        public DetectingIssue detectingIssue { get; private set; }
-        public SearchBarIssue(DetectingIssue detectingIssue) { this.detectingIssue = detectingIssue; }
+        public TroubleshootView detectingIssue { get; private set; }
+        public SearchBarIssue(TroubleshootView detectingIssue) { this.detectingIssue = detectingIssue; }
 
        
         public async Task verifiyRegistry()
