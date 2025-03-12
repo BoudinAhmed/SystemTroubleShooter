@@ -11,13 +11,34 @@ using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class NetworkDriveViewModel : IIssueViewModel
+    public class NetworkDriveViewModel : IIssueViewModel, INotifyPropertyChanged
     {
         private readonly NetworkDriveModel _networkDriveModel;
 
-        public string StatusMessage { get; set; }
 
 
+        private string _statusMessage;
+
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (_statusMessage != value) // Only trigger PropertyChanged if the value changes
+                {
+                    _statusMessage = value;
+                    OnPropertyChanged(nameof(StatusMessage)); // Notify the UI that StatusMessage has changed
+                }
+            }
+        }
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         // Constructor
         public NetworkDriveViewModel()
@@ -43,9 +64,6 @@ namespace WindowsTroubleShooter.ViewModel
             await MapNetworkDrive('J', @"\\eprod-st-file01");
         }
 
-        Task IIssueViewModel.RunDiagnosticsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
