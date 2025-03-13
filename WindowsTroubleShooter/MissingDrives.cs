@@ -13,8 +13,8 @@ namespace WindowsTroubleShooter
 {
     class MissingDrives
     {
-        public DetectingIssue detectingIssue { get; private set; }
-        public MissingDrives(DetectingIssue detectingIssue) { this.detectingIssue = detectingIssue; }
+        public TroubleshootView detectingIssue { get; private set; }
+        public MissingDrives(TroubleshootView detectingIssue) { this.detectingIssue = detectingIssue; }
 
         public async Task MapNetworkDrive(string driveLetter, string networkPath)
         {

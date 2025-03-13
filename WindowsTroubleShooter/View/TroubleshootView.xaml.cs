@@ -21,10 +21,10 @@ namespace WindowsTroubleShooter.View
     /// <summary>
     /// Interaction logic for DetectingIssue.xaml
     /// </summary>
-    public partial class DetectingIssue : Window
+    public partial class TroubleshootView : Window
     {
        
-        public DetectingIssue()
+        public TroubleshootView()
         {
             InitializeComponent();
 

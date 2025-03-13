@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WindowsTroubleShooter.Helpers;
 using WindowsTroubleShooter.ViewModel;
 
 namespace WindowsTroubleShooter.View
@@ -20,15 +22,26 @@ namespace WindowsTroubleShooter.View
     /// </summary>
     public partial class StartView : Window
     {
-        private readonly IssueSelectedViewModel _issueSelectedViewModel;
+        private readonly StartViewModel _issueSelectedViewModel;
         public StartView()
         {
             InitializeComponent();
-            _issueSelectedViewModel = new IssueSelectedViewModel();
-            DataContext = _issueSelectedViewModel;
+            DataContext = new StartViewModel(new NavigationService(ResolveViewModel));
+            
 
         }
-        
+        private object ResolveViewModel(Type viewModelType)
+        {
+            // Resolve the ViewModel (either from your IoC container or manually)
+            // For example:
+            if (viewModelType == typeof(TroubleshootViewModel))
+            {
+                return new TroubleshootViewModel(new ObservableCollection<string> { "NetworkDrive" });
+            }
+
+            return null;
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed) { DragMove(); }
