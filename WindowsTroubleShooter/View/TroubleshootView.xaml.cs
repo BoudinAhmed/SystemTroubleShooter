@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -23,19 +25,23 @@ namespace WindowsTroubleShooter.View
     /// </summary>
     public partial class TroubleshootView : Window
     {
-       
-        public TroubleshootView()
-        {
-            InitializeComponent();
-
+        public TroubleshootView() 
+        { 
+            InitializeComponent(); 
         }
 
 
+        public TroubleshootView(ObservableCollection<string> selectedIssues)
+        {
+            InitializeComponent();
+            this.DataContext = new TroubleshootViewModel(selectedIssues);
+        }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+            
         }
 
 

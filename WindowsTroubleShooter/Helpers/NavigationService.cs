@@ -20,18 +20,42 @@ namespace WindowsTroubleShooter.Helpers
 
         public void NavigateTo<TViewModel>(ObservableCollection<string> selectedIssues)
         {
-            // Create an instance of the ViewModel and pass the selectedIssues to the constructor
+            // Create ViewModel and pass the selectedIssues
             var viewModel = (TViewModel)Activator.CreateInstance(typeof(TViewModel), selectedIssues);
 
-            // Map ViewModel to a View (using the ViewModel's name, we assume the convention "ViewModel" -> "View")
+            // Map ViewModel to View
             var viewType = typeof(TViewModel).Name.Replace("ViewModel", "View"); // Map to View
-            var view = Activator.CreateInstance(Type.GetType($"WindowsTroubleShooter.View.{viewType}")) as Window;
 
-            if (view != null)
+            // Ensuring correct namespace for the View
+            var viewFullTypeName = $"WindowsTroubleShooter.View.{viewType}";
+            var viewTypeInstance = Type.GetType(viewFullTypeName);
+
+            if (viewTypeInstance != null)
             {
-                // Bind the DataContext of the View to the ViewModel
-                view.DataContext = viewModel;
-                view.Show();
+                // If the View has a constructor that accepts parameters, we pass selectedIssues
+                var constructor = viewTypeInstance.GetConstructor(new[] { typeof(ObservableCollection<string>) });
+
+                if (constructor != null)
+                {
+                    var view = constructor.Invoke(new object[] { selectedIssues }) as Window;
+                    if (view != null)
+                    {
+                        view.DataContext = viewModel;
+                        view.Show();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Error: Could not create view of type {viewFullTypeName}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Error: No constructor found in {viewFullTypeName} that accepts ObservableCollection<string>");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Error: Could not find type {viewFullTypeName}");
             }
         }
     }

@@ -8,7 +8,7 @@ namespace WindowsTroubleShooter.ViewModel
 {
     public interface IIssueViewModel
     {
-        public string StatusMessage { get; set; }
+        public string StatusMessage { get; }
         Task RunDiagnosticsAsync();
     }
 }

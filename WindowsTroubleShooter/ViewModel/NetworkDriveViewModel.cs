@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using WindowsTroubleShooter.Helpers;
 using WindowsTroubleShooter.Model;
 
@@ -14,56 +11,55 @@ namespace WindowsTroubleShooter.ViewModel
     public class NetworkDriveViewModel : IIssueViewModel, INotifyPropertyChanged
     {
         private readonly NetworkDriveModel _networkDriveModel;
-
-
-
         private string _statusMessage;
 
+        // Initialize the model
+        public NetworkDriveViewModel()
+        {
+            _networkDriveModel = new NetworkDriveModel();
+        }
+
+        // StatusMessage with change notification
         public string StatusMessage
         {
-            get { return _statusMessage; }
-            set
+            get => _statusMessage;
+            private set
             {
-                if (_statusMessage != value) // Only trigger PropertyChanged if the value changes
+                if (_statusMessage != value)
                 {
                     _statusMessage = value;
-                    OnPropertyChanged(nameof(StatusMessage)); // Notify the UI that StatusMessage has changed
+                    OnPropertyChanged();
                 }
             }
         }
 
+        // Event to notify when a property changes
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        // Trigger PropertyChanged notification
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Constructor
-        public NetworkDriveViewModel()
-        {
-            _networkDriveModel = new NetworkDriveModel(); // Creating instance of the model
-        }
-
+        // map the network drive async
         internal async Task MapNetworkDrive(char driveLetter, string networkPath)
         {
             StatusMessage = $"Searching for {driveLetter}: drive...";
             await Task.Delay(600);
+
             StatusMessage = "Mapping network drive...";
             await Task.Delay(600);
 
-            // Call the Model and get the result
-            StatusMessage = _networkDriveModel.MapNetworkDrive(driveLetter, networkPath);
+            var result = _networkDriveModel.MapNetworkDrive(driveLetter, networkPath);
+            StatusMessage = result;
         }
 
-        
 
+        // Run diagnostics asynchronously
         public async Task RunDiagnosticsAsync()
         {
             await MapNetworkDrive('J', @"\\eprod-st-file01");
         }
-
-        
     }
 }
