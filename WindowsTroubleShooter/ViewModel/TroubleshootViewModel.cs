@@ -1,29 +1,44 @@
-﻿using Caliburn.Micro;
-using GalaSoft.MvvmLight.Command;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
+using WindowsTroubleShooter.Helpers;
+using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.ViewModel
 {
     public class TroubleshootViewModel : INotifyPropertyChanged, IIssueViewModel
     {
+        
+        private string _statusMessage;
+        // Property to bind the StatusMessage with the UI
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            private set
+            {
+                if (_statusMessage != value)
+                {
+                    _statusMessage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // List of issues to troubleshoot
+        public List<IIssueViewModel> IssuesToTroubleshoot { get; } = new List<IIssueViewModel>();
+
+        // Contructor to initialize the View
         public TroubleshootViewModel()
         {
         }
 
-        public String StatusMessage { get; set; }
-        public List<IIssueViewModel> IssuesToTroubleshoot = new List<IIssueViewModel>();
-        
-        public ICommand RunDiagnosticsCommand { get; }
-
+        // Constructor that initializes the ViewModel based on selected issues
         public TroubleshootViewModel(ObservableCollection<string> selectedIssues)
         {
             // Dynamically initialize ViewModels based on selected issues
@@ -34,57 +49,55 @@ namespace WindowsTroubleShooter.ViewModel
                     case "NetworkDrive":
                         var networkDriveViewModel = new NetworkDriveViewModel();
                         networkDriveViewModel.PropertyChanged += IssueStatusChanged;
-                        IssuesToTroubleshoot.Add(new NetworkDriveViewModel());
-
-                        
+                        IssuesToTroubleshoot.Add(networkDriveViewModel);
                         break;
+
                     case "SearchBar":
                         //_issuesToTroubleshoot.Add(new SearchBarViewModel());
                         break;
-                        // Add cases for other issues...
+                        // To add other cases...
                 }
             }
 
-            Task.Run(async ()=> await RunDiagnosticsAsync());
+            Task.Run(async () => await RunDiagnosticsAsync());
         }
 
+        
 
+        // Event to notify changes in the properties
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        // Trigger PropertyChanged notification
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        // Event handler to update the StatusMessage when an issue's StatusMessage changes
         private void IssueStatusChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IIssueViewModel.StatusMessage))
             {
-                var issue = sender as IIssueViewModel;
-                if (issue != null)
+                if (sender is IIssueViewModel issue)
                 {
-                    StatusMessage = issue.StatusMessage; // Update the main StatusMessage property
+                    StatusMessage = issue.StatusMessage;
                 }
             }
         }
 
+        // Run diagnostics on all issues asynchronously
         public async Task RunDiagnosticsAsync()
         {
-            // Run diagnostics in a background task to avoid blocking the UI thread.
-            await Task.Run(async () =>
+            foreach (var issue in IssuesToTroubleshoot)
             {
-                foreach (var issue in IssuesToTroubleshoot)
-                {
-                    await issue.RunDiagnosticsAsync();
+                await issue.RunDiagnosticsAsync();
 
-                    // To update the UI, use the Dispatcher to marshal the updates to the UI thread.
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        StatusMessage = issue.StatusMessage;
-                    });
+                // Update the StatusMessage based on the current issue
+                StatusMessage = issue.StatusMessage;
 
-                    await Task.Delay(500); // Add delay if needed
-                }
-            });
+                // Adding a small delay to avoid blocking
+                await Task.Delay(500);
+            }
         }
     }
 }
