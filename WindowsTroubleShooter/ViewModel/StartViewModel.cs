@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
-using WindowsTroubleShooter.Helpers;
 using WindowsTroubleShooter.View;
+using WindowsTroubleShooter.Interfaces;
+using WindowsTroubleShooter.Helpers.Commands;
 
 namespace WindowsTroubleShooter.ViewModel
 {
@@ -21,14 +22,13 @@ namespace WindowsTroubleShooter.ViewModel
         public ICommand NavigateToTroubleshootingCommand { get; }
 
         public StartViewModel() { }
+
         // Constructor injection for the navigation service
         public StartViewModel(INavigateService navigationService)
         {
             _navigationService = navigationService;
             NavigateToTroubleshootingCommand = new RelayCommand(NavigateToTroubleshooting);
 
-            // Add some initial issues (for example, "NetworkDrive")
-            SelectedIssues.Add("NetworkDrive");
         }
 
         public void NavigateToTroubleshooting()

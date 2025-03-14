@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace WindowsTroubleShooter.Helpers
+namespace WindowsTroubleShooter.Helpers.Converters
 {
     public class CheckboxToIssueConverter : IValueConverter
     {

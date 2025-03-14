@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WindowsTroubleShooter.Helpers
+namespace WindowsTroubleShooter.Helpers.Commands
 {
 
     public class RelayCommand : ICommand

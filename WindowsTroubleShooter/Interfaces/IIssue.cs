@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsTroubleShooter.ViewModel
+namespace WindowsTroubleShooter.Interfaces
 {
-    public interface IIssueViewModel
+    public interface IIssue
     {
         public string StatusMessage { get; }
         Task RunDiagnosticsAsync();

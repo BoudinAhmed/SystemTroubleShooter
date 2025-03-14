@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsTroubleShooter.ViewModel" 
-        xmlns:conv="clr-namespace:WindowsTroubleShooter.Helpers" 
+        xmlns:conv="clr-namespace:WindowsTroubleShooter.Helpers.Converters" 
         
         mc:Ignorable="d"
         Title="Windows Troubleshooter" Height="450" Width="800"
@@ -22,7 +22,7 @@
     </Window.Resources>
     <Border CornerRadius="20" BorderThickness="5">
         <Border.Background>
-            <ImageBrush ImageSource="/Images/background.jfif"/>
+            <ImageBrush ImageSource="/Assets/background.jfif"/>
         </Border.Background>
 
         <Grid Margin="0,392,0,0" Background="#7b0d2d">

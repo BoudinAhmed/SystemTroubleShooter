@@ -4,11 +4,12 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WindowsTroubleShooter.Helpers;
+using WindowsTroubleShooter.Interfaces;
 using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class NetworkDriveViewModel : IIssueViewModel, INotifyPropertyChanged
+    public class NetworkDriveViewModel : IIssue, INotifyPropertyChanged
     {
         private readonly NetworkDriveModel _networkDriveModel;
         private string _statusMessage;
@@ -59,7 +60,7 @@ namespace WindowsTroubleShooter.ViewModel
         // Run diagnostics asynchronously
         public async Task RunDiagnosticsAsync()
         {
-            await MapNetworkDrive('J', @"\\eprod-st-file01");
+            await MapNetworkDrive('Z', @"\\Path");
         }
     }
 }

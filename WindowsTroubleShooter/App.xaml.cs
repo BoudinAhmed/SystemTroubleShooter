@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Unity;
 using WindowsTroubleShooter.Helpers;
+using WindowsTroubleShooter.Interfaces;
 using WindowsTroubleShooter.View;
 using WindowsTroubleShooter.ViewModel;
 
