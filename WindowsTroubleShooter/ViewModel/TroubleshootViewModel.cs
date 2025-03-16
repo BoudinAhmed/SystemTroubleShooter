@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,7 +15,11 @@ namespace WindowsTroubleShooter.ViewModel
 {
     public class TroubleshootViewModel : INotifyPropertyChanged, IIssueViewModel
     {
-        
+
+        public INavigateService _navigationService { get; set; }
+
+        public ICommand NavigateToTroubleshootingCommand { get; }
+
         private string _statusMessage;
         // Property to bind the StatusMessage with the UI
         public string StatusMessage
@@ -58,11 +63,20 @@ namespace WindowsTroubleShooter.ViewModel
                         // To add other cases...
                 }
             }
-
+            
             Task.Run(async () => await RunDiagnosticsAsync());
-        }
+
 
         
+
+        
+    }
+        public void NavigateToExit()
+        {
+            // Call NavigateTo on the navigation service to go to the exit view
+            _navigationService.NavigateTo<ExitViewModel>();
+        }
+
 
         // Event to notify changes in the properties
         public event PropertyChangedEventHandler PropertyChanged;
@@ -98,6 +112,7 @@ namespace WindowsTroubleShooter.ViewModel
                 // Adding a small delay to avoid blocking
                 await Task.Delay(500);
             }
+            NavigateToExit();
         }
     }
 }

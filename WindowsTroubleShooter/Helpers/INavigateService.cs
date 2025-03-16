@@ -8,6 +8,7 @@ namespace WindowsTroubleShooter.Helpers
 {
     public interface INavigateService
     {
+        //void NavigateTo<TViewModel>();
         void NavigateTo<TViewModel>(System.Collections.ObjectModel.ObservableCollection<string> selectedIssues);
     }
 }

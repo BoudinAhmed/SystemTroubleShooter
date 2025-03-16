@@ -27,8 +27,7 @@ namespace WindowsTroubleShooter.ViewModel
             _navigationService = navigationService;
             NavigateToTroubleshootingCommand = new RelayCommand(NavigateToTroubleshooting);
 
-            // Add some initial issues (for example, "NetworkDrive")
-            SelectedIssues.Add("NetworkDrive");
+            
         }
 
         public void NavigateToTroubleshooting()

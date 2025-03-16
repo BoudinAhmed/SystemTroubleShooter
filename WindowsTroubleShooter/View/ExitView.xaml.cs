@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WindowsTroubleShooter.ViewModel;
 
 namespace WindowsTroubleShooter.View
 {
@@ -22,6 +23,7 @@ namespace WindowsTroubleShooter.View
         public ExitWindow()
         {
             InitializeComponent();
+            this.DataContext = new ExitViewModel();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
