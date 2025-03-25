@@ -1,7 +1,7 @@
 # Windows Troubleshooter
 
-A troubleshooting utility built in C# using the **MVVM (Model-View-ViewModel)** design pattern. This application is designed to assist in diagnosing and fixing common issues with network drives, system settings, 
-and other typical computer-related problems. The project is structured using the **WPF** framework for the UI, and **Caliburn.Micro** for navigation and ViewModel binding.
+A troubleshooting utility built in C# using the **MVVM (Model-View-ViewModel)** design pattern. This application is designed to assist in diagnosing and fixing common issues with internet, network drives, system settings, 
+and other typical computer-related problems. The project is structured using MVVM and **WPF** framework for the UI, and follow the MVVM 
 
 ---
 
@@ -24,15 +24,15 @@ and other typical computer-related problems. The project is structured using the
 ![Screenshot of Troubleshooting View](assets/troubleshooting-view.png)  
 *View displaying the status messages as issues are diagnosed*
 
+![Screenshot of Result View View](assets/Result-view.png)  
+*View displaying the final result message*
 ---
 
 ## 🛠️ Technologies
 
 - **C#**
-- **WPF** (Windows Presentation Foundation)
+- **WPF**
 - **MVVM Pattern**
-- **Caliburn.Micro** (for navigation and ViewModel binding)
-- **GalaSoft MVVM Light** (for RelayCommand and event handling)
 
 ---
 
