@@ -26,6 +26,7 @@ and other typical computer-related problems. The project is structured using MVV
 
 ![Screenshot of Result View View](assets/Result-view.png)  
 *View displaying the final result message*
+
 ---
 
 ## 🛠️ Technologies
