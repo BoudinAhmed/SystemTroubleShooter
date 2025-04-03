@@ -75,7 +75,7 @@ namespace WindowsTroubleShooter.ViewModel
         public void NavigateToExit()
         {
             // Call NavigateTo on the navigation service to go to the exit view
-            _navigationService.NavigateTo<ExitViewModel>();
+            //_navigationService.NavigateTo<ExitViewModel>();
         }
 
 

@@ -26,7 +26,7 @@ namespace WindowsTroubleShooter.View
         public StartView()
         {
             InitializeComponent();
-            DataContext = new StartViewModel(new NavigationService(ResolveViewModel));
+            DataContext = new StartViewModel();
             
 
         }

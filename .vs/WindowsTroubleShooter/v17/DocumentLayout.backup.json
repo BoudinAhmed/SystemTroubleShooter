@@ -1,12 +1,135 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\aboudin\\WindowsTroubleShooter\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\windowstroubleshooter\\windowstroubleshooter\\view\\startview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\startview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\windowstroubleshooter\\windowstroubleshooter\\viewmodel\\startviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\viewmodel\\startviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\windowstroubleshooter\\windowstroubleshooter\\viewmodel\\issueitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\viewmodel\\issueitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\windowstroubleshooter\\windowstroubleshooter\\view\\startview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\startview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\windowstroubleshooter\\windowstroubleshooter\\helpers\\commands\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\helpers\\commands\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\windowstroubleshooter\\windowstroubleshooter\\helpers\\converters\\indextocolumnconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\helpers\\converters\\indextocolumnconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\aboudin\\windowstroubleshooter\\windowstroubleshooter\\viewmodel\\troubleshootviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\viewmodel\\troubleshootviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StartView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\StartView.xaml.cs",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\StartView.xaml.cs",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\StartView.xaml.cs*",
+              "RelativeToolTip": "WindowsTroubleShooter\\View\\StartView.xaml.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T19:51:43.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StartViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\StartViewModel.cs",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\ViewModel\\StartViewModel.cs",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\StartViewModel.cs",
+              "RelativeToolTip": "WindowsTroubleShooter\\ViewModel\\StartViewModel.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAiwEwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T16:45:22.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StartView.xaml",
+              "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\StartView.xaml",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\StartView.xaml",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\StartView.xaml",
+              "RelativeToolTip": "WindowsTroubleShooter\\View\\StartView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-03T17:30:35.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RelayCommand.cs",
+              "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\Helpers\\Commands\\RelayCommand.cs",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\Helpers\\Commands\\RelayCommand.cs",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\Helpers\\Commands\\RelayCommand.cs",
+              "RelativeToolTip": "WindowsTroubleShooter\\Helpers\\Commands\\RelayCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T16:50:55.151Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IndexToColumnConverter.cs",
+              "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\Helpers\\Converters\\IndexToColumnConverter.cs",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\Helpers\\Converters\\IndexToColumnConverter.cs",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\Helpers\\Converters\\IndexToColumnConverter.cs",
+              "RelativeToolTip": "WindowsTroubleShooter\\Helpers\\Converters\\IndexToColumnConverter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T17:27:29.188Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IssueItemViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
+              "RelativeToolTip": "WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAxwHoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T16:47:50.209Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TroubleshootViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\TroubleshootViewModel.cs",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\ViewModel\\TroubleshootViewModel.cs",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\TroubleshootViewModel.cs",
+              "RelativeToolTip": "WindowsTroubleShooter\\ViewModel\\TroubleshootViewModel.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAA3wE0AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T16:45:55.719Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

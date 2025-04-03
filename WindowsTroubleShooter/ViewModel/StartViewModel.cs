@@ -10,32 +10,73 @@ using GalaSoft.MvvmLight;
 using WindowsTroubleShooter.View;
 using WindowsTroubleShooter.Interfaces;
 using WindowsTroubleShooter.Helpers.Commands;
+using System.Windows.Controls;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class StartViewModel : ObservableObject
+    public class StartViewModel 
     {
-        private readonly INavigateService _navigationService;
+        public ObservableCollection<IssueItemViewModel> IssueItems { get; set; }
+        private IssueItemViewModel _lastClickedItem;
+        private Border _lastClickedBorder;
 
+        private readonly INavigateService _navigationService;
+        public  string Version { get; set; } 
+
+        
         public ObservableCollection<string> SelectedIssues { get; set; } = new ObservableCollection<string>();
 
         public ICommand NavigateToTroubleshootingCommand { get; }
 
-        public StartViewModel() { }
-
-        // Constructor injection for the navigation service
-        public StartViewModel(INavigateService navigationService)
+        public StartViewModel() 
         {
-            _navigationService = navigationService;
-            NavigateToTroubleshootingCommand = new RelayCommand(NavigateToTroubleshooting);
+            IssueItems = new ObservableCollection<IssueItemViewModel>
+            {
+                new IssueItemViewModel
+                {
+                    Title = "Internet Connection",
+                    Description = "Fix problems with connecting to the internet",
+                    ImageSource = "\xE701"
+                },
+                new IssueItemViewModel
+                {
+                    Title = "Windows Update",
+                    Description = "Resolve problem with windows update",
+                    ImageSource = "\xE895"
+                },
+                new IssueItemViewModel
+                {
+                    Title = "Sound",
+                    Description = "Fix problems with playing audio",
+                    ImageSource = "\xE767"
+                },
+                new IssueItemViewModel
+                {
+                    Title = "Map Network Drive",
+                    Description = "Map a network drive with letter and path",
+                    ImageSource = "\xE8CE"
+                }
 
-<<<<<<< HEAD
-=======
-            
->>>>>>> 80f229745252eb5d7a29544152d0eca4a156ae5c
+            };
+            Version = "Version 2.0.1";
         }
 
-        public void NavigateToTroubleshooting()
+        public void ListenToNextClicked(IssueItemViewModel clickedItem, Border clickedBorder)
+        {
+            if (_lastClickedItem != null && _lastClickedItem != clickedItem)
+            {
+                _lastClickedItem.Reset();
+            }
+
+            _lastClickedItem = clickedItem;
+            _lastClickedBorder = clickedBorder;
+        }
+
+
+        // Constructor injection for the navigation service
+        
+
+        public void NavigateToTroubleshooting(object obj)
         {
             // Call NavigateTo on the navigation service and pass SelectedIssues
             _navigationService.NavigateTo<TroubleshootViewModel>(SelectedIssues);
