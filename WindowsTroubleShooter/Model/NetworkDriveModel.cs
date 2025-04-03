@@ -28,12 +28,15 @@ namespace WindowsTroubleShooter.Model
                 string output = p.StandardOutput.ReadToEnd();
                 p.Dispose();
 
-                return $"Netword drive {letter} mapped successfully";
+                
+                return $"Network drive {letter} mapped successfully";
+                
+                
             }
 
             catch 
             {
-                return $"Failed to map {letter}. Please verify your internet connection and/or VPN if working from home";
+                return $"Failed to map {letter}. Please verify your VPN / internet connection";
             }
         }
     }

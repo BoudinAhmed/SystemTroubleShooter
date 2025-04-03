@@ -17,7 +17,7 @@
             <Border CornerRadius="20"
             BorderThickness="5">
         <Border.Background>
-            <ImageBrush ImageSource="/Images/background.jfif"/>
+            <ImageBrush ImageSource="/Assets/background.jfif"/>
 
         </Border.Background>
 

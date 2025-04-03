@@ -26,7 +26,7 @@ namespace WindowsTroubleShooter.View
         public StartView()
         {
             InitializeComponent();
-            DataContext = new StartViewModel(new NavigationService(ResolveViewModel));
+            DataContext = new StartViewModel();
             
 
         }
@@ -36,7 +36,7 @@ namespace WindowsTroubleShooter.View
             // For example:
             if (viewModelType == typeof(TroubleshootViewModel))
             {
-                return new TroubleshootViewModel(new ObservableCollection<string> { "NetworkDrive" });
+                return new TroubleshootViewModel(new ObservableCollection<string> { "" });
             }
 
             return null;

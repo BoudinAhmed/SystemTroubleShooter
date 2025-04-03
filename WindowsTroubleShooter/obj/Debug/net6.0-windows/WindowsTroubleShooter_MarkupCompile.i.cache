@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\
 WindowsTroubleShooter
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\App.xaml
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\App.xaml
 3874133189
 
-2025163894
-208-1244777501
+21-962212353
+208-1135694659
 View\ExitView.xaml;View\StartView.xaml;View\TroubleshootView.xaml;
 
 True

@@ -9,11 +9,12 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WindowsTroubleShooter.Helpers;
+using WindowsTroubleShooter.Interfaces;
 using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class TroubleshootViewModel : INotifyPropertyChanged, IIssueViewModel
+    public class TroubleshootViewModel : INotifyPropertyChanged, IIssue
     {
 
         public INavigateService _navigationService { get; set; }
@@ -36,7 +37,7 @@ namespace WindowsTroubleShooter.ViewModel
         }
 
         // List of issues to troubleshoot
-        public List<IIssueViewModel> IssuesToTroubleshoot { get; } = new List<IIssueViewModel>();
+        public List<IIssue> IssuesToTroubleshoot { get; } = new List<IIssue>();
 
         // Contructor to initialize the View
         public TroubleshootViewModel()
@@ -74,7 +75,7 @@ namespace WindowsTroubleShooter.ViewModel
         public void NavigateToExit()
         {
             // Call NavigateTo on the navigation service to go to the exit view
-            _navigationService.NavigateTo<ExitViewModel>();
+            //_navigationService.NavigateTo<ExitViewModel>();
         }
 
 
@@ -90,9 +91,9 @@ namespace WindowsTroubleShooter.ViewModel
         // Event handler to update the StatusMessage when an issue's StatusMessage changes
         private void IssueStatusChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(IIssueViewModel.StatusMessage))
+            if (e.PropertyName == nameof(IIssue.StatusMessage))
             {
-                if (sender is IIssueViewModel issue)
+                if (sender is IIssue issue)
                 {
                     StatusMessage = issue.StatusMessage;
                 }
