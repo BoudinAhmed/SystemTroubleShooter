@@ -1,0 +1,8 @@
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.csproj.AssemblyReference.cache
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\ExitView.g.cs
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\StartView.g.cs
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\TroubleshootView.g.cs
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter_MarkupCompile.cache
+C:\Users\aboudin\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter_MarkupCompile.lref

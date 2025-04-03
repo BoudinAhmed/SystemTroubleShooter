@@ -18,7 +18,45 @@ namespace WindowsTroubleShooter.Helpers
         {
             _viewModelFactory = viewModelFactory;
         }
+        /*public void NavigateTo<TViewModel>()
+        {
+            try
+            {
+                // Map ViewModel to View
+                var viewType = typeof(TViewModel).Name.Replace("ViewModel", "View");
 
+                // Ensuring correct namespace for the View
+                var viewFullTypeName = $"WindowsTroubleShooter.View.{viewType}";
+                var viewTypeInstance = Type.GetType(viewFullTypeName);
+
+                if (viewTypeInstance != null)
+                {
+                    // Create View Instance
+                    var view = Activator.CreateInstance(viewTypeInstance) as Window;
+
+                    if (view != null)
+                    {
+                        // Create ViewModel Instance
+                        var viewModel = Activator.CreateInstance(typeof(TViewModel));
+
+                        view.DataContext = viewModel;
+                        view.Show();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Error: Could not create view of type {viewFullTypeName}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Could not find type {viewFullTypeName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during navigation: {ex}");
+            }
+        }*/
         public void NavigateTo<TViewModel>(ObservableCollection<string> selectedIssues)
         {
             // Create ViewModel and pass the selectedIssues

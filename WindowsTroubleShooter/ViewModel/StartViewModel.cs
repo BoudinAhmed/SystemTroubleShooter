@@ -29,6 +29,10 @@ namespace WindowsTroubleShooter.ViewModel
             _navigationService = navigationService;
             NavigateToTroubleshootingCommand = new RelayCommand(NavigateToTroubleshooting);
 
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 80f229745252eb5d7a29544152d0eca4a156ae5c
         }
 
         public void NavigateToTroubleshooting()
