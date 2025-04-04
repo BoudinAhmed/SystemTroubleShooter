@@ -3,43 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WindowsTroubleShooter.ViewModel"
+        xmlns:local="clr-namespace:WindowsTroubleShooter.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        Background="Transparent"
-        AllowsTransparency="True">
-    <Window.DataContext>
-        <local:TroubleshootViewModel/>
-    </Window.DataContext>
-            <Border CornerRadius="20"
-            BorderThickness="5">
-        <Border.Background>
-            <ImageBrush ImageSource="/Assets/background.jfif"/>
-
-        </Border.Background>
+        Title="Troubleshooting Session" Height="450" Width="800"
+        Background="#202020" Foreground="#dddddd"
+        FontFamily="Segoe UI" UseLayoutRounding="True">
 
 
 
 
 
 
-        <Grid Margin="0,392,0,0" Background="#7b0d2d">
+    <Grid Margin="0,392,0,0">
 
-            <!--Main section-->
-            <Label Background="Transparent"  HorizontalAlignment="Left" Margin="81,-320,0,0"  Content="Detecting problems" VerticalAlignment="Top" Width="332" FontSize="24" Foreground="White" BorderBrush="#00E4E8F5"/>
-            <Label Name="repairs" HorizontalAlignment="Left" Margin="81,-258,0,0" Content="{Binding StatusMessage}" VerticalAlignment="Top" Width="571" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9"/>
-            <ProgressBar   Name="ProgressBar" HorizontalAlignment="Left" Height="23" Margin="158,-191,0,0" VerticalAlignment="Top" Width="418" IsIndeterminate="True"/>
+        <!--Main section-->
+        <Label Background="Transparent"  HorizontalAlignment="Left" Margin="81,-355,0,0"  Content="Detecting problems" VerticalAlignment="Top" Width="332" FontSize="24" Foreground="White" BorderBrush="#00E4E8F5"/>
+        <Label Name="repairs" HorizontalAlignment="Left" Margin="81,-281,0,0" Content="{Binding StatusMessage}" VerticalAlignment="Top" Width="571" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9"/>
+        <ProgressBar   Name="ProgressBar" HorizontalAlignment="Left" Height="23" Margin="158,-237,0,0" VerticalAlignment="Top" Width="418" IsIndeterminate="True"/>
 
-            <!--bottom section-->
-            <Button Content="Cancel" HorizontalAlignment="Left" Height="28" Margin="683,0,0,0" VerticalAlignment="Center" Width="84" Click="Button_Click"/>
+        <!--bottom section-->
 
 
-        </Grid>
 
-    
-    </Border>
+    </Grid>
+
+
+
 
 </Window>

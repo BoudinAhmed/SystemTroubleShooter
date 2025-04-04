@@ -19,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Model\BaseTroubleshooter.cs" />
+    <Compile Include="Model\InternetTroubleshooter.cs" />
     <Compile Include="Model\NetworkDriveModel.cs" />
   </ItemGroup>
 
