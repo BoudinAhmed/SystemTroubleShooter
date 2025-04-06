@@ -26,7 +26,7 @@ namespace WindowsTroubleShooter.ViewModel
         
         public ObservableCollection<string> SelectedIssues { get; set; } = new ObservableCollection<string>();
 
-        public ICommand NavigateToTroubleshootingCommand { get; }
+       
 
         public StartViewModel() 
         {
@@ -76,10 +76,6 @@ namespace WindowsTroubleShooter.ViewModel
         // Constructor injection for the navigation service
         
 
-        public void NavigateToTroubleshooting(object obj)
-        {
-            // Call NavigateTo on the navigation service and pass SelectedIssues
-            _navigationService.NavigateTo<TroubleshootViewModel>(SelectedIssues);
-        }
+        
     }
 }

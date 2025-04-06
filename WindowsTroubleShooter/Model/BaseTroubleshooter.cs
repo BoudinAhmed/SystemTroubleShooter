@@ -62,7 +62,7 @@ namespace WindowsTroubleShooter.Model
 
                     string output = process.StandardOutput.ReadToEnd();
 
-                    // You might want to log or use the 'output' here.
+                    // Will add code for the 'output' here.
 
                     return true;
                 }
