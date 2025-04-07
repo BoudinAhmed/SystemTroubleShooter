@@ -5,7 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using WindowsTroubleShooter.Helpers;
 using WindowsTroubleShooter.Helpers.Commands;
+using WindowsTroubleShooter.Model;
+using WindowsTroubleShooter.View;
 
 namespace WindowsTroubleShooter.ViewModel
 {
@@ -65,7 +68,11 @@ namespace WindowsTroubleShooter.ViewModel
         public string Title { get; set; }
         public string Description { get; set; }  
         public string ImageSource { get; set; }
+        public BaseTroubleshooter IssueType { get; set; }
         public bool IsItemSelected { get; set; }
+
+        //Handle the navigation to the next view
+        private NavigationService _navigationService { get; set; }
 
         // Gets the command executed when the item's is clicked. 
         public ICommand ItemClickedCommand { get; }
@@ -80,6 +87,7 @@ namespace WindowsTroubleShooter.ViewModel
         
         public IssueItemViewModel()
         {
+            _navigationService = new NavigationService();
             ItemClickedCommand = new RelayCommand(OnItemClicked);
             ItemCancelClickedCommand = new RelayCommand(OnItemCancelClicked);
             ItemTroubleshootClickedCommand = new RelayCommand(OnItemTroubleshootClicked);
@@ -138,9 +146,9 @@ namespace WindowsTroubleShooter.ViewModel
         }
 
         private void OnItemTroubleshootClicked(object obj)
-        {
-            // Todo: implement troubleshoot button
-            throw new NotImplementedException();
+        { 
+            _navigationService.NavigateTo<TroubleshootView, TroubleshootViewModel>( 
+                new TroubleshootViewModel(this.IssueType)); 
         }
 
         

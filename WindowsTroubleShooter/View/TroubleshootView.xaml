@@ -4,30 +4,63 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsTroubleShooter.View"
+        xmlns:vm="clr-namespace:WindowsTroubleShooter.ViewModel"
+        
         mc:Ignorable="d"
-        Title="Troubleshooting Session" Height="450" Width="800"
+        Title="Troubleshooting Session"
+        Height="650" Width="1000"
         Background="#202020" Foreground="#dddddd"
         FontFamily="Segoe UI" UseLayoutRounding="True">
+    <Window.DataContext>
+        <vm:TroubleshootViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <TextBlock
+            Text="Troubleshooting"
+            Grid.Row="0"
+            Margin="20,20,20,0"
+            FontSize="24"
+            FontWeight="SemiBold"
+            HorizontalAlignment="Left" />
 
+        
 
+        <TextBlock
+            Name="StatusMessage"
+            Text="{Binding StatusMessage}"
+            Grid.Row="1"
+            Margin="20,0,20,20"
+            FontSize="16"
+            Foreground="#FFF5F9F9"
+            TextWrapping="Wrap"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
 
+        <ProgressBar
+            Name="ProgressBar"
+            Grid.Row="2"
+            Height="23"
+            Margin="20,0,20,20"
+            IsIndeterminate="True" />
 
+        <ContentControl
+            Name="TroubleshootContent"
+            Grid.Row="3"
+            Margin="20"
+            Content="{Binding CurrentView}" />
 
-    <Grid Margin="0,392,0,0">
-
-        <!--Main section-->
-        <Label Background="Transparent"  HorizontalAlignment="Left" Margin="81,-355,0,0"  Content="Detecting problems" VerticalAlignment="Top" Width="332" FontSize="24" Foreground="White" BorderBrush="#00E4E8F5"/>
-        <Label Name="repairs" HorizontalAlignment="Left" Margin="81,-281,0,0" Content="{Binding StatusMessage}" VerticalAlignment="Top" Width="571" Background="Transparent" BorderBrush="#00ABADB3" FontSize="16" Foreground="#FFF5F9F9"/>
-        <ProgressBar   Name="ProgressBar" HorizontalAlignment="Left" Height="23" Margin="158,-237,0,0" VerticalAlignment="Top" Width="418" IsIndeterminate="True"/>
-
-        <!--bottom section-->
-
-
+        
 
     </Grid>
-
-
-
-
 </Window>

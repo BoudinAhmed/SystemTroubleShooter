@@ -30,17 +30,7 @@ namespace WindowsTroubleShooter.View
             
 
         }
-        private object ResolveViewModel(Type viewModelType)
-        {
-            // Resolve the ViewModel (either from your IoC container or manually)
-            // For example:
-            if (viewModelType == typeof(TroubleshootViewModel))
-            {
-                return new TroubleshootViewModel(new ObservableCollection<string> { "" });
-            }
-
-            return null;
-        }
+        
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

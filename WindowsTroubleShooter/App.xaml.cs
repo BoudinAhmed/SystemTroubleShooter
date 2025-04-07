@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using Unity;
 using WindowsTroubleShooter.Helpers;
 using WindowsTroubleShooter.Interfaces;
@@ -18,22 +19,21 @@ namespace WindowsTroubleShooter
     /// </summary>
     public partial class App : Application
     {
-        private readonly IUnityContainer _container;
+        public static NavigationService NavigationService { get; private set; }
 
-        public App()
+        protected override void OnStartup(StartupEventArgs e)
         {
-            _container = new UnityContainer();
+            base.OnStartup(e);
 
-            // Register the Navigation Service
-            _container.RegisterSingleton<INavigateService, NavigationService>();
+            // Initialize the Navigation Service
+            NavigationService = new NavigationService();
 
-            // Register ViewModels and Views
-            _container.RegisterType<StartViewModel>();
-            _container.RegisterType<TroubleshootViewModel>();
-
-            // Start the app by showing the first view
-            var mainWindow = _container.Resolve<StartView>(); // Assuming MainWindow has a constructor with the ViewModel injected.
-            mainWindow.Show();
+            // Start the app with the first view
+            var firstView = new StartView
+            {
+                DataContext = new StartViewModel()
+            };
+            firstView.Show();
         }
     }
 }

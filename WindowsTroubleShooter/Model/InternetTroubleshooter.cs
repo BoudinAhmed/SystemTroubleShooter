@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using System.Windows.Threading; // Add this using directive
 
 namespace WindowsTroubleShooter.Model
 {
@@ -33,11 +33,9 @@ namespace WindowsTroubleShooter.Model
         {
             try
             {
-                // Disable interfaces
                 ExecuteCommand($"netsh interface set interface \"{WifiInterfaceName}\" disable");
                 ExecuteCommand($"netsh interface set interface \"{EthernetInterfaceName}\" disable");
 
-                // Enable interfaces
                 ExecuteCommand($"netsh interface set interface \"{WifiInterfaceName}\" enable");
                 ExecuteCommand($"netsh interface set interface \"{EthernetInterfaceName}\" enable");
 
@@ -49,14 +47,12 @@ namespace WindowsTroubleShooter.Model
             }
             catch (Exception ex)
             {
-                // Will logging the exception for debugging later time
                 System.Diagnostics.Debug.WriteLine($"Error refreshing network adapter: {ex.Message}");
             }
         }
 
         public void NetworkReset()
         {
-            // ExecuteCommand(NetworkResetCommand); 
             if (IsConnected())
             {
                 ResolutionMessage = "Fix: Network Reset";
@@ -66,22 +62,23 @@ namespace WindowsTroubleShooter.Model
 
         public override async Task<string> RunDiagnosticsAsync()
         {
-            StatusMessage = "Troubleshooting Internet";
+            // Use Dispatcher.InvokeAsync to update StatusMessage on the UI thread
+            await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Troubleshooting Internet");
             await Task.Delay(2000);
 
-            StatusMessage = "Refreshing Network Adapter";
+            await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Refreshing Network Adapter");
             await Task.Delay(2000);
             RefreshNetworkAdapter();
 
             if (IsFixed)
             {
-                StatusMessage = "Internet Connection Fixed";
+                await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Internet Connection Fixed");
                 await Task.Delay(2000);
                 return "Internet Connection Fixed";
             }
 
             await Task.Delay(2000);
-            StatusMessage = "Network Reset";
+            await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Network Reset");
             await Task.Delay(2000);
             NetworkReset();
 

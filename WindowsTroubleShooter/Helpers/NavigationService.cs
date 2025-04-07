@@ -11,54 +11,18 @@ using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.Helpers
 {
-    public class NavigationService : INavigateService
+    public class NavigationService
     {
-        private readonly Func<Type, object> _viewModelFactory;
-
-        public NavigationService(Func<Type, object> viewModelFactory)
+        public void NavigateTo<TView, TViewModel>(TViewModel viewModel)
+            where TView : Window, new()
+            where TViewModel : class
         {
-            _viewModelFactory = viewModelFactory;
-        }
-       
-        public void NavigateTo<TViewModel>(BaseTroubleshooter selectedIssue)
-        {
-            // Create ViewModel and pass the selectedIssues
-            var viewModel = (TViewModel)Activator.CreateInstance(typeof(TViewModel), selectedIssue);
-
-            // Map ViewModel to View
-            var viewType = typeof(TViewModel).Name.Replace("ViewModel", "View"); // Map to View
-
-            // Ensuring correct namespace for the View
-            var viewFullTypeName = $"WindowsTroubleShooter.View.{viewType}";
-            var viewTypeInstance = Type.GetType(viewFullTypeName);
-
-            if (viewTypeInstance != null)
+            var view = new TView
             {
-                // If the View has a constructor that accepts parameters, we pass selectedIssues
-                var constructor = viewTypeInstance.GetConstructor(new[] { typeof(ObservableCollection<string>) });
+                DataContext = viewModel
+            };
 
-                if (constructor != null)
-                {
-                    var view = constructor.Invoke(new object[] { selectedIssue }) as Window;
-                    if (view != null)
-                    {
-                        view.DataContext = viewModel;
-                        view.Show();
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Error: Could not create view of type {viewFullTypeName}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"Error: No constructor found in {viewFullTypeName} that accepts ObservableCollection<string>");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Error: Could not find type {viewFullTypeName}");
-            }
+            view.Show();
         }
     }
 

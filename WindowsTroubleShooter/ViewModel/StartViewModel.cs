@@ -11,6 +11,7 @@ using WindowsTroubleShooter.View;
 using WindowsTroubleShooter.Interfaces;
 using WindowsTroubleShooter.Helpers.Commands;
 using System.Windows.Controls;
+using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.ViewModel
 {
@@ -36,25 +37,30 @@ namespace WindowsTroubleShooter.ViewModel
                 {
                     Title = "Internet Connection",
                     Description = "Fix problems with connecting to the internet",
-                    ImageSource = "\xE701"
+                    ImageSource = "\xE701",
+                    IssueType = new InternetTroubleshooter()
+
                 },
                 new IssueItemViewModel
                 {
                     Title = "Windows Update",
                     Description = "Resolve problem with windows update",
-                    ImageSource = "\xE895"
+                    ImageSource = "\xE895",
+                    IssueType = new InternetTroubleshooter() //To be changed
                 },
                 new IssueItemViewModel
                 {
                     Title = "Sound",
                     Description = "Fix problems with playing audio",
-                    ImageSource = "\xE767"
+                    ImageSource = "\xE767",
+                    IssueType = new InternetTroubleshooter() //To be changed
                 },
                 new IssueItemViewModel
                 {
                     Title = "Map Network Drive",
                     Description = "Map a network drive with letter and path",
-                    ImageSource = "\xE8CE"
+                    ImageSource = "\xE8CE",
+                    IssueType = new InternetTroubleshooter() //To be changed
                 }
 
             };

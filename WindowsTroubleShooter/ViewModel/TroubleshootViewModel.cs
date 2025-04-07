@@ -16,10 +16,7 @@ namespace WindowsTroubleShooter.ViewModel
 {
     public class TroubleshootViewModel : INotifyPropertyChanged, IIssue
     {
-
-        public INavigateService _navigationService { get; set; }
-
-        public ICommand NavigateToTroubleshootingCommand { get; }
+        
 
         private string _statusMessage;
         // Property to bind the StatusMessage with the UI
@@ -35,6 +32,7 @@ namespace WindowsTroubleShooter.ViewModel
                 }
             }
         }
+        public object CurrentView { get; set; } // CurrentView property
 
         // List of issues to troubleshoot
         public List<IIssue> IssuesToTroubleshoot { get; } = new List<IIssue>();
@@ -45,27 +43,11 @@ namespace WindowsTroubleShooter.ViewModel
         }
 
         // Constructor that initializes the ViewModel based on selected issues
-        public TroubleshootViewModel(ObservableCollection<string> selectedIssues)
+        public TroubleshootViewModel(BaseTroubleshooter selectedIssue)
         {
-            // Dynamically initialize ViewModels based on selected issues
-            foreach (var issue in selectedIssues)
-            {
-                switch (issue)
-                {
-                    case "NetworkDrive":
-                        var networkDriveViewModel = new NetworkDriveViewModel();
-                        networkDriveViewModel.PropertyChanged += IssueStatusChanged;
-                        IssuesToTroubleshoot.Add(networkDriveViewModel);
-                        break;
-
-                    case "SearchBar":
-                        //_issuesToTroubleshoot.Add(new SearchBarViewModel());
-                        break;
-                        // To add other cases...
-                }
-            }
+            StatusMessage = selectedIssue.StatusMessage;
             
-            Task.Run(async () => await RunDiagnosticsAsync());
+            Task.Run(async () => await selectedIssue.RunDiagnosticsAsync());
 
 
         
@@ -74,8 +56,8 @@ namespace WindowsTroubleShooter.ViewModel
     }
         public void NavigateToExit()
         {
-            // Call NavigateTo on the navigation service to go to the exit view
-            //_navigationService.NavigateTo<ExitViewModel>();
+            // Todo: Change to resolution view upon completing troubleshooting (with final message)
+            
         }
 
 
@@ -91,9 +73,9 @@ namespace WindowsTroubleShooter.ViewModel
         // Event handler to update the StatusMessage when an issue's StatusMessage changes
         private void IssueStatusChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(IIssue.StatusMessage))
+            if (e.PropertyName == nameof(BaseTroubleshooter.StatusMessage))
             {
-                if (sender is IIssue issue)
+                if (sender is BaseTroubleshooter issue)
                 {
                     StatusMessage = issue.StatusMessage;
                 }

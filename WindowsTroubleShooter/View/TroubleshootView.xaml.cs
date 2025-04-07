@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WindowsTroubleShooter.Model;
 using WindowsTroubleShooter.ViewModel;
 
 namespace WindowsTroubleShooter.View
@@ -31,22 +32,11 @@ namespace WindowsTroubleShooter.View
         }
 
 
-        public TroubleshootView(ObservableCollection<string> selectedIssues)
+        public TroubleshootView(BaseTroubleshooter selectedIssue)
         {
             InitializeComponent();
-            this.DataContext = new TroubleshootViewModel(selectedIssues);
+            this.DataContext = new TroubleshootViewModel(selectedIssue);
         }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-            
-        }
-
-
-
-    
 
 
 
