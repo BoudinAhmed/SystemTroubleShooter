@@ -63,22 +63,22 @@ namespace WindowsTroubleShooter.Model
         public override async Task<string> RunDiagnosticsAsync()
         {
             // Use Dispatcher.InvokeAsync to update StatusMessage on the UI thread
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Troubleshooting Internet");
+            StatusMessage = "Troubleshooting Internet";
             await Task.Delay(2000);
 
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Refreshing Network Adapter");
+            StatusMessage = "Refreshing Network Adapter";
             await Task.Delay(2000);
             RefreshNetworkAdapter();
 
             if (IsFixed)
             {
-                await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Internet Connection Fixed");
+                StatusMessage = "Internet Connection Fixed" ;
                 await Task.Delay(2000);
                 return "Internet Connection Fixed";
             }
 
             await Task.Delay(2000);
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() => StatusMessage = "Network Reset");
+            StatusMessage = "Network Reset";
             await Task.Delay(2000);
             NetworkReset();
 

@@ -41,6 +41,9 @@ namespace WindowsTroubleShooter.Model
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
+            System.Diagnostics.Debug.WriteLine($"BaseTroubleshooter: OnPropertyChanged called for '{propertyName}' on Thread {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

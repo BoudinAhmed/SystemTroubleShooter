@@ -16,7 +16,7 @@ namespace WindowsTroubleShooter.ViewModel
 {
     public class TroubleshootViewModel : INotifyPropertyChanged, IIssue
     {
-        
+        private readonly BaseTroubleshooter _currentIssue;
 
         private string _statusMessage;
         // Property to bind the StatusMessage with the UI
@@ -40,14 +40,17 @@ namespace WindowsTroubleShooter.ViewModel
         // Contructor to initialize the View
         public TroubleshootViewModel()
         {
+            StatusMessage = "Ready to troubleshoot...";
         }
 
         // Constructor that initializes the ViewModel based on selected issues
         public TroubleshootViewModel(BaseTroubleshooter selectedIssue)
         {
-            StatusMessage = selectedIssue.StatusMessage;
+            _currentIssue = selectedIssue;
+            _currentIssue.PropertyChanged += IssueStatusChanged;
+            StatusMessage = _currentIssue.StatusMessage;
             
-            Task.Run(async () => await selectedIssue.RunDiagnosticsAsync());
+            Task.Run(async () => await _currentIssue.RunDiagnosticsAsync());
 
 
         
@@ -73,12 +76,11 @@ namespace WindowsTroubleShooter.ViewModel
         // Event handler to update the StatusMessage when an issue's StatusMessage changes
         private void IssueStatusChanged(object sender, PropertyChangedEventArgs e)
         {
+            // Check if the property that changed is StatusMessage
             if (e.PropertyName == nameof(BaseTroubleshooter.StatusMessage))
             {
-                if (sender is BaseTroubleshooter issue)
-                {
-                    StatusMessage = issue.StatusMessage;
-                }
+                
+                StatusMessage = _currentIssue.StatusMessage;
             }
         }
 
