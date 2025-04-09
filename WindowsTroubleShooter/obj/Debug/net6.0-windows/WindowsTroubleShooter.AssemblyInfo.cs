@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WindowsTroubleShooter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+067548f49efe8709d78180692dc2a0969d5f10ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+335a166e2a9554147628a8bb4d8db4ba90001ae8")]
 [assembly: System.Reflection.AssemblyProductAttribute("WindowsTroubleShooter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WindowsTroubleShooter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
