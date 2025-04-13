@@ -14,10 +14,7 @@
         AllowsTransparency="True">
     <Border CornerRadius="20"
             BorderThickness="5">
-        <Border.Background>
-            <ImageBrush ImageSource="/Images/background.jfif"/>
-
-        </Border.Background>
+        
 
 
 
