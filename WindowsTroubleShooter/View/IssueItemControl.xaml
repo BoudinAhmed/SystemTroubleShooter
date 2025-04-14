@@ -171,6 +171,29 @@
                     </Button.RenderTransform>
                 </Button>
             </StackPanel>
+            
+            <TextBlock Grid.Column="1"
+                       Grid.Row="1"
+                       Text="Detecting Issue..."
+                       Visibility="{Binding IsTroubleshooting, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       VerticalAlignment="Top"
+                       Margin="0,15,10,0"/>
+
+            <ProgressBar Grid.Column="1"
+                         Grid.Row="1"
+                         IsIndeterminate="True"
+                         Visibility="{Binding IsTroubleshooting, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Left"
+                         Margin="0,5,0,0"
+                         Height="2" Width="200"/>
+
+            <TextBlock Grid.Column="1"
+                       Grid.Row="1"
+                       Text="{Binding TroubleshootingStatus}"
+                       Visibility="{Binding IsTroubleshooting, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       VerticalAlignment="Bottom"
+                       Margin="0,25,0,15" />
         </Grid>
     </Border>
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,79 +13,100 @@ using WindowsTroubleShooter.View;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    
     // Represents an issue item in the UI elements.
     public class IssueItemViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private bool areButtonsVisible;
-        private bool isTextVisible = true;
-        private Border associatedBorder;
+        private BaseTroubleshooter _currentIssue;
+        private bool _areButtonsVisible;
+        private bool _isTextVisible = true;
+        private Border _associatedBorder;
+        private bool _isTroubleshooting;
+        private string _troubleshootingStatus;
 
-        
-        // Gets or sets a value indicating whether the buttons are visible
+
+        // Gets or sets a value indicating whether the buttons are visible.
         public bool AreButtonsVisible
         {
-            get => areButtonsVisible;
+            get => _areButtonsVisible;
             set
             {
-                if (areButtonsVisible != value)
+                if (_areButtonsVisible != value)
                 {
-                    areButtonsVisible = value;
+                    _areButtonsVisible = value;
                     OnPropertyChanged(nameof(AreButtonsVisible));
                 }
             }
         }
 
-        
-        // Gets or sets a value indicating whether the text is visible
+        // Gets or sets a value indicating whether the text is visible.
         public bool IsTextVisible
         {
-            get => isTextVisible;
+            get => _isTextVisible;
             set
             {
-                if (isTextVisible != value)
+                if (_isTextVisible != value)
                 {
-                    isTextVisible = value;
+                    _isTextVisible = value;
                     OnPropertyChanged(nameof(IsTextVisible));
                 }
             }
         }
 
-        
-        // Gets or sets the associated border element.
-        public Border AssociatedBorder
+        // Gets or sets a value indicating whether the troubleshoot items is visible.
+        public bool IsTroubleshooting
         {
-            get => associatedBorder;
+            get => _isTroubleshooting;
             set
             {
-                associatedBorder = value;
+                if (_isTroubleshooting != value)
+                {
+                    _isTroubleshooting = value;
+                    OnPropertyChanged(nameof(IsTroubleshooting));
+                }
             }
         }
 
-        
-        // Gets or sets for all elements of an item
+        // Gets or sets a value for troubleshooting status message
+        public string TroubleshootingStatus
+        {
+            get => _troubleshootingStatus;
+            set
+            {
+                if (_troubleshootingStatus != value)
+                {
+                    _troubleshootingStatus = value;
+                    OnPropertyChanged(nameof(TroubleshootingStatus));
+                }
+            }
+        }
+        // Gets or sets the associated border element.
+        public Border AssociatedBorder
+        {
+            get => _associatedBorder;
+            set => _associatedBorder = value;
+        }
+
+        // Gets or sets properties for all elements of an item.
         public string Title { get; set; }
-        public string Description { get; set; }  
+        public string Description { get; set; }
         public string ImageSource { get; set; }
         public BaseTroubleshooter IssueType { get; set; }
         public bool IsItemSelected { get; set; }
 
-        //Handle the navigation to the next view
+        // Handle the navigation to the next view.
         private NavigationService _navigationService { get; set; }
 
-        // Gets the command executed when the item's is clicked. 
+        // Gets the command executed when the item is clicked.
         public ICommand ItemClickedCommand { get; }
 
-        
-       // Gets the command executed when the item's cancel button is clicked. 
+        // Gets the command executed when the item's cancel button is clicked.
         public ICommand ItemCancelClickedCommand { get; }
 
-        // Gets the command executed when the item's troubleshoot button is clicked. 
+        // Gets the command executed when the item's troubleshoot button is clicked.
         public ICommand ItemTroubleshootClickedCommand { get; }
 
-        
         public IssueItemViewModel()
         {
             _navigationService = new NavigationService();
@@ -96,16 +118,10 @@ namespace WindowsTroubleShooter.ViewModel
         private void OnItemClicked(object obj)
         {
             AssociatedBorder = obj as Border;
-            if (AssociatedBorder == null)
-            {
-                return;
-            }
+            if (AssociatedBorder == null) return;
 
             var fadeOutStoryboard = AssociatedBorder.Resources["FadeOut"] as Storyboard;
-            if (fadeOutStoryboard == null)
-            {
-                return;
-            }
+            if (fadeOutStoryboard == null) return;
 
             fadeOutStoryboard.Completed += (sender, e) => StartButtonAnimation(AssociatedBorder);
             fadeOutStoryboard.Begin(AssociatedBorder);
@@ -119,18 +135,12 @@ namespace WindowsTroubleShooter.ViewModel
         private void OnItemCancelClicked(object obj)
         {
             AssociatedBorder = obj as Border;
-            if (AssociatedBorder == null)
-            {
-                return;
-            }
+            if (AssociatedBorder == null) return;
 
             var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
             var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
 
-            if (fadeInStoryboard == null || resetStoryboard == null)
-            {
-                return;
-            }
+            if (fadeInStoryboard == null || resetStoryboard == null) return;
 
             resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
             resetStoryboard.Begin(AssociatedBorder);
@@ -138,6 +148,7 @@ namespace WindowsTroubleShooter.ViewModel
             IsItemSelected = false;
             IsTextVisible = true;
             AreButtonsVisible = false;
+            IsTroubleshooting = false;
 
             if (Application.Current.MainWindow?.DataContext is StartViewModel startViewModel)
             {
@@ -145,13 +156,26 @@ namespace WindowsTroubleShooter.ViewModel
             }
         }
 
-        private void OnItemTroubleshootClicked(object obj)
-        { 
-            _navigationService.NavigateTo<TroubleshootView, TroubleshootViewModel>( 
-                new TroubleshootViewModel(this.IssueType)); 
+        private void IssueStatusChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // Check if the property that changed is StatusMessage.
+            if (e.PropertyName == nameof(BaseTroubleshooter.StatusMessage))
+            {
+                TroubleshootingStatus = _currentIssue.StatusMessage;
+            }
         }
 
-        
+        private void OnItemTroubleshootClicked(object obj)
+        {
+            AreButtonsVisible = false;
+            IsTroubleshooting = true;
+            TroubleshootingStatus = "Starting...";
+            _currentIssue = this.IssueType;
+            _currentIssue.PropertyChanged += IssueStatusChanged;
+
+            _ = Task.Run(async () => await _currentIssue.RunDiagnosticsAsync());
+        }
+
         // Shows the buttons associated with the issue item.
         public void ShowButtons()
         {
@@ -163,10 +187,7 @@ namespace WindowsTroubleShooter.ViewModel
         private void StartButtonAnimation(object sender)
         {
             Reset();
-            if (!(sender is Border border))
-            {
-                return;
-            }
+            if (!(sender is Border border)) return;
 
             var buttonAnimationStoryboard = border.Resources["ButtonAnimation"] as Storyboard;
             if (buttonAnimationStoryboard == null)
@@ -179,27 +200,16 @@ namespace WindowsTroubleShooter.ViewModel
             buttonAnimationStoryboard.Begin(border);
         }
 
-        
-        // Resets the issue item to its initial state.
+        // Resets the issue item to its initial state (title and description shown only).
         public void Reset()
         {
-            if (IsTextVisible || !AreButtonsVisible)
-            {
-                return;
-            }
-
-            if (AssociatedBorder == null)
-            {
-                return;
-            }
+            if (IsTextVisible || !AreButtonsVisible) return;
+            if (AssociatedBorder == null) return;
 
             var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
             var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
 
-            if (fadeInStoryboard == null)
-            {
-                return;
-            }
+            if (fadeInStoryboard == null) return;
 
             resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
             resetStoryboard.Begin(AssociatedBorder);
@@ -209,7 +219,6 @@ namespace WindowsTroubleShooter.ViewModel
             AreButtonsVisible = false;
         }
 
-        
         // PropertyChanged event.
         protected virtual void OnPropertyChanged(string propertyName)
         {

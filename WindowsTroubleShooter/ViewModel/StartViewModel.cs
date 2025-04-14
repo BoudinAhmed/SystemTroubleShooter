@@ -40,6 +40,7 @@ namespace WindowsTroubleShooter.ViewModel
                     ImageSource = "\xE701",
                     IssueType = new InternetTroubleshooter()
 
+
                 },
                 new IssueItemViewModel
                 {

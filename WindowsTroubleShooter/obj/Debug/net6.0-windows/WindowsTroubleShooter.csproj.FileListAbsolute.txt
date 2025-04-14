@@ -82,8 +82,6 @@ C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\bin\Debug\net6.0-wind
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\bin\Debug\net6.0-windows\runtimes\win7-x64\native\libuv.dll
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\bin\Debug\net6.0-windows\runtimes\win7-x86\native\libuv.dll
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.csproj.AssemblyReference.cache
-C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\Styles.baml
-C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\ExitView.g.cs
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\IssueItemControl.g.cs
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\StartView.g.cs
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\TroubleshootView.g.cs
@@ -92,7 +90,6 @@ C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-wind
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter_MarkupCompile.cache
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter_MarkupCompile.lref
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\App.baml
-C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\ExitView.baml
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\IssueItemControl.baml
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\StartView.baml
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\TroubleshootView.baml
@@ -108,3 +105,4 @@ C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-wind
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.pdb
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.genruntimeconfig.cache
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\ref\WindowsTroubleShooter.dll
+C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\Resources\Styles.baml

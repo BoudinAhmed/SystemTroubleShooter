@@ -13,18 +13,12 @@
     <Compile Update="View\TroubleshootView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\ExitView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="View\StartView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="View\TroubleshootView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\ExitView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\StartView.xaml">
