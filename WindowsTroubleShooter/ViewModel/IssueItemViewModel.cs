@@ -117,6 +117,12 @@ namespace WindowsTroubleShooter.ViewModel
 
         private void OnItemClicked(object obj)
         {
+            //Not to interupt the troubleshooting process
+            if (IsTroubleshooting) {
+                return;
+            }
+
+            //The animation to be played when the item is clicked.
             AssociatedBorder = obj as Border;
             if (AssociatedBorder == null) return;
 
@@ -165,7 +171,7 @@ namespace WindowsTroubleShooter.ViewModel
             }
         }
 
-        private void OnItemTroubleshootClicked(object obj)
+        private async void OnItemTroubleshootClicked(object obj)
         {
             AreButtonsVisible = false;
             IsTroubleshooting = true;
@@ -173,7 +179,49 @@ namespace WindowsTroubleShooter.ViewModel
             _currentIssue = this.IssueType;
             _currentIssue.PropertyChanged += IssueStatusChanged;
 
-            _ = Task.Run(async () => await _currentIssue.RunDiagnosticsAsync());
+            Task diagnosticsTask = Task.Run(async () =>  await _currentIssue.RunDiagnosticsAsync());
+
+            await diagnosticsTask;
+               
+               
+            
+            if (diagnosticsTask.IsCompleted)
+            {
+                
+                if (_currentIssue.IsFixed)
+                {
+                    TroubleshootingStatus = "Success";
+                }
+                else
+                {
+                    TroubleshootingStatus = "Failed";
+                }
+                await Task.Delay(2000);
+                 IsTroubleshooting = false;
+
+                // The animation to reset to inital state
+                AssociatedBorder = obj as Border;
+                if (AssociatedBorder == null) return;
+
+                var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
+                var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
+
+                if (fadeInStoryboard == null || resetStoryboard == null) return;
+
+                resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
+                resetStoryboard.Begin(AssociatedBorder);
+
+                IsItemSelected = false;
+                IsTextVisible = true;
+                AreButtonsVisible = false;
+                IsTroubleshooting = false;
+
+                if (Application.Current.MainWindow?.DataContext is StartViewModel startViewModel)
+                {
+                    startViewModel.ListenToNextClicked(this, AssociatedBorder);
+                }
+            }
+            
         }
 
         // Shows the buttons associated with the issue item.
