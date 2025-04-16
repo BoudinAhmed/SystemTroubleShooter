@@ -70,8 +70,7 @@
               "RelativeToolTip": "WindowsTroubleShooter\\Model\\InternetTroubleshooter.cs",
               "ViewState": "AgIAACkAAAAAAAAAAAAwwD4AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T18:41:48.057Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T18:41:48.057Z"
             },
             {
               "$type": "Document",
@@ -83,8 +82,7 @@
               "RelativeToolTip": "WindowsTroubleShooter\\Model\\BaseTroubleshooter.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAQwCQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T18:41:34.578Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T18:41:34.578Z"
             },
             {
               "$type": "Document",
@@ -96,8 +94,7 @@
               "RelativeToolTip": "WindowsTroubleShooter\\ViewModel\\TroubleshootViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T18:31:48.554Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T18:31:48.554Z"
             },
             {
               "$type": "Document",
@@ -120,8 +117,7 @@
               "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\IssueItemControl.xaml",
               "RelativeToolTip": "WindowsTroubleShooter\\View\\IssueItemControl.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-13T23:22:08.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T23:22:08.695Z"
             },
             {
               "$type": "Document",
@@ -129,9 +125,9 @@
               "Title": "IssueItemViewModel.cs",
               "DocumentMoniker": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
-              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs*",
-              "RelativeToolTip": "WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs*",
-              "ViewState": "AgIAALIAAAAAAAAAAAAAAMkAAAA5AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
+              "RelativeToolTip": "WindowsTroubleShooter\\ViewModel\\IssueItemViewModel.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAgwBQAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-14T15:15:29.259Z",
               "EditorCaption": ""
@@ -179,8 +175,7 @@
               "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\Resources\\Styles.xaml",
               "RelativeToolTip": "WindowsTroubleShooter\\Resources\\Styles.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-13T23:24:26.843Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T23:24:26.843Z"
             },
             {
               "$type": "Document",
@@ -191,8 +186,7 @@
               "ToolTip": "C:\\Users\\aboudin\\WindowsTroubleShooter\\WindowsTroubleShooter\\App.xaml",
               "RelativeToolTip": "WindowsTroubleShooter\\App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-13T23:31:04.742Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T23:31:04.742Z"
             }
           ]
         }

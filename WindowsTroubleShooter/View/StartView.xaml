@@ -34,7 +34,7 @@
             Text="Troubleshooter Dashboard"
             Grid.Row="0"
             Grid.ColumnSpan="2"
-            Margin="20,20,20,0"
+            Margin="20,25,20,0"
             FontSize="22"
             FontWeight="SemiBold"
             HorizontalAlignment="Left" />
