@@ -29,12 +29,13 @@ namespace WindowsTroubleShooter.Model
         }
 
         // Public properties
-        public bool IsFixed { get; set; }
+       
         public string IssueType { get; set; }
         public string Detail { get; set; }
         public List<string> TaskList { get; set; }
         public DateTime TimeStamp { get; set; }
         public string ResolutionMessage { get; set; }
+        public bool IsFixed { get; set; }
 
         // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
