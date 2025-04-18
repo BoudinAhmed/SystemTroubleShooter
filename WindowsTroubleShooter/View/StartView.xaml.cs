@@ -30,32 +30,33 @@ namespace WindowsTroubleShooter.View
             
 
         }
-        
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed) { DragMove(); }
-        }
-        
-        private void Button_Next(object sender, RoutedEventArgs e)
-        {
 
-           /* if (SearchIssueOption.IsChecked == true || MapDrives.IsChecked == true || UnlockAccount.IsChecked == true)
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                DetectingIssue detectingIssue = new DetectingIssue(this);
-                detectingIssue.Show();
-                Close();
-            }*/
-            
+                DragMove();
+            }
         }
 
-        private void Button_Cancel(object sender, RoutedEventArgs e)
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeRestoreWindow(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void CloseWindow(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        
 
 
-        }
+
+    }
     }
