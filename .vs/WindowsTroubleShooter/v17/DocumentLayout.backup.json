@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\boudi\\WindowsTroubleShooter\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\boudi\\windowstroubleshooter\\windowstroubleshooter\\view\\issueitemcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\issueitemcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|c:\\users\\boudi\\windowstroubleshooter\\windowstroubleshooter\\view\\startview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{E0298F0A-E2CF-4D9F-907D-802949BCCA5A}|WindowsTroubleShooter\\WindowsTroubleShooter.csproj|solutionrelative:windowstroubleshooter\\view\\startview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
@@ -23,6 +27,18 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "IssueItemControl.xaml",
+              "DocumentMoniker": "C:\\Users\\boudi\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\IssueItemControl.xaml",
+              "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\IssueItemControl.xaml",
+              "ToolTip": "C:\\Users\\boudi\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\IssueItemControl.xaml",
+              "RelativeToolTip": "WindowsTroubleShooter\\View\\IssueItemControl.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-19T13:43:12.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "StartView.xaml",
               "DocumentMoniker": "C:\\Users\\boudi\\WindowsTroubleShooter\\WindowsTroubleShooter\\View\\StartView.xaml",
               "RelativeDocumentMoniker": "WindowsTroubleShooter\\View\\StartView.xaml",
