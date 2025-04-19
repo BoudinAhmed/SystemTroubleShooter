@@ -102,7 +102,7 @@ namespace WindowsTroubleShooter {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WindowsTroubleShooter;V1.0.0.0;component/view/issueitemcontrol.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WindowsTroubleShooter;component/view/issueitemcontrol.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\IssueItemControl.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
