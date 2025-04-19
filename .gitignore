@@ -1,0 +1,33 @@
+# Compiled output
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+*.cachefile
+*.vcxproj.user
+*.csproj.user
+
+# NuGet packages
+packages/
+global.json
+project.lock.json
+
+# Build results
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+
+# Test results
+TestResults/
+
+# ReSharper cache
+_ReSharper*/
+
+# Temporary files and folders
+*.tmp
+*.~
+*.bak
