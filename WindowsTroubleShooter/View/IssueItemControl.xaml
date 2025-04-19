@@ -147,6 +147,7 @@
                         Command="{Binding ItemCancelClickedCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}"
                         Margin="0,0,5,0"
+                        Width="200"
                         Opacity="0">
                     <Button.RenderTransform>
                         <TranslateTransform X="10" />
@@ -165,6 +166,7 @@
                         Style="{StaticResource ButtonStyle}"
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}"
                         Margin="5,0,0,0"
+                        Width="200"
                         Opacity="0">
                     <Button.RenderTransform>
                         <TranslateTransform X="-10" />

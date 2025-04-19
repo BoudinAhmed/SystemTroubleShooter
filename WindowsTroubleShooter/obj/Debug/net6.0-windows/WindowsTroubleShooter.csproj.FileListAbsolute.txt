@@ -30,7 +30,6 @@ C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\bin\Debug\net6.0-wind
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\bin\Debug\net6.0-windows\runtimes\win7-x86\native\libuv.dll
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\WindowsTroubleShooter.csproj.AssemblyReference.cache
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\Resources\Styles.baml
-C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\Resource\CustomWindowStyles.baml
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\IssueItemControl.g.cs
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\StartView.g.cs
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\obj\Debug\net6.0-windows\View\TroubleshootView.g.cs

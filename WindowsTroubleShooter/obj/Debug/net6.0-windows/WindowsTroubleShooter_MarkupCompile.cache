@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\boudi\WindowsTroubleShooter\WindowsTroubleShooter\App.xaml
-51230986967
+4-1315357715
 
 191721119619
 208293100065
-Resources\Styles.xaml;Resource\CustomWindowStyles.xaml;View\IssueItemControl.xaml;View\StartView.xaml;View\TroubleshootView.xaml;
+Resources\Styles.xaml;View\IssueItemControl.xaml;View\StartView.xaml;View\TroubleshootView.xaml;
 
 False
 

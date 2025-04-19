@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:WindowsTroubleShooter"
         xmlns:vm="clr-namespace:WindowsTroubleShooter.ViewModel"
-        Title="Troubleshooter" Height="650" Width="1000"
+        Title="Troubleshooter" Height="700" Width="1200"
         Foreground="#dddddd"
         FontFamily="Segoe UI" UseLayoutRounding="True" 
         WindowStyle="None" AllowsTransparency="True" Background="Transparent" 
@@ -72,7 +72,7 @@
             <TextBlock
                 Text="Troubleshooter Dashboard"
                 Grid.Row="0"
-                Margin="20,20,20,0"
+                Margin="20,30,20,0"
                 FontSize="22"
                 FontWeight="SemiBold"
                 HorizontalAlignment="Left" />
