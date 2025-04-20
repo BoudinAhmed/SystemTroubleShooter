@@ -2,18 +2,57 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:WindowsTroubleShooter.ViewModel"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WindowsTroubleShooter" 
+             xmlns:local="clr-namespace:WindowsTroubleShooter"
+             xmlns:converters="clr-namespace:WindowsTroubleShooter.Helpers.Converters"
              Foreground="#dddddd"
              Background="#202020"
-             mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="1200">
+             mc:Ignorable="d"
+             d:DesignHeight="750" d:DesignWidth="1200">
     <UserControl.DataContext>
         <vm:DashboardViewModel/>
     </UserControl.DataContext>
-    
-    <Grid Grid.Row="1" Grid.Column="1">
+
+    <UserControl.Resources>
+        <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+            <Setter Property="Background" Value="#2a2a2a"/>
+            <Setter Property="Foreground" Value="#dddddd"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#444444"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#444444"/>
+            <Setter Property="RowBackground" Value="#2a2a2a"/>
+            <Setter Property="AlternatingRowBackground" Value="#303030"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+            <Setter Property="Background" Value="#3a3a3a"/>
+            <Setter Property="Foreground" Value="#eeeeee"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#007ACC"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <converters:StatusToBrushConverter x:Key="StatusToBrushConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -23,42 +62,85 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock
-        Text="Troubleshooter Dashboard"
-        Grid.Row="0"
-        Margin="20,30,20,0"
-        FontSize="22"
-        FontWeight="SemiBold"
-        HorizontalAlignment="Left" />
+            Text="Dashboard"
+            Grid.Row="0"
+            Margin="20,30,20,10" FontSize="22"
+            FontWeight="SemiBold"
+            HorizontalAlignment="Left" />
+        
+        
+        <Border Grid.Row="1"
+                Background="#2a2a2a"
+                CornerRadius="4"
+                BorderBrush="#444444"
+                BorderThickness="1"
+                Margin="20,25,20,10"
+                Padding="15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Margin="0,25,20,10">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Machine Name:" FontWeight="SemiBold" Margin="0,0,10,5"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MachineName, FallbackValue='PC-NAME'}" Margin="0,0,20,5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Operating System:" FontWeight="SemiBold" Margin="0,0,10,5"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding OSVersion, FallbackValue='Windows 11 Pro 23H2'}" Margin="0,0,20,5" TextTrimming="CharacterEllipsis"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="User:" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentUser, FallbackValue='Domain\\Username'}" Margin="0,0,20,0"/>
+
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Status:" FontWeight="SemiBold" Margin="0,0,10,5"/>
+                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Margin="0,0,0,5">
+                    <Ellipse Width="10" Height="10" Margin="0,0,5,0" VerticalAlignment="Center"
+                             Fill="{Binding SystemStatus, Converter={StaticResource StatusToBrushConverter}, FallbackValue='Gray'}"/>
+                    <TextBlock Text="{Binding SystemStatus, FallbackValue='Unknown'}"/>
+                </StackPanel>
+
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="IP Address:" FontWeight="SemiBold" Margin="0,0,10,5"/>
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding IpAddress, FallbackValue='192.168.1.100'}" Margin="0,0,0,5"/>
+
+            </Grid>
+        </Border>
+
+
+        <TextBlock
+            Text="Most Frequent Issues"
+            Grid.Row="2"
+            Margin="20,15,0,0" FontSize="16"
+            Foreground="#bbbbbb"
+            HorizontalAlignment="Left"/>
+
+        <Button Grid.Row="2"
+                HorizontalAlignment="Right"
+                Style="{StaticResource ButtonStyle}"
+                Margin="0,15,20,5" Height="25" Width="100">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="View History" VerticalAlignment="Center" />
-                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE81C;" VerticalAlignment="Center" Margin="5,0,0,0" />
+                        <TextBlock Text="See all" VerticalAlignment="Center" />
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE76C;" VerticalAlignment="Center" Margin="15,0,0,0" />
                     </StackPanel>
                 </DataTemplate>
             </Button.ContentTemplate>
         </Button>
 
-        <TextBlock
-        Text="Choose an issue to begin troubleshooting:"
-        Grid.Row="1"
-        Margin="20,5,20,15"
-        FontSize="16"
-        Foreground="#bbbbbb"
-        HorizontalAlignment="Left"/>
 
-        <Border
-        Grid.Row="1"
-        Height="1"
-        Background="#444444"
-        Margin="20,40,20,20" />
-
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding IssueItems}">
+        <ItemsControl Grid.Row="3" ItemsSource="{Binding IssueItems}" Margin="0,0,0,10">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -84,40 +166,49 @@
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
                     <Setter Property="Grid.Column"
-                        Value="{Binding Converter={StaticResource IndexToColumnConverter},
+                            Value="{Binding Converter={StaticResource IndexToColumnConverter},
                                         RelativeSource={RelativeSource Self}}" />
                     <Setter Property="Grid.Row"
-                        Value="{Binding Converter={StaticResource IndexToRowConverter},
+                            Value="{Binding Converter={StaticResource IndexToRowConverter},
                                         RelativeSource={RelativeSource Self}}" />
                     <Setter Property="Margin" Value="20,0,20,10" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
-        <Border Grid.Row="3" Margin="20,20,20,20" Background="#2b2b2b" CornerRadius="4" Padding="20">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Suggest an Issue" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-
-                <TextBlock Grid.Row="1" Text="Please provide feedback or suggest a new issue to be added to the list." Margin="0,0,0,10" Foreground="#bbbbbb"/>
-
-                <TextBox Grid.Row="2" Background="#3c3c3c" Foreground="#dddddd" BorderThickness="1" BorderBrush="#555555" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100"/>
-
-                <Button Grid.Row="3" Content="Submit Feedback" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,10,0,0"/>
-            </Grid>
-        </Border>
 
         <TextBlock
-        Text="{Binding Version}"
-        Grid.Row="4"
-        HorizontalAlignment="Right"
-        VerticalAlignment="Bottom"
-        Margin="0,0,20,20" />
+            Text="Troubleshooting History"
+            Grid.Row="4"
+            Margin="20,15,0,5" FontSize="16"
+            Foreground="#bbbbbb"
+            HorizontalAlignment="Left"/>
+
+
+        <DataGrid Grid.Row="5"
+                  ItemsSource="{Binding HistoryEntries}"
+                  Margin="20,0,20,10"
+                  MaxHeight="300" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date / Time" Binding="{Binding Timestamp, StringFormat='yyyy-MM-dd HH:mm'}" Width="150"/>
+                <DataGridTextColumn Header="Issue Description" Binding="{Binding IssueDescription}" Width="*"/>
+                <DataGridTemplateColumn Header="Status" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ResolutionStatus}"
+                                        Foreground="{Binding ResolutionStatus, Converter={StaticResource StatusToBrushConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <TextBlock
+            Text="{Binding Version, FallbackValue='v1.0.0'}"
+            Grid.Row="6" HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="0,0,20,20"
+            Foreground="#aaaaaa" />
     </Grid>
 </UserControl>

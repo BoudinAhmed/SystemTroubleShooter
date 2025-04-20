@@ -58,7 +58,7 @@
                 </StackPanel>
             </Border>
 
-            <Grid Grid.Row="1" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1" Margin="30 0 30 0">
                 <view:DashboardView/>
             </Grid>
             
