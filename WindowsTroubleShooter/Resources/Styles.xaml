@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--For buttons grey and round edges-->
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="150"/>
         <Setter Property="Height" Value="35"/>
@@ -30,7 +31,8 @@
         </Setter>
     </Style>
 
-
+    
+    <!--For each issue item border-->
     <Style x:Key="IssueItemStyle" TargetType="Border">
         <Setter Property="Padding" Value="20,0,0,0" />
         <Setter Property="Height" Value="70" />
@@ -45,8 +47,10 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-  
-        <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+    
+    
+   <!--title bar elements-->
+   <Style x:Key="TitleBarButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#dddddd"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -69,9 +73,10 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style x:Key="TitleBarCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource TitleBarButtonStyle}">
+    </Style>
+         
+   <!--Close button on title bar-->
+   <Style x:Key="TitleBarCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource TitleBarButtonStyle}">
             <Setter Property="Foreground" Value="#eee"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -90,9 +95,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+    </Style>
 
-        <Style x:Key="SideBarButtonStyle" TargetType="Button">
+    
+   <!--Sidepanel elements-->
+    <Style x:Key="SideBarButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#dddddd"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -117,8 +124,60 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+     </Style>
 
-      
+    
+     <!--Scrollbar style-->
+    <Style x:Key="ScrollBarStyle" TargetType="{x:Type ScrollBar}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid>
+                        <Track x:Name="PART_Track" Orientation="{TemplateBinding Orientation}" IsDirectionReversed="True">
+                            <Track.Thumb>
+                                <Thumb x:Name="PART_Thumb" Focusable="False">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="{x:Type Thumb}">
+                                            <Border Background="DarkGray" CornerRadius="2">
+                                                <Border.Width>
+                                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                </Border.Width>
+                                                <Border.Height>
+                                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                </Border.Height>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Horizontal">
+                            <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="False"/>
+                            <Setter TargetName="PART_Thumb" Property="Width">
+                                <Setter.Value>
+                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Track}}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Thumb" Property="Height" Value="8"/>
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="PART_Thumb" Property="Height">
+                                <Setter.Value>
+                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Track}}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Thumb" Property="Width" Value="8"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
 
 </ResourceDictionary>

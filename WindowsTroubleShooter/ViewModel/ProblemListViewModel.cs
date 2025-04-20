@@ -1,28 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using WindowsTroubleShooter.Interfaces;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using WindowsTroubleShooter.Model;
-using System.Collections.Generic;
+using WindowsTroubleShooter.ViewModel;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class DashboardViewModel
+    public class ProblemListViewModel
     {
         public ObservableCollection<IssueItemViewModel> IssueItems { get; set; }
-        public string SystemStatus;
-        public List<HistoryEntryModel> HistoryEntries { get; set; }
         private IssueItemViewModel _lastClickedItem;
         private Border _lastClickedBorder;
-        private readonly INavigateService _navigationService;
         public string Version { get; set; }
         public ObservableCollection<string> SelectedIssues { get; set; } = new ObservableCollection<string>();
 
-        public DashboardViewModel()
-        {
-            SystemStatus = "Online";
-            IssueItems = new ObservableCollection<IssueItemViewModel>
+        public ProblemListViewModel()
+        { 
+         IssueItems = new ObservableCollection<IssueItemViewModel>
             {
+                new IssueItemViewModel
+                {
+                    Title = "Internet Connection",
+                    Description = "Fix problems with connecting to the internet",
+                    ImageSource = "\xE701",
+                    IssueType = new InternetTroubleshooter()
+
+
+                },
+                new IssueItemViewModel
+                {
+                    Title = "Windows Update",
+                    Description = "Resolve problem with windows update",
+                    ImageSource = "\xE895",
+                    IssueType = new InternetTroubleshooter() //To be changed
+                },
+                new IssueItemViewModel
+                {
+                    Title = "Sound",
+                    Description = "Fix problems with playing audio",
+                    ImageSource = "\xE767",
+                    IssueType = new InternetTroubleshooter() //To be changed
+                },
+                new IssueItemViewModel
+                {
+                    Title = "Map Network Drive",
+                    Description = "Map a network drive with letter and path",
+                    ImageSource = "\xE8CE",
+                    IssueType = new InternetTroubleshooter() //To be changed
+                },
                 new IssueItemViewModel
                 {
                     Title = "Internet Connection",
@@ -55,47 +84,7 @@ namespace WindowsTroubleShooter.ViewModel
                 }
 
             };
-
-            HistoryEntries = new List<HistoryEntryModel>
-            {
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
-
-            };
-            Version = "Version 2.0.1";
-        }
-
-        public void ListenToNextClicked(IssueItemViewModel clickedItem, Border clickedBorder)
-        {
-            if (_lastClickedItem != null && _lastClickedItem != clickedItem)
-            {
-                _lastClickedItem.Reset();
-            }
-
-            _lastClickedItem = clickedItem;
-            _lastClickedBorder = clickedBorder;
+         Version = "Version 2.0.1";
         }
     }
 }
