@@ -13,7 +13,7 @@
         <vm:ProblemListViewModel/>
     </UserControl.DataContext>
 
-    <Grid Margin="20 0 0 0">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -29,7 +29,7 @@
             <TextBlock
                 Text="Problem List"
                 Grid.Column="0"
-                Margin="20,30,20,0"
+                Margin="20,30,20,35"
                 FontSize="22"
                 FontWeight="SemiBold"
                 HorizontalAlignment="Left" />
@@ -53,7 +53,7 @@
             <StackPanel>
                 <TextBlock
                     Text="Choose an issue to begin troubleshooting:"
-                    Margin="20,5,20,30"
+                    Margin="20,0,20,30"
                     FontSize="16"
                     Foreground="#bbbbbb"
                     HorizontalAlignment="Left"/>
