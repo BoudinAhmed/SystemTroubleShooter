@@ -1,101 +1,169 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel; 
+using System.Runtime.CompilerServices; 
+using System.Net.NetworkInformation; 
 using WindowsTroubleShooter.Interfaces;
-using System.Windows.Controls;
 using WindowsTroubleShooter.Model;
-using System.Collections.Generic;
+using System.Linq;
+using System.Collections.Generic; 
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class DashboardViewModel
-    {
-        public ObservableCollection<IssueItemViewModel> IssueItems { get; set; }
-        public string SystemStatus;
-        public List<HistoryEntryModel> HistoryEntries { get; set; }
-        private IssueItemViewModel _lastClickedItem;
-        private Border _lastClickedBorder;
-        private readonly INavigateService _navigationService;
-        public string Version { get; set; }
-        public ObservableCollection<string> SelectedIssues { get; set; } = new ObservableCollection<string>();
 
+    public class DashboardViewModel : ViewModelBase 
+    {
+
+        // --- Backing Fields ---
+        private string _machineName;
+        private string _osVersion;
+        private string _currentUser;
+        private string _systemStatus;
+        private string _ipAddress;
+        private string _version;
+        private ObservableCollection<IssueItemViewModel> _issueItems;
+        private ObservableCollection<HistoryEntryModel> _historyEntries; 
+        private ObservableCollection<string> _selectedIssues = new ObservableCollection<string>();
+
+        
+
+        // --- Public Properties Binding ---
+
+        // Properties for System Overview
+        public string MachineName
+        {
+            get => _machineName;
+            private set => SetProperty(ref _machineName, value);
+        }
+
+        public string OSVersion
+        {
+            get => _osVersion;
+            private set => SetProperty(ref _osVersion, value);
+        }
+
+        public string CurrentUser
+        {
+            get => _currentUser;
+            private set => SetProperty(ref _currentUser, value);
+        }
+
+        public string SystemStatus
+        {
+            get => _systemStatus;
+            private set => SetProperty(ref _systemStatus, value); 
+        }
+
+        public string IpAddress
+        {
+            get => _ipAddress;
+            private set => SetProperty(ref _ipAddress, value);
+        }
+
+        public string Version
+        {
+            get => _version;
+            set => SetProperty(ref _version, value);
+        }
+
+        // Properties for Issues and History
+        public ObservableCollection<IssueItemViewModel> IssueItems
+        {
+            get => _issueItems;
+            set => SetProperty(ref _issueItems, value);
+        }
+
+        public ObservableCollection<HistoryEntryModel> HistoryEntries
+        {
+            get => _historyEntries;
+            set => SetProperty(ref _historyEntries, value);
+        }
+
+
+        // --- Constructor ---
         public DashboardViewModel()
         {
-            SystemStatus = "Online";
-            IssueItems = new ObservableCollection<IssueItemViewModel>
-            {
-                new IssueItemViewModel
-                {
-                    Title = "Internet Connection",
-                    Description = "Fix problems with connecting to the internet",
-                    ImageSource = "\xE701",
-                    IssueType = new InternetTroubleshooter()
+            // Initializing collections
+            IssueItems = new ObservableCollection<IssueItemViewModel>();
+            HistoryEntries = new ObservableCollection<HistoryEntryModel>(); 
 
+            // Load data / Set initial values
+            LoadSystemInfo(); 
+            UpdateSystemStatus(); 
+            LoadIssueItems();
+            LoadHistory();
+            LoadVersionInfo();
 
-                },
-                new IssueItemViewModel
-                {
-                    Title = "Windows Update",
-                    Description = "Resolve problem with windows update",
-                    ImageSource = "\xE895",
-                    IssueType = new InternetTroubleshooter() //To be changed
-                },
-                new IssueItemViewModel
-                {
-                    Title = "Sound",
-                    Description = "Fix problems with playing audio",
-                    ImageSource = "\xE767",
-                    IssueType = new InternetTroubleshooter() //To be changed
-                },
-                new IssueItemViewModel
-                {
-                    Title = "Map Network Drive",
-                    Description = "Map a network drive with letter and path",
-                    ImageSource = "\xE8CE",
-                    IssueType = new InternetTroubleshooter() //To be changed
-                }
+            // TODO: Implenment timer or event listener call UpdateSystemStatus() in a span time
+            
+        }
 
-            };
+        // --- Data Loading Methods ---
 
-            HistoryEntries = new List<HistoryEntryModel>
-            {
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
-                new HistoryEntryModel
-                {
-                Timestamp = DateTime.Now,
-                IssueDescription = "internet issue not access browser",
-                ResolutionStatus="reset net adapter"
-                },
+        private void LoadSystemInfo()
+        {
+            // Fetch actual system info
+            MachineName = Environment.MachineName;
+            OSVersion = Environment.OSVersion.VersionString;
+            CurrentUser = Environment.UserName;
+            IpAddress = GetLocalIPAddress() ?? "N/A";
+        }
 
-            };
+        private void LoadVersionInfo()
+        {
+            // Hardcoded for now but will load it from assembly info
             Version = "Version 2.0.1";
         }
 
-        public void ListenToNextClicked(IssueItemViewModel clickedItem, Border clickedBorder)
+        private void UpdateSystemStatus()
         {
-            if (_lastClickedItem != null && _lastClickedItem != clickedItem)
-            {
-                _lastClickedItem.Reset();
-            }
+            //Determine network status
+            bool isOnline = NetworkInterface.GetIsNetworkAvailable();
+            
 
-            _lastClickedItem = clickedItem;
-            _lastClickedBorder = clickedBorder;
+            SystemStatus = isOnline ? "Online" : "Offline"; // todo update the property
         }
+
+        private void LoadIssueItems()
+        {
+            
+            // Add items
+            IssueItems.Add(new IssueItemViewModel { Title = "Internet Connection", Description = "Fix problems with connecting to the internet", ImageSource = "\xE701", IssueType = new InternetTroubleshooter() });
+            IssueItems.Add(new IssueItemViewModel { Title = "Windows Update", Description = "Resolve problem with windows update", ImageSource = "\xE895", IssueType = new InternetTroubleshooter() });
+            IssueItems.Add(new IssueItemViewModel { Title = "Sound", Description = "Fix problems with playing audio", ImageSource = "\xE767", IssueType = new InternetTroubleshooter() });
+            IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive", Description = "Map a network drive with letter and path", ImageSource = "\xE8CE", IssueType = new InternetTroubleshooter() });
+            // ... will pull from cache file eventually
+        }
+
+        private void LoadHistory()
+        {
+            // Will pull from cache file eventually
+            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddHours(-1), IssueDescription = "Internet issue not access browser", ResolutionStatus = "Fixed" });
+            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-1), IssueDescription = "Sound driver needed reinstall", ResolutionStatus = "Fixed" });
+            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-2), IssueDescription = "Windows Update stuck", ResolutionStatus = "Pending Investigation" });
+        }
+
+        // --- Helper Methods ---
+        private string GetLocalIPAddress()
+        {
+            try
+            {
+                var host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+                foreach (var ip in host.AddressList)
+                {
+                    if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) // Get that ip
+                    {
+                        return ip.ToString();
+                    }
+                }
+                return "IPv4 Not found";
+            }
+            catch (Exception)
+            {
+                return "Error retrieving IP";
+            }
+        }
+
+        
     }
 }
