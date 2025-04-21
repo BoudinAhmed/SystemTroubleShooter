@@ -37,6 +37,8 @@ namespace WindowsTroubleShooter.ViewModel
 
         public ProblemListViewModel()
         {
+            _issueItems = new ObservableCollection<IssueItemViewModel>();
+
             LoadVersionInfo();
             LoadIssueItems();
             
@@ -44,19 +46,17 @@ namespace WindowsTroubleShooter.ViewModel
 
         private void LoadIssueItems()
         {
+            
             //Hardcoded for now will figure something out
             IssueItems.Add(new IssueItemViewModel { Title = "Internet Connection", Description = "Fix problems with connecting to the internet", ImageSource = "\xE701", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Windows Update",      Description = "Resolve problem with windows update",          ImageSource = "\xE895", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Sound",               Description = "Fix problems with playing audio",              ImageSource = "\xE767", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive",   Description = "Map a network drive with letter and path",     ImageSource = "\xE8CE", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Internet Connection", Description = "Fix problems with connecting to the internet", ImageSource = "\xE701", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Windows Update",      Description = "Resolve problem with windows update",          ImageSource = "\xE895", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Sound",               Description = "Fix problems with playing audio",              ImageSource = "\xE767", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive",   Description = "Map a network drive with letter and path",     ImageSource = "\xE8CE", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Internet Connection", Description = "Fix problems with connecting to the internet", ImageSource = "\xE701", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Windows Update",      Description = "Resolve problem with windows update",          ImageSource = "\xE895", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Sound",               Description = "Fix problems with playing audio",              ImageSource = "\xE767", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive",   Description = "Map a network drive with letter and path",     ImageSource = "\xE8CE", IssueType = new InternetTroubleshooter() });
+            IssueItems.Add(new IssueItemViewModel { Title = "Windows Update", Description = "Resolve problem with windows update", ImageSource = "\xE895", IssueType = new InternetTroubleshooter() });
+            IssueItems.Add(new IssueItemViewModel { Title = "Sound", Description = "Fix problems with playing audio", ImageSource = "\xE767", IssueType = new InternetTroubleshooter() });
+            IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive", Description = "Map a network drive with letter and path", ImageSource = "\xE8CE", IssueType = new InternetTroubleshooter() });
+
         }
 
         private void LoadVersionInfo()
