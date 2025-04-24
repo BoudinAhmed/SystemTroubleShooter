@@ -31,7 +31,42 @@
         </Setter>
     </Style>
 
-    
+     
+    <!--Dashboard Style -->
+    <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+        <Setter Property="Background" Value="#2a2a2a"/>
+        <Setter Property="Foreground" Value="#dddddd"/>
+        <Setter Property="BorderBrush" Value="#444444"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="#444444"/>
+        <Setter Property="VerticalGridLinesBrush" Value="#444444"/>
+        <Setter Property="RowBackground" Value="#2a2a2a"/>
+        <Setter Property="AlternatingRowBackground" Value="#303030"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+    </Style>
+    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="Background" Value="#3a3a3a"/>
+        <Setter Property="Foreground" Value="#eeeeee"/>
+        <Setter Property="BorderBrush" Value="#444444"/>
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#007ACC"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!--For each issue item border-->
     <Style x:Key="IssueItemStyle" TargetType="Border">
         <Setter Property="Padding" Value="20,0,0,0" />

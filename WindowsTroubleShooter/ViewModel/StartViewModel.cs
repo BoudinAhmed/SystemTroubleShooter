@@ -13,11 +13,14 @@ namespace WindowsTroubleShooter.ViewModel
 {
     public class StartViewModel : ViewModelBase
     {
+
+        //-Declarations
+        public ICommand SwitchToDashboardCommand { get; set; }
+        public ICommand SwitchToProblemListCommand { get; set; }
         private IssueItemViewModel _lastClickedItem;
         private Border _lastClickedBorder;       
         private UserControl _currentUserControl = new DashboardView();
-        public ICommand SwitchToDashboardCommand { get; set; }
-        public ICommand SwitchToProblemListCommand { get; set; }
+        
 
 
         public UserControl CurrentUserControl
