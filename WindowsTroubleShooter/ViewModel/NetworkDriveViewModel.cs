@@ -9,7 +9,7 @@ using WindowsTroubleShooter.Model;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class NetworkDriveViewModel : IIssue, INotifyPropertyChanged
+    public class NetworkDriveViewModel :  INotifyPropertyChanged
     {
         private readonly NetworkDriveModel _networkDriveModel;
         private string _statusMessage;
