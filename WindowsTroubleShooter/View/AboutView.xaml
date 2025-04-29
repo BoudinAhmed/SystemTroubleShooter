@@ -22,7 +22,7 @@
                        Margin="0,0,0,15"/>
 
             <TextBlock Name="VersionTextBlock"
-                       Text="{Binding Version, StringFormat='Version: {0}', FallbackValue='Version: 2.0.1'}"
+                       Text="{Binding Version, StringFormat='Version: {0}', FallbackValue='Version: 2.0.2'}"
                        FontSize="14"
                        Foreground="#bbbbbb"
                        Margin="0,0,0,20"/>
