@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WindowsTroubleShooter.Helpers.Commands;
@@ -12,8 +14,10 @@ namespace WindowsTroubleShooter.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        // Inherit from *your* ViewModelBase
-       
+
+
+            private readonly string _settingsFilePath;
+
             // --- Properties Relevant to Network Drives ---
             private Dictionary<string, string> _configuredNetworkDrives;
             public Dictionary<string, string> ConfiguredNetworkDrives
@@ -39,8 +43,7 @@ namespace WindowsTroubleShooter.ViewModel
                 set => SetProperty(ref _newDrivePath, value);
             }
 
-            // Using ObservableCollection for AvailableDriveLetters as it's common for ComboBoxes
-            // and handles UI updates automatically when items are added/removed.
+            // Using ObservableCollection for AvailableDriveLetters
             private ObservableCollection<string> _availableDriveLetters;
             public ObservableCollection<string> AvailableDriveLetters
             {
@@ -63,15 +66,15 @@ namespace WindowsTroubleShooter.ViewModel
 
             public SettingsViewModel()
             {
-                // --- Initialize based on which option you choose ---
-                // If using Option 2 (JSON File):
-                // string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                // string appFolder = Path.Combine(appDataFolder, "WindowsTroubleShooter"); // Use your app name
-                // Directory.CreateDirectory(appFolder);
-                // _networkDrivesSettingsFilePath = Path.Combine(appFolder, "network_drives.json");
 
-                // Initialize collections
-                _availableDriveLetters = new ObservableCollection<string>(); // Initialize field directly
+            string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string appFolder = Path.Combine(localAppData, "WindowsTroubleShooter");
+            Directory.CreateDirectory(appFolder); // Ensure the directory exists
+            _settingsFilePath = Path.Combine(appFolder, "settings.json");
+
+            LoadSettings();
+            // Initialize collections
+            _availableDriveLetters = new ObservableCollection<string>(); // Initialize field directly
                 _configuredNetworkDrives = new Dictionary<string, string>(); // Initialize field directly
 
                 // Load existing settings when the ViewModel is created
@@ -141,11 +144,54 @@ namespace WindowsTroubleShooter.ViewModel
 
 
             // --- Load/Save Methods - Implement using Option 1 or Option 2 below ---
-            public virtual void LoadSettings() { /* Implementation specific */ }
-            public virtual void SaveSettings() { /* Implementation specific */ }
+            public virtual void LoadSettings() 
+            {
+                if (File.Exists(_settingsFilePath))
+                {
+                    try
+                    {
+                        string jsonString = File.ReadAllText(_settingsFilePath);
+                        var savedSettings = JsonSerializer.Deserialize<SettingsData>(jsonString);
+                        // ... populate your ViewModel properties from savedSettings ...
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error loading settings: {ex.Message}");
+                        // Handle error or load default settings
+                    }
+            }
+            else
+            {
+                // Load default settings if the file doesn't exist
+            }
+        }
+            public virtual void SaveSettings() 
+            {
+            try
+            {
+                var settingsToSave = new SettingsData
+                {
+                    // ... populate your SettingsData object from ViewModel properties ...
+                };
+                string jsonString = JsonSerializer.Serialize(settingsToSave, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(_settingsFilePath, jsonString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving settings: {ex.Message}");
+            }
+            }
 
-            // --- Helper Methods ---
-            private void UpdateAvailableDriveLetters()
+        public class SettingsData
+        {
+            public string PreferredDns { get; set; }
+            public string AlternateDns { get; set; }
+            public Dictionary<string, string> NetworkDrives { get; set; }
+            // ... other properties ...
+        }
+
+        // --- Helper Methods ---
+        private void UpdateAvailableDriveLetters()
             {
                 var initialLetters = GetInitialDriveLetters(); // Get C: to Z:
                 var usedLetters = ConfiguredNetworkDrives.Keys;

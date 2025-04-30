@@ -22,7 +22,7 @@
                        Margin="0,0,0,15"/>
 
             <TextBlock Name="VersionTextBlock"
-                       Text="{Binding Version, StringFormat='Version: {0}', FallbackValue='Version: 2.0.2'}"
+                       Text="{Binding Version}"
                        FontSize="14"
                        Foreground="#bbbbbb"
                        Margin="0,0,0,20"/>
@@ -77,7 +77,7 @@
                  This tool is provided to assist with troubleshooting common Windows issues. While it aims to be accurate and helpful, use it at your own discretion. The developer(s) are not responsible for any data loss or system instability that may occur from using this application. For critical system problems, always consult with a qualified IT professional.
             </TextBlock>
 
-            <TextBlock Text="Copyright © 2025 [Your Name / Your Company Name]. All rights reserved."
+            <TextBlock Text="Copyright © 2025 Boudin Djama. All rights reserved."
                        FontSize="10"
                        Foreground="#888888"
                        HorizontalAlignment="Center"
