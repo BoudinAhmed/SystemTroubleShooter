@@ -17,6 +17,7 @@ namespace WindowsTroubleShooter.ViewModel
         //-Declarations
         public ICommand SwitchToDashboardCommand { get; set; }
         public ICommand SwitchToProblemListCommand { get; set; }
+        public ICommand SwitchToSettingsCommand { get; set; }
         private IssueItemViewModel _lastClickedItem;
         private Border _lastClickedBorder;       
         private UserControl _currentUserControl = new DashboardView();
@@ -33,6 +34,21 @@ namespace WindowsTroubleShooter.ViewModel
         {
             SwitchToDashboardCommand = new RelayCommand(SwitchToDashboard);
             SwitchToProblemListCommand = new RelayCommand(SwitchToProblemList);
+            SwitchToSettingsCommand = new RelayCommand(SwitchToSettings);
+        }
+
+        private void SwitchToSettings()
+        {
+            if (CurrentUserControl is not SettingsView)
+            {
+                FadeOut(() =>
+                {
+                    CurrentUserControl = new SettingsView();
+                    OnPropertyChanged(nameof(CurrentUserControl));
+                    FadeIn();
+                });
+
+            }
         }
 
         private void SwitchToDashboard()

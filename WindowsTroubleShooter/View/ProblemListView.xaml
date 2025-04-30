@@ -119,6 +119,8 @@
                     </Grid>
                 </Border>
             </StackPanel>
+
+            </StackPanel>
         </ScrollViewer>
 
         <TextBlock
