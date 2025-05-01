@@ -16,7 +16,7 @@ A helpful desktop utility built with **C#** and the **WPF** framework, employing
 
 ---
 
-## 🖼️ Screenshots
+## 🖼️ Screenshots (Coming Soon)
 
 ![Screenshot of Start View](assets/start-view.png)
 *Get started here! This view offers clear navigation to the various troubleshooting options.*
