@@ -3,175 +3,258 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WindowsTroubleShooter.Helpers.Commands;
-
 
 namespace WindowsTroubleShooter.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
+        private readonly string _settingsFilePath;
 
+        // --- Properties Relevant to Network Drives ---
+        private Dictionary<string, string> _configuredNetworkDrives;
+        public Dictionary<string, string> ConfiguredNetworkDrives
+        {
+            get => _configuredNetworkDrives;
+            set => SetProperty(ref _configuredNetworkDrives, value);
+        }
 
-            private readonly string _settingsFilePath;
+        private string _newDriveLetter;
+        public string NewDriveLetter
+        {
+            get => _newDriveLetter;
+            set => SetProperty(ref _newDriveLetter, value);
+        }
 
-            // --- Properties Relevant to Network Drives ---
-            private Dictionary<string, string> _configuredNetworkDrives;
-            public Dictionary<string, string> ConfiguredNetworkDrives
-            {
-                get => _configuredNetworkDrives;
-                // Use your SetProperty method
-                set => SetProperty(ref _configuredNetworkDrives, value);
-            }
+        private string _newDrivePath;
+        public string NewDrivePath
+        {
+            get => _newDrivePath;
+            set => SetProperty(ref _newDrivePath, value);
+        }
 
-            private string _newDriveLetter;
-            public string NewDriveLetter
-            {
-                get => _newDriveLetter;
-                // Use your SetProperty method
-                set => SetProperty(ref _newDriveLetter, value);
-            }
+        private ObservableCollection<string> _availableDriveLetters;
+        public ObservableCollection<string> AvailableDriveLetters
+        {
+            get => _availableDriveLetters;
+            set => SetProperty(ref _availableDriveLetters, value);
+        }
 
-            private string _newDrivePath;
-            public string NewDrivePath
-            {
-                get => _newDrivePath;
-                // Use your SetProperty method
-                set => SetProperty(ref _newDrivePath, value);
-            }
+        // --- Properties Relevant to Internet Settings ---
+        private string _preferredDns;
+        public string PreferredDns
+        {
+            get => _preferredDns;
+            set => SetProperty(ref _preferredDns, value);
+        }
 
-            // Using ObservableCollection for AvailableDriveLetters
-            private ObservableCollection<string> _availableDriveLetters;
-            public ObservableCollection<string> AvailableDriveLetters
-            {
-                get => _availableDriveLetters;
-                set => SetProperty(ref _availableDriveLetters, value);
-            }
+        private string _alternateDns;
+        public string AlternateDns
+        {
+            get => _alternateDns;
+            set => SetProperty(ref _alternateDns, value);
+        }
 
+        // --- Properties Relevant to Sound Settings ---
+        private ObservableCollection<OutputDevice> _availableOutputDevices;
+        public ObservableCollection<OutputDevice> AvailableOutputDevices
+        {
+            get => _availableOutputDevices;
+            set => SetProperty(ref _availableOutputDevices, value);
+        }
 
-            // --- Commands ---
-            public ICommand SaveSettingsCommand { get; }
-            public ICommand CancelSettingsCommand { get; }
-            public ICommand AddNetworkDriveCommand { get; }
-            public ICommand RemoveNetworkDriveCommand { get; }
+        private OutputDevice _selectedOutputDevice;
+        public OutputDevice SelectedOutputDevice
+        {
+            get => _selectedOutputDevice;
+            set => SetProperty(ref _selectedOutputDevice, value);
+        }
 
+        // --- Properties Relevant to Windows Update Settings ---
+        private bool _pauseUpdates;
+        public bool PauseUpdates
+        {
+            get => _pauseUpdates;
+            set => SetProperty(ref _pauseUpdates, value);
+        }
 
-            // --- Constructor & Methods ---
+        private string _activeHoursStart;
+        public string ActiveHoursStart
+        {
+            get => _activeHoursStart;
+            set => SetProperty(ref _activeHoursStart, value);
+        }
 
-            // Field for Option 2 file path - declare if using Option 2
-            // private readonly string _networkDrivesSettingsFilePath;
+        private string _activeHoursEnd;
+        public string ActiveHoursEnd
+        {
+            get => _activeHoursEnd;
+            set => SetProperty(ref _activeHoursEnd, value);
+        }
 
-            public SettingsViewModel()
-            {
+        // --- Commands ---
+        public ICommand SaveSettingsCommand { get; }
+        public ICommand CancelSettingsCommand { get; }
+        public ICommand AddNetworkDriveCommand { get; }
+        public ICommand RemoveNetworkDriveCommand { get; }
 
+        // --- Constructor & Methods ---
+        public SettingsViewModel()
+        {
             string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string appFolder = Path.Combine(localAppData, "WindowsTroubleShooter");
             Directory.CreateDirectory(appFolder); // Ensure the directory exists
             _settingsFilePath = Path.Combine(appFolder, "settings.json");
 
-            LoadSettings();
             // Initialize collections
-            _availableDriveLetters = new ObservableCollection<string>(); // Initialize field directly
-                _configuredNetworkDrives = new Dictionary<string, string>(); // Initialize field directly
+            _availableDriveLetters = new ObservableCollection<string>(GetInitialDriveLetters());
+            _configuredNetworkDrives = new Dictionary<string, string>();
+            _availableOutputDevices = new ObservableCollection<OutputDevice>(); // Will populate this
 
-                // Load existing settings when the ViewModel is created
-                LoadSettings(); // This will populate ConfiguredNetworkDrives and update AvailableDriveLetters
+            // Load existing settings when the ViewModel is created
+            LoadSettings();
 
-                // Initialize Commands using your RelayCommand implementation
-                // Use lambdas ignoring the 'object' parameter for commands that don't use it.
-                SaveSettingsCommand = new RelayCommand(o => SaveSettings());
-                CancelSettingsCommand = new RelayCommand(o => LoadSettings()); // Cancel reloads last saved state
-                AddNetworkDriveCommand = new RelayCommand(o => AddNetworkDrive(), o => CanAddNetworkDrive());
+            // Initialize Commands using RelayCommand
+            SaveSettingsCommand = new RelayCommand(o => SaveSettings());
+            CancelSettingsCommand = new RelayCommand(o => LoadSettings()); // Cancel reloads last saved state
+            AddNetworkDriveCommand = new RelayCommand(o => AddNetworkDrive(), o => CanAddNetworkDrive());
+            RemoveNetworkDriveCommand = new RelayCommand(
+                param => RemoveNetworkDrive((string)param), // Execute action casts object to string
+                param => CanRemoveNetworkDrive((string)param) // CanExecute predicate casts object to string
+            );
 
-                // For commands passing a parameter, cast the object parameter inside the lambda.
-                RemoveNetworkDriveCommand = new RelayCommand(
-                    param => RemoveNetworkDrive((string)param), // Execute action casts object to string
-                    param => CanRemoveNetworkDrive((string)param) // CanExecute predicate casts object to string
-                );
-            }
+            // Initialize other settings properties with default values / load them
+            _preferredDns = string.Empty;
+            _alternateDns = string.Empty;
+            _pauseUpdates = false;
+            _activeHoursStart = "09:00"; // Default start time
+            _activeHoursEnd = "17:00";   // Default end time
 
-            private void AddNetworkDrive()
+            // Todo: implement how AvailableOutputDevices are fetched
+            // ex _availableOutputDevices = GetAvailableSoundDevices();
+        }
+
+        private void AddNetworkDrive()
+        {
+            var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
+            updatedDrives.Add(NewDriveLetter, NewDrivePath);
+            ConfiguredNetworkDrives = updatedDrives;
+
+            AvailableDriveLetters.Remove(NewDriveLetter);
+
+            NewDriveLetter = null;
+            NewDrivePath = string.Empty;
+        }
+
+        private bool CanAddNetworkDrive()
+        {
+            return !string.IsNullOrWhiteSpace(NewDriveLetter) &&
+                   AvailableDriveLetters.Contains(NewDriveLetter) &&
+                   !string.IsNullOrWhiteSpace(NewDrivePath) &&
+                   !ConfiguredNetworkDrives.ContainsKey(NewDriveLetter);
+        }
+
+        private void RemoveNetworkDrive(string driveLetterToRemove)
+        {
+            var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
+            if (updatedDrives.Remove(driveLetterToRemove))
             {
-                // Create a *new* dictionary instance based on the old one
-                var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
-                updatedDrives.Add(NewDriveLetter, NewDrivePath);
-                ConfiguredNetworkDrives = updatedDrives; // Triggers SetProperty -> OnPropertyChanged
+                ConfiguredNetworkDrives = updatedDrives;
 
-                // Update available letters (remove the added one)
-                AvailableDriveLetters.Remove(NewDriveLetter);
-
-                // Clear input fields
-                NewDriveLetter = null; // Triggers SetProperty
-                NewDrivePath = string.Empty; // Triggers SetProperty
-            }
-
-            private bool CanAddNetworkDrive()
-            {
-                return !string.IsNullOrWhiteSpace(NewDriveLetter) &&
-                       AvailableDriveLetters.Contains(NewDriveLetter) && // Ensure it's a valid available letter
-                       !string.IsNullOrWhiteSpace(NewDrivePath) &&
-                       !ConfiguredNetworkDrives.ContainsKey(NewDriveLetter);
-            }
-
-            private void RemoveNetworkDrive(string driveLetterToRemove)
-            {
-                // Create a *new* dictionary instance
-                var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
-                if (updatedDrives.Remove(driveLetterToRemove)) // Only proceed if removal was successful
+                if (!AvailableDriveLetters.Contains(driveLetterToRemove))
                 {
-                    ConfiguredNetworkDrives = updatedDrives; // Triggers SetProperty -> OnPropertyChanged
-
-                    // Add the letter back to available list if needed and not already present
-                    if (!AvailableDriveLetters.Contains(driveLetterToRemove))
-                    {
-                        AvailableDriveLetters.Add(driveLetterToRemove);
-                        // Re-sort the list if desired (ObservableCollection doesn't sort automatically)
-                        var sortedLetters = AvailableDriveLetters.OrderBy(l => l).ToList();
-                        AvailableDriveLetters.Clear();
-                        foreach (var l in sortedLetters) AvailableDriveLetters.Add(l);
-                    }
+                    AvailableDriveLetters.Add(driveLetterToRemove);
+                    var sortedLetters = AvailableDriveLetters.OrderBy(l => l).ToList();
+                    AvailableDriveLetters.Clear();
+                    foreach (var l in sortedLetters) AvailableDriveLetters.Add(l);
                 }
             }
+        }
 
-            private bool CanRemoveNetworkDrive(string driveLetter)
+        private bool CanRemoveNetworkDrive(string driveLetter)
+        {
+            return !string.IsNullOrEmpty(driveLetter) && ConfiguredNetworkDrives.ContainsKey(driveLetter);
+        }
+
+        public virtual void LoadSettings()
+        {
+            if (File.Exists(_settingsFilePath))
             {
-                // Can remove if the parameter is a valid key in the current dictionary
-                return !string.IsNullOrEmpty(driveLetter) && ConfiguredNetworkDrives.ContainsKey(driveLetter);
-            }
-
-
-            // --- Load/Save Methods - Implement using Option 1 or Option 2 below ---
-            public virtual void LoadSettings() 
-            {
-                if (File.Exists(_settingsFilePath))
+                try
                 {
-                    try
+                    string jsonString = File.ReadAllText(_settingsFilePath);
+                    var savedSettings = JsonSerializer.Deserialize<SettingsData>(jsonString);
+                    if (savedSettings != null)
                     {
-                        string jsonString = File.ReadAllText(_settingsFilePath);
-                        var savedSettings = JsonSerializer.Deserialize<SettingsData>(jsonString);
-                        // ... populate your ViewModel properties from savedSettings ...
+                        ConfiguredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
+                        PreferredDns = savedSettings.PreferredDns;
+                        AlternateDns = savedSettings.AlternateDns;
+                        PauseUpdates = savedSettings.PauseUpdates;
+                        ActiveHoursStart = savedSettings.ActiveHoursStart;
+                        ActiveHoursEnd = savedSettings.ActiveHoursEnd;
+                        // Todo: load SelectedOutputDevice based on some identifier
+                        // For example, if SettingsData stores the DeviceName:
+                        // SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault(d => d.DeviceName == savedSettings.SelectedOutputDeviceName);
+                        UpdateAvailableDriveLetters();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine($"Error loading settings: {ex.Message}");
-                        // Handle error or load default settings
+                        ConfiguredNetworkDrives = new Dictionary<string, string>();
+                        UpdateAvailableDriveLetters();
+                        // To initialize other properties to default values
+                        PreferredDns = string.Empty;
+                        AlternateDns = string.Empty;
+                        PauseUpdates = false;
+                        ActiveHoursStart = "09:00";
+                        ActiveHoursEnd = "17:00";
+                        SelectedOutputDevice = null; // Or some default
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading settings: {ex.Message}");
+                    ConfiguredNetworkDrives = new Dictionary<string, string>();
+                    UpdateAvailableDriveLetters();
+                    // To initialize other properties to default values on error
+                    PreferredDns = string.Empty;
+                    AlternateDns = string.Empty;
+                    PauseUpdates = false;
+                    ActiveHoursStart = "09:00";
+                    ActiveHoursEnd = "17:00";
+                    SelectedOutputDevice = null;
+                }
             }
             else
             {
                 // Load default settings if the file doesn't exist
+                ConfiguredNetworkDrives = new Dictionary<string, string>();
+                UpdateAvailableDriveLetters();
+                PreferredDns = string.Empty;
+                AlternateDns = string.Empty;
+                PauseUpdates = false;
+                ActiveHoursStart = "09:00";
+                ActiveHoursEnd = "17:00";
+                SelectedOutputDevice = null;
             }
         }
-            public virtual void SaveSettings() 
-            {
+
+        public virtual void SaveSettings()
+        {
             try
             {
                 var settingsToSave = new SettingsData
                 {
-                    // ... populate your SettingsData object from ViewModel properties ...
+                    NetworkDrives = ConfiguredNetworkDrives,
+                    PreferredDns = PreferredDns,
+                    AlternateDns = AlternateDns,
+                    PauseUpdates = PauseUpdates,
+                    ActiveHoursStart = ActiveHoursStart,
+                    ActiveHoursEnd = ActiveHoursEnd,
+                    // Will decide how to store the selected output device
+                    // Maybe store the DeviceName:
+                    // SelectedOutputDeviceName = SelectedOutputDevice?.DeviceName
                 };
                 string jsonString = JsonSerializer.Serialize(settingsToSave, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(_settingsFilePath, jsonString);
@@ -180,40 +263,47 @@ namespace WindowsTroubleShooter.ViewModel
             {
                 Console.WriteLine($"Error saving settings: {ex.Message}");
             }
-            }
-
-        public class SettingsData
-        {
-            public string PreferredDns { get; set; }
-            public string AlternateDns { get; set; }
-            public Dictionary<string, string> NetworkDrives { get; set; }
-            // ... other properties ...
         }
+
+        
 
         // --- Helper Methods ---
         private void UpdateAvailableDriveLetters()
+        {
+            var initialLetters = GetInitialDriveLetters();
+            var usedLetters = ConfiguredNetworkDrives.Keys;
+            var available = initialLetters.Except(usedLetters).OrderBy(l => l);
+
+            AvailableDriveLetters.Clear();
+            foreach (var letter in available)
             {
-                var initialLetters = GetInitialDriveLetters(); // Get C: to Z:
-                var usedLetters = ConfiguredNetworkDrives.Keys;
-
-                var available = initialLetters.Except(usedLetters).OrderBy(l => l);
-
-                // Update the ObservableCollection efficiently
-                AvailableDriveLetters.Clear();
-                foreach (var letter in available)
-                {
-                    AvailableDriveLetters.Add(letter);
-                }
-                // No OnPropertyChanged needed for ObservableCollection content changes if bound correctly
+                AvailableDriveLetters.Add(letter);
             }
+        }
 
-            private List<string> GetInitialDriveLetters()
-            {
-                // Generates "C:", "D:", ..., "Z:"
-                return Enumerable.Range('C', 'Z' - 'C' + 1).Select(i => (char)i + ":").ToList();
-                // Optional: You could refine this further by checking DriveInfo.GetDrives()
-                // to exclude currently connected physical drives if desired.
-            }
-
+        private List<string> GetInitialDriveLetters()
+        {
+            return Enumerable.Range('C', 'Z' - 'C' + 1).Select(i => (char)i + ":").ToList();
         }
     }
+
+
+    // Model for SettingsData 
+    public class SettingsData
+    {
+        public string PreferredDns { get; set; }
+        public string AlternateDns { get; set; }
+        public Dictionary<string, string> NetworkDrives { get; set; }
+        public bool PauseUpdates { get; set; }
+        public string ActiveHoursStart { get; set; }
+        public string ActiveHoursEnd { get; set; }
+        // public string SelectedOutputDeviceName { get; set; } // If I choose to store by name
+    }
+
+    // Model for OutputDevice 
+    public class OutputDevice
+    {
+        public string DeviceName { get; set; }
+        // other properties to be added
+    }
+}

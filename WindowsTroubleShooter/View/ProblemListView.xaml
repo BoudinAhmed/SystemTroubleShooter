@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:v="clr-namespace:WindowsTroubleShooter.View"
              xmlns:vm="clr-namespace:WindowsTroubleShooter.ViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WindowsTroubleShooter"
@@ -49,16 +50,13 @@
             <ScrollViewer.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBarStyle}"/>
             </ScrollViewer.Resources>
-
             <StackPanel>
                 <TextBlock
-                    Text="Choose an issue to begin troubleshooting:"
-                    Margin="20,0,20,30"
-                    FontSize="16"
-                    Foreground="#bbbbbb"
-                    HorizontalAlignment="Left"/>
-
-                
+            Text="Choose an issue to begin troubleshooting:"
+            Margin="20,0,20,30"
+            FontSize="16"
+            Foreground="#bbbbbb"
+            HorizontalAlignment="Left"/>
 
                 <ItemsControl ItemsSource="{Binding IssueItems}">
                     <ItemsControl.ItemsPanel>
@@ -69,6 +67,7 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -90,11 +89,11 @@
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="ContentPresenter">
                             <Setter Property="Grid.Column"
-                                    Value="{Binding Converter={StaticResource IndexToColumnConverter},
-                                                    RelativeSource={RelativeSource Self}}" />
+                            Value="{Binding Converter={StaticResource IndexToColumnConverter},
+                                            RelativeSource={RelativeSource Self}}" />
                             <Setter Property="Grid.Row"
-                                    Value="{Binding Converter={StaticResource IndexToRowConverter},
-                                                    RelativeSource={RelativeSource Self}}" />
+                            Value="{Binding Converter={StaticResource IndexToRowConverter},
+                                            RelativeSource={RelativeSource Self}}" />
                             <Setter Property="Margin" Value="20,0,20,10" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>
@@ -118,8 +117,6 @@
                         <Button Grid.Row="3" Content="Submit Feedback" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,10,0,0"/>
                     </Grid>
                 </Border>
-            </StackPanel>
-
             </StackPanel>
         </ScrollViewer>
 
