@@ -11,6 +11,6 @@ namespace WindowsTroubleShooter.Model
         public DateTime Timestamp { get; set; }
         public string IssueDescription { get; set; }
         public string ResolutionStatus { get; set; } // e.g., "Fixed", "Pending", "Failed", "Info"
-                                                     // Add other properties as needed
+                                                     
     }
 }
