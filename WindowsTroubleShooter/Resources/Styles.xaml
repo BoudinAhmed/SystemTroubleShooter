@@ -135,11 +135,7 @@
     
    <!--Sidepanel elements-->
     <Style x:Key="SideBarButtonStyle" TargetType="Button">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="Transparent"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#dddddd"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Width" Value="55"/>
@@ -149,42 +145,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="PART_BackgroundBorder"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="4">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder"
-                                                    Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                    To="#3c3c3c" Duration="0:0:0.15"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder"
-                                                    Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                    To="Transparent" Duration="0:0:0.15"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <Setter TargetName="border" Property="Background" Value="#3c3c3c"/>
                         </Trigger>
-
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_BackgroundBorder" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="#444444"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="border" Property="Background" Value="#444444"/>
                         </Trigger>
 
                         <MultiDataTrigger>
@@ -192,24 +161,7 @@
                                 <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="Dashboard"/>
                                 <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Dashboard"/>
                             </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder"
-                                                    Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                    To="#505050" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiDataTrigger.EnterActions>
-                            <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder"
-                                                    Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                    To="Transparent" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiDataTrigger.ExitActions>
+                            <Setter TargetName="border" Property="Background" Value="#505050"/>
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -217,20 +169,7 @@
                                 <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="ProblemList"/>
                                 <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="ProblemList"/>
                             </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" To="#505050" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiDataTrigger.EnterActions>
-                            <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiDataTrigger.ExitActions>
+                            <Setter TargetName="border" Property="Background" Value="#505050"/>
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -238,29 +177,11 @@
                                 <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="Settings"/>
                                 <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Settings"/>
                             </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" To="#505050" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiDataTrigger.EnterActions>
-                            <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="PART_BackgroundBorder" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiDataTrigger.ExitActions>
+                            <Setter TargetName="border" Property="Background" Value="#505050"/>
                         </MultiDataTrigger>
 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="#dddddd"/>
             </Setter.Value>
         </Setter>
     </Style>
