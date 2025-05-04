@@ -19,10 +19,18 @@ namespace WindowsTroubleShooter.ViewModel
         public ICommand SwitchToProblemListCommand { get; set; }
         public ICommand SwitchToSettingsCommand { get; set; }
         private IssueItemViewModel _lastClickedItem;
-        private Border _lastClickedBorder;       
-        private UserControl _currentUserControl = new DashboardView();
-        
+        private Border _lastClickedBorder;
 
+        private string _selectedView;
+
+        public string SelectedView
+        {
+            get => _selectedView;
+            set => SetProperty(ref _selectedView, value);
+        }
+
+
+        private UserControl _currentUserControl = new DashboardView();
 
         public UserControl CurrentUserControl
         {
@@ -32,9 +40,15 @@ namespace WindowsTroubleShooter.ViewModel
 
         public StartViewModel() 
         {
+
+            _currentUserControl = new DashboardView();
+            UpdateSelectedView(_currentUserControl);
+
+            //Navigation commands
             SwitchToDashboardCommand = new RelayCommand(SwitchToDashboard);
             SwitchToProblemListCommand = new RelayCommand(SwitchToProblemList);
             SwitchToSettingsCommand = new RelayCommand(SwitchToSettings);
+            
         }
 
         private void SwitchToSettings()
@@ -44,7 +58,7 @@ namespace WindowsTroubleShooter.ViewModel
                 FadeOut(() =>
                 {
                     CurrentUserControl = new SettingsView();
-                    OnPropertyChanged(nameof(CurrentUserControl));
+                    UpdateSelectedView(CurrentUserControl);
                     FadeIn();
                 });
 
@@ -58,7 +72,7 @@ namespace WindowsTroubleShooter.ViewModel
                 FadeOut(() =>
             {
                 CurrentUserControl = new DashboardView();
-                OnPropertyChanged(nameof(CurrentUserControl));
+                UpdateSelectedView(CurrentUserControl);
                 FadeIn();
             });
 
@@ -69,12 +83,30 @@ namespace WindowsTroubleShooter.ViewModel
         {
             if (CurrentUserControl is not ProblemListView)
             {
-                FadeOut(() =>
-                {
+                
                     CurrentUserControl = new ProblemListView();
-                    OnPropertyChanged(nameof(CurrentUserControl));
-                    FadeIn();
-                });
+                    UpdateSelectedView(CurrentUserControl);
+                    
+            }
+        }
+
+        private void UpdateSelectedView(UserControl currentControl)
+        {
+            if (currentControl is DashboardView)
+            {
+                SelectedView = "Dashboard";
+            }
+            else if (currentControl is ProblemListView)
+            {
+                SelectedView = "ProblemList";
+            }
+            else if (currentControl is SettingsView)
+            {
+                SelectedView = "Settings";
+            }
+            else
+            {
+                SelectedView = null; // Or some default
             }
         }
 
