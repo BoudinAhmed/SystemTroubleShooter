@@ -35,7 +35,17 @@ namespace WindowsTroubleShooter.ViewModel
         public UserControl CurrentUserControl
         {
             get { return _currentUserControl; }
-            set { SetProperty(ref (_currentUserControl), value); }
+            set
+            {
+                SetProperty(ref _currentUserControl, value);
+                // Subscribe to the event whenever CurrentUserControl becomes a DashboardView
+                if (_currentUserControl is DashboardView dashboardView && dashboardView.DataContext is DashboardViewModel dashboardViewModel)
+                {
+                    dashboardViewModel.RequestNavigateToProblemList -= DashboardViewModel_RequestNavigateToProblemList; // Unsubscribe first to avoid multiple subscriptions
+                    dashboardViewModel.RequestNavigateToProblemList += DashboardViewModel_RequestNavigateToProblemList;
+
+                }
+            }
         } 
 
         public StartViewModel() 
@@ -49,6 +59,14 @@ namespace WindowsTroubleShooter.ViewModel
             SwitchToProblemListCommand = new RelayCommand(SwitchToProblemList);
             SwitchToSettingsCommand = new RelayCommand(SwitchToSettings);
             
+            if (CurrentUserControl is DashboardView dashboardView)
+        {
+            if (dashboardView.DataContext is DashboardViewModel dashboardViewModel)
+            {
+                dashboardViewModel.RequestNavigateToProblemList += DashboardViewModel_RequestNavigateToProblemList;
+            }
+        }
+
         }
 
         private void SwitchToSettings()
@@ -88,6 +106,12 @@ namespace WindowsTroubleShooter.ViewModel
                     UpdateSelectedView(CurrentUserControl);
                     
             }
+        }
+
+        private void DashboardViewModel_RequestNavigateToProblemList(object sender, EventArgs e)
+        {
+            CurrentUserControl = new ProblemListView();
+            UpdateSelectedView(CurrentUserControl);
         }
 
         private void UpdateSelectedView(UserControl currentControl)
