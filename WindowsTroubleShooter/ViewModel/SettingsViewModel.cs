@@ -18,7 +18,14 @@ namespace WindowsTroubleShooter.ViewModel
         public Dictionary<string, string> ConfiguredNetworkDrives
         {
             get => _configuredNetworkDrives;
-            set => SetProperty(ref _configuredNetworkDrives, value);
+            set
+            {
+                if (SetProperty(ref _configuredNetworkDrives, value))
+                {
+                    SaveSettings();
+                    UpdateAvailableDriveLetters();
+                }
+            }
         }
 
         private string _newDriveLetter;
@@ -130,7 +137,7 @@ namespace WindowsTroubleShooter.ViewModel
             _alternateDns = string.Empty;
             _pauseUpdates = false;
             _activeHoursStart = "09:00"; // Default start time
-            _activeHoursEnd = "17:00";   // Default end time
+            _activeHoursEnd = "17:00";    // Default end time
 
             // Todo: implement how AvailableOutputDevices are fetched
             // ex _availableOutputDevices = GetAvailableSoundDevices();
@@ -138,14 +145,15 @@ namespace WindowsTroubleShooter.ViewModel
 
         private void AddNetworkDrive()
         {
-            var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
-            updatedDrives.Add(NewDriveLetter, NewDrivePath);
-            ConfiguredNetworkDrives = updatedDrives;
+            if (CanAddNetworkDrive())
+            {
+                var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
+                updatedDrives.Add(NewDriveLetter, NewDrivePath);
+                ConfiguredNetworkDrives = updatedDrives; // This will trigger SaveSettings and UpdateAvailableDriveLetters
 
-            AvailableDriveLetters.Remove(NewDriveLetter);
-
-            NewDriveLetter = null;
-            NewDrivePath = string.Empty;
+                NewDriveLetter = null;
+                NewDrivePath = string.Empty;
+            }
         }
 
         private bool CanAddNetworkDrive()
@@ -161,15 +169,7 @@ namespace WindowsTroubleShooter.ViewModel
             var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
             if (updatedDrives.Remove(driveLetterToRemove))
             {
-                ConfiguredNetworkDrives = updatedDrives;
-
-                if (!AvailableDriveLetters.Contains(driveLetterToRemove))
-                {
-                    AvailableDriveLetters.Add(driveLetterToRemove);
-                    var sortedLetters = AvailableDriveLetters.OrderBy(l => l).ToList();
-                    AvailableDriveLetters.Clear();
-                    foreach (var l in sortedLetters) AvailableDriveLetters.Add(l);
-                }
+                ConfiguredNetworkDrives = updatedDrives; // This will trigger SaveSettings and UpdateAvailableDriveLetters
             }
         }
 
@@ -265,7 +265,6 @@ namespace WindowsTroubleShooter.ViewModel
             }
         }
 
-        
 
         // --- Helper Methods ---
         private void UpdateAvailableDriveLetters()
