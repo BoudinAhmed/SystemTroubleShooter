@@ -6,7 +6,9 @@ using System.Net.NetworkInformation;
 using WindowsTroubleShooter.Interfaces;
 using WindowsTroubleShooter.Model;
 using System.Linq;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Windows.Input;
+using WindowsTroubleShooter.Helpers.Commands;
 
 namespace WindowsTroubleShooter.ViewModel
 {
@@ -25,7 +27,8 @@ namespace WindowsTroubleShooter.ViewModel
         private ObservableCollection<HistoryEntryModel> _historyEntries; 
         private ObservableCollection<string> _selectedIssues = new ObservableCollection<string>();
 
-        
+        public ICommand SwitchToProblemListCommand { get; set; }
+
 
         // --- Public Properties Binding ---
 
@@ -95,7 +98,16 @@ namespace WindowsTroubleShooter.ViewModel
             LoadVersionInfo();
 
             // TODO: Implenment timer or event listener call UpdateSystemStatus() in a span time
-            
+
+            // Navigation commands
+            SwitchToProblemListCommand = new RelayCommand(SwitchToProblemList);
+
+        }
+
+        public event EventHandler RequestNavigateToProblemList;
+        private void SwitchToProblemList(object obj)
+        {
+            RequestNavigateToProblemList?.Invoke(this, EventArgs.Empty);
         }
 
         // --- Data Loading Methods ---
