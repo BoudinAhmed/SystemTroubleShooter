@@ -18,6 +18,8 @@ namespace WindowsTroubleShooter.ViewModel
         public ICommand SwitchToDashboardCommand { get; set; }
         public ICommand SwitchToProblemListCommand { get; set; }
         public ICommand SwitchToSettingsCommand { get; set; }
+        public ICommand SwitchToAboutCommand { get; set; }
+
         private IssueItemViewModel _lastClickedItem;
         private Border _lastClickedBorder;
 
@@ -58,7 +60,8 @@ namespace WindowsTroubleShooter.ViewModel
             SwitchToDashboardCommand = new RelayCommand(SwitchToDashboard);
             SwitchToProblemListCommand = new RelayCommand(SwitchToProblemList);
             SwitchToSettingsCommand = new RelayCommand(SwitchToSettings);
-            
+            SwitchToAboutCommand = new RelayCommand(SwitchToAbout);
+
             if (CurrentUserControl is DashboardView dashboardView)
         {
             if (dashboardView.DataContext is DashboardViewModel dashboardViewModel)
@@ -69,19 +72,6 @@ namespace WindowsTroubleShooter.ViewModel
 
         }
 
-        private void SwitchToSettings()
-        {
-            if (CurrentUserControl is not SettingsView)
-            {
-                FadeOut(() =>
-                {
-                    CurrentUserControl = new SettingsView();
-                    UpdateSelectedView(CurrentUserControl);
-                    FadeIn();
-                });
-
-            }
-        }
 
         private void SwitchToDashboard()
         {
@@ -107,7 +97,33 @@ namespace WindowsTroubleShooter.ViewModel
                     
             }
         }
+        private void SwitchToSettings()
+        {
+            if (CurrentUserControl is not SettingsView)
+            {
+                FadeOut(() =>
+                {
+                    CurrentUserControl = new SettingsView();
+                    UpdateSelectedView(CurrentUserControl);
+                    FadeIn();
+                });
 
+            }
+        }
+
+        private void SwitchToAbout()
+        {
+            if (CurrentUserControl is not AboutView)
+            {
+                FadeOut(() =>
+                {
+                    CurrentUserControl = new AboutView();
+                    UpdateSelectedView(CurrentUserControl);
+                    FadeIn();
+                });
+
+            }
+        }
         private void DashboardViewModel_RequestNavigateToProblemList(object sender, EventArgs e)
         {
             CurrentUserControl = new ProblemListView();

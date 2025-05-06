@@ -62,7 +62,7 @@
                     <Button Grid.Row="1" VerticalAlignment="Top"    Style="{StaticResource SideBarButtonStyle}" Content="&#xEA37;" FontFamily="Segoe MDL2 Assets"  Tag="ProblemList" Margin="0,0,0,0" Command="{Binding SwitchToProblemListCommand}"/>
                     <Button Grid.Row="2" VerticalAlignment="Top"    Style="{StaticResource SideBarButtonStyle}" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" Margin="0,0,0,0"/>
                     <Button Grid.Row="4" VerticalAlignment="Bottom" Style="{StaticResource SideBarButtonStyle}" Content="&#xE713;" FontFamily="Segoe MDL2 Assets"  Tag="Settings" Margin="0,0,0,0" Command="{Binding SwitchToSettingsCommand}"/>
-                    <Button Grid.Row="5" VerticalAlignment="Bottom" Style="{StaticResource SideBarButtonStyle}" Content="&#xE946;" FontFamily="Segoe MDL2 Assets" Margin="0,0,0,0" />
+                    <Button Grid.Row="5" VerticalAlignment="Bottom" Style="{StaticResource SideBarButtonStyle}" Content="&#xE946;" FontFamily="Segoe MDL2 Assets"  Tag="About" Margin="0,0,0,0" Command="{Binding SwitchToAboutCommand}"/>
                 </Grid>
             </Border>
             

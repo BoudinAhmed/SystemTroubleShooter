@@ -152,7 +152,7 @@ namespace WindowsTroubleShooter.ViewModel
             // Will pull from cache file eventually
             HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddHours(-1), IssueDescription = "Internet issue not access browser", ResolutionStatus = "Fixed" });
             HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-1), IssueDescription = "Sound driver needed reinstall", ResolutionStatus = "Fixed" });
-            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-2), IssueDescription = "Windows Update stuck", ResolutionStatus = "Pending Investigation" });
+            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-2), IssueDescription = "Windows Update stuck", ResolutionStatus = "Pending" });
         }
 
         // --- Helper Methods ---
