@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using WindowsTroubleShooter.View;
 using System.Windows.Media.Animation;
 using System.Windows;
+using System.Diagnostics;
 
 namespace WindowsTroubleShooter.ViewModel
 {
@@ -69,6 +70,7 @@ namespace WindowsTroubleShooter.ViewModel
                 dashboardViewModel.RequestNavigateToProblemList += DashboardViewModel_RequestNavigateToProblemList;
             }
         }
+            Debug.WriteLine(this.SelectedView);
 
         }
 
