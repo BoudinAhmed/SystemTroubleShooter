@@ -9,9 +9,26 @@
         FontFamily="Segoe UI" UseLayoutRounding="True" 
         WindowStyle="None" AllowsTransparency="True" Background="Transparent" 
         ResizeMode="NoResize">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <view:DashboardView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProblemListViewModel}">
+            <view:ProblemListView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <view:SettingsView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AboutViewModel}">
+            <view:AboutView />
+        </DataTemplate>
+    </Window.Resources>
     <Window.DataContext>
         <vm:StartViewModel/>
     </Window.DataContext>
+    
+   
+    
     <Border CornerRadius="10" Background="#202020">
         <Grid>
         <Grid.ColumnDefinitions>
@@ -68,7 +85,7 @@
             
             
             <Grid Grid.Row="1" Grid.Column="1" Margin="30 0 30 0">
-                <ContentControl Content="{Binding CurrentUserControl}"/>
+                <ContentControl Content="{Binding CurrentContentViewModel}"/>
             </Grid>
             
         </Grid>
