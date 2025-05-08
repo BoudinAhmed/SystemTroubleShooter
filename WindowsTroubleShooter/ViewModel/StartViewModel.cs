@@ -33,29 +33,28 @@ namespace WindowsTroubleShooter.ViewModel
         }
 
 
-        private UserControl _currentUserControl = new DashboardView();
+        private ViewModelBase _currentContentViewModel = new DashboardViewModel();
 
-        public UserControl CurrentUserControl
+        public ViewModelBase CurrentContentViewModel
         {
-            get { return _currentUserControl; }
+            get { return _currentContentViewModel; }
             set
             {
-                SetProperty(ref _currentUserControl, value);
-                // Subscribe to the event whenever CurrentUserControl becomes a DashboardView
-                if (_currentUserControl is DashboardView dashboardView && dashboardView.DataContext is DashboardViewModel dashboardViewModel)
+                SetProperty(ref _currentContentViewModel, value);
+                // Subscribe to event when switching to DashboardViewModel
+                if (_currentContentViewModel is DashboardViewModel dashboardViewModel)
                 {
-                    dashboardViewModel.RequestNavigateToProblemList -= DashboardViewModel_RequestNavigateToProblemList; // Unsubscribe first to avoid multiple subscriptions
+                    dashboardViewModel.RequestNavigateToProblemList -= DashboardViewModel_RequestNavigateToProblemList;
                     dashboardViewModel.RequestNavigateToProblemList += DashboardViewModel_RequestNavigateToProblemList;
-
                 }
             }
-        } 
+        }
 
         public StartViewModel() 
         {
 
-            _currentUserControl = new DashboardView();
-            UpdateSelectedView(_currentUserControl);
+            _currentContentViewModel = new DashboardViewModel();
+            UpdateSelectedView(_currentContentViewModel);
 
             //Navigation commands
             SwitchToDashboardCommand = new RelayCommand(SwitchToDashboard);
@@ -63,88 +62,82 @@ namespace WindowsTroubleShooter.ViewModel
             SwitchToSettingsCommand = new RelayCommand(SwitchToSettings);
             SwitchToAboutCommand = new RelayCommand(SwitchToAbout);
 
-            if (CurrentUserControl is DashboardView dashboardView)
-        {
-            if (dashboardView.DataContext is DashboardViewModel dashboardViewModel)
+            if (CurrentContentViewModel is DashboardViewModel dashboardViewModel)
             {
+            
                 dashboardViewModel.RequestNavigateToProblemList += DashboardViewModel_RequestNavigateToProblemList;
             }
-        }
-            Debug.WriteLine(this.SelectedView);
+        
+            
 
         }
 
 
         private void SwitchToDashboard()
         {
-            if (CurrentUserControl is not DashboardView)
+            if (CurrentContentViewModel is not DashboardViewModel)
             {
-                FadeOut(() =>
-            {
-                CurrentUserControl = new DashboardView();
-                UpdateSelectedView(CurrentUserControl);
-                FadeIn();
-            });
+
+                CurrentContentViewModel = new DashboardViewModel();
+                UpdateSelectedView(CurrentContentViewModel);
 
             }
         }
 
         private void SwitchToProblemList()
         {
-            if (CurrentUserControl is not ProblemListView)
+            if (CurrentContentViewModel is not ProblemListViewModel)
             {
                 
-                    CurrentUserControl = new ProblemListView();
-                    UpdateSelectedView(CurrentUserControl);
+                    CurrentContentViewModel = new ProblemListViewModel();
+                    UpdateSelectedView(CurrentContentViewModel);
                     
             }
         }
         private void SwitchToSettings()
         {
-            if (CurrentUserControl is not SettingsView)
+            if (CurrentContentViewModel is not SettingsViewModel)
             {
-                FadeOut(() =>
-                {
-                    CurrentUserControl = new SettingsView();
-                    UpdateSelectedView(CurrentUserControl);
-                    FadeIn();
-                });
+
+                CurrentContentViewModel = new SettingsViewModel();
+                UpdateSelectedView(CurrentContentViewModel);
 
             }
         }
 
         private void SwitchToAbout()
         {
-            if (CurrentUserControl is not AboutView)
+            if (CurrentContentViewModel is not AboutViewModel)
             {
-                FadeOut(() =>
-                {
-                    CurrentUserControl = new AboutView();
-                    UpdateSelectedView(CurrentUserControl);
-                    FadeIn();
-                });
+
+                CurrentContentViewModel = new AboutViewModel();
+                UpdateSelectedView(CurrentContentViewModel);
 
             }
         }
         private void DashboardViewModel_RequestNavigateToProblemList(object sender, EventArgs e)
         {
-            CurrentUserControl = new ProblemListView();
-            UpdateSelectedView(CurrentUserControl);
+            CurrentContentViewModel = new ProblemListViewModel();
+            UpdateSelectedView(CurrentContentViewModel);
         }
 
-        private void UpdateSelectedView(UserControl currentControl)
+        private void UpdateSelectedView(object currentControl)
         {
-            if (currentControl is DashboardView)
+            if (currentControl is DashboardViewModel)
             {
                 SelectedView = "Dashboard";
             }
-            else if (currentControl is ProblemListView)
+            else if (currentControl is ProblemListViewModel)
             {
                 SelectedView = "ProblemList";
             }
-            else if (currentControl is SettingsView)
+            else if (currentControl is SettingsViewModel)
             {
                 SelectedView = "Settings";
+            }
+            else if (currentControl is AboutViewModel)
+            {
+                SelectedView = "About";
             }
             else
             {
@@ -152,19 +145,8 @@ namespace WindowsTroubleShooter.ViewModel
             }
         }
 
-        //Animation when switch usercontrols
-        private void FadeOut(Action onComplete)
-        {
-            var fadeOut = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.1)));
-            fadeOut.Completed += (s, e) => onComplete();
-            (_currentUserControl as UIElement)?.BeginAnimation(UIElement.OpacityProperty, fadeOut);
-        }
-
-        private void FadeIn()
-        {
-            var fadeIn = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.2)));
-            (_currentUserControl as UIElement)?.BeginAnimation(UIElement.OpacityProperty, fadeIn);
-        }
+        
+       
 
         //To cancelled/reset selection if another issueItem is clicked
         public void ListenToNextClicked(IssueItemViewModel clickedItem, Border clickedBorder)
