@@ -10,10 +10,7 @@
              Background="#202020"
              mc:Ignorable="d"
              d:DesignHeight="650" d:DesignWidth="1200">
-    <UserControl.DataContext>
-        <vm:ProblemListViewModel/>
-    </UserControl.DataContext>
-
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

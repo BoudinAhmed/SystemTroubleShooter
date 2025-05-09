@@ -10,9 +10,7 @@
              Background="#202020"
              mc:Ignorable="d"
              d:DesignHeight="750" d:DesignWidth="1200">
-    <UserControl.DataContext>
-        <vm:DashboardViewModel/>
-    </UserControl.DataContext>
+    
 
     <UserControl.Resources>
         <converters:StatusToBrushConverter x:Key="StatusToBrushConverter"/>
@@ -94,7 +92,7 @@
         <Button Grid.Row="2"
                 HorizontalAlignment="Right"
                 Style="{StaticResource ButtonStyle}"
-                Command="{Binding SwitchToProblemListCommand}"
+                Command="{Binding SeeAllProblemListCommand}"
                 Margin="0,15,20,5" Height="25" Width="100">
             <Button.ContentTemplate>
                 <DataTemplate>
