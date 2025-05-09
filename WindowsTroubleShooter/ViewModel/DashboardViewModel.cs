@@ -27,7 +27,7 @@ namespace WindowsTroubleShooter.ViewModel
         private ObservableCollection<HistoryEntryModel> _historyEntries; 
         private ObservableCollection<string> _selectedIssues = new ObservableCollection<string>();
 
-        public ICommand SwitchToProblemListCommand { get; set; }
+        public ICommand SeeAllProblemListCommand { get; set; }
 
 
         // --- Public Properties Binding ---
@@ -100,12 +100,12 @@ namespace WindowsTroubleShooter.ViewModel
             // TODO: Implenment timer or event listener call UpdateSystemStatus() in a span time
 
             // Navigation commands
-            SwitchToProblemListCommand = new RelayCommand(SwitchToProblemList);
+            SeeAllProblemListCommand = new RelayCommand(SeeAllProblemList);
 
         }
 
         public event EventHandler RequestNavigateToProblemList;
-        private void SwitchToProblemList(object obj)
+        private void SeeAllProblemList(object obj)
         {
             RequestNavigateToProblemList?.Invoke(this, EventArgs.Empty);
         }

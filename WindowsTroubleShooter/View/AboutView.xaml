@@ -9,11 +9,12 @@
              Background="#202020"
              Foreground="#dddddd">
 
-    <UserControl.DataContext>
-        <vm:AboutViewModel/>
-    </UserControl.DataContext>
+   
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="25">
+        <ScrollViewer.Resources>
+            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBarStyle}"/>
+        </ScrollViewer.Resources>
         <StackPanel>
 
             <TextBlock Text="About WindowsTroubleShooter"
