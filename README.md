@@ -5,7 +5,7 @@ As someone who enjoys fixing IT issues and always looks for opportunities to aut
 Working on a completely new version of the application, currently under active development and reconstruction. I am in the process of revising the user interface and re-structuring the code behind, fully utilizing PowerShell for enhanced diagnostic and repair functions.
 
 
-This software is a helpful desktop utility built with **C#** and the **WPF** framework, using the **MVVM (Model-View-ViewModel)** design pattern. This application empowers you to quickly diagnose and resolve common Windows issues, specifically focusing on **internet connectivity, sound problems, network drive mapping, ensuring your system is up-to-date, and more**
+This software is a helpful desktop utility built with **C#** and the **WPF** framework, using the **MVVM (Model-View-ViewModel)** design pattern. This application will assist in quickly diagnose and resolve common Windows issues, specifically focusing on **internet connectivity, sound problems, network drive mapping, ensuring your system is up-to-date, and more.**
 
 ---
 
