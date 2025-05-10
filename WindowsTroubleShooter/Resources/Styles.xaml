@@ -158,7 +158,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="Dashboard"/>
+                                <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="SystemOverview"/>
                                 <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Dashboard"/>
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="border" Property="Background" Value="#505050"/>
@@ -166,7 +166,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="ProblemList"/>
+                                <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="Home"/>
                                 <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="ProblemList"/>
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="border" Property="Background" Value="#505050"/>
