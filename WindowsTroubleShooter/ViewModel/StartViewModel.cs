@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using WindowsTroubleShooter.Interfaces;
-using System.Windows.Controls;
-using WindowsTroubleShooter.Model;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using WindowsTroubleShooter.View;
-using System.Windows.Media.Animation;
-using System.Windows;
-using System.Diagnostics;
 
 namespace WindowsTroubleShooter.ViewModel
 {
@@ -33,7 +25,7 @@ namespace WindowsTroubleShooter.ViewModel
         }
 
 
-        private ViewModelBase _currentContentViewModel = new SystemOverviewViewModel();
+        private ViewModelBase _currentContentViewModel;
 
         public ViewModelBase CurrentContentViewModel
         {
@@ -49,8 +41,8 @@ namespace WindowsTroubleShooter.ViewModel
         public StartViewModel() 
         {
 
-            _currentContentViewModel = new HomeViewModel();
-            UpdateSelectedView(_currentContentViewModel);
+            CurrentContentViewModel = new HomeViewModel();
+            UpdateSelectedView(CurrentContentViewModel);
 
             //Navigation commands
             SwitchToHomeCommand = new RelayCommand(SwitchToHome);

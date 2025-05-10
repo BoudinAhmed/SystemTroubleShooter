@@ -85,9 +85,11 @@
 
         <TextBlock
             Text="System Details / Resources"
-            Grid.Row="2" Margin="20,15,0,0" FontSize="16"
+            Grid.Row="2" 
+            Margin="20,15,0,5" FontSize="16"
             Foreground="#bbbbbb" HorizontalAlignment="Left"
             FontFamily="Segoe UI"/>
+        
         <Grid Grid.Row="3" Margin="20,0,20,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

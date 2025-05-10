@@ -6,11 +6,17 @@
              xmlns:vm="clr-namespace:WindowsTroubleShooter.ViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WindowsTroubleShooter"
+             xmlns:converter="clr-namespace:WindowsTroubleShooter.Helpers.Converters"
+             
              Foreground="#dddddd"
              Background="#202020"
              mc:Ignorable="d"
              d:DesignHeight="650" d:DesignWidth="1200">
-    
+
+    <UserControl.Resources>
+        <converter:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,6 +30,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+
             <TextBlock
                 Text="Windows Troubleshooter"
                 Grid.Column="0"
@@ -31,16 +38,36 @@
                 FontSize="22"
                 FontWeight="SemiBold"
                 HorizontalAlignment="Left" />
-            <Button Grid.Column="2" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Margin="0,25,20,10">
-                <Button.ContentTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Quick Scan" VerticalAlignment="Center" />
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE721;" VerticalAlignment="Center" Margin="5,0,0,0" />
-                        </StackPanel>
-                    </DataTemplate>
-                </Button.ContentTemplate>
-            </Button>
+
+            <Border Grid.Column="1"
+                    Margin="0,20,20,10"
+                    CornerRadius="4"
+                    BorderBrush="#555555" BorderThickness="1"
+                    Background="#3c3c3c" Padding="10,5"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Right"
+                    Height="35" Width="500">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Search for an issue..."
+                               Foreground="#888888" VerticalAlignment="Center" IsHitTestVisible="False"
+                               Visibility="{Binding SearchQuery, Converter={StaticResource StringToVisibilityConverter}}"
+                               FontFamily="Segoe UI"/>
+                    <TextBox Grid.Column="0"
+                             Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                             Background="Transparent" BorderThickness="0"     Foreground="#dddddd"    VerticalContentAlignment="Center"
+                             FontFamily="Segoe UI"/>
+                    <TextBlock Grid.Column="1" Text="&#xE1A3;" FontFamily="Segoe MDL2 Assets"
+                               VerticalAlignment="Center"
+                               Margin="5,0,0,0"
+                               Foreground="#888888"/>
+                </Grid>
+            </Border>
+
         </Grid>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -49,13 +76,13 @@
             </ScrollViewer.Resources>
             <StackPanel>
                 <TextBlock
-            Text="Choose an issue to begin troubleshooting:"
-            Margin="20,0,20,30"
-            FontSize="16"
-            Foreground="#bbbbbb"
-            HorizontalAlignment="Left"/>
-
-                <ItemsControl ItemsSource="{Binding IssueItems}">
+                    Text="Choose an issue to begin troubleshooting:"
+                    Margin="20,0,20,30"
+                    FontSize="16"
+                    Foreground="#bbbbbb"
+                    HorizontalAlignment="Left"
+                    FontFamily="Segoe UI"/>
+                <ItemsControl ItemsSource="{Binding FilteredIssueItems}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid>
@@ -86,17 +113,18 @@
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="ContentPresenter">
                             <Setter Property="Grid.Column"
-                            Value="{Binding Converter={StaticResource IndexToColumnConverter},
-                                            RelativeSource={RelativeSource Self}}" />
+                                    Value="{Binding Converter={StaticResource IndexToColumnConverter},
+                                                    RelativeSource={RelativeSource Self}}" />
                             <Setter Property="Grid.Row"
-                            Value="{Binding Converter={StaticResource IndexToRowConverter},
-                                            RelativeSource={RelativeSource Self}}" />
+                                    Value="{Binding Converter={StaticResource IndexToRowConverter},
+                                                    RelativeSource={RelativeSource Self}}" />
                             <Setter Property="Margin" Value="20,0,20,10" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
 
-                <Border Margin="20,20,20,20" Background="#2b2b2b" CornerRadius="4" Padding="20">
+                <Border Margin="20,20,20,20" Background="#2b2b2b" CornerRadius="4" Padding="20"
+                        BorderBrush="#444444" BorderThickness="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -105,13 +133,15 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Suggest an Issue" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-
-                        <TextBlock Grid.Row="1" Text="Can't find your issue or have a suggestion?" Margin="0,0,0,10" Foreground="#bbbbbb"/>
-
-                        <TextBox Grid.Row="2" Background="#3c3c3c" Foreground="#dddddd" BorderThickness="1" BorderBrush="#555555" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100"/>
-
-                        <Button Grid.Row="3" Content="Submit Feedback" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,10,0,0"/>
+                        <TextBlock Text="Suggest an Issue" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"
+                                   FontFamily="Segoe UI" Foreground="#dddddd"/>
+                        <TextBlock Grid.Row="1" Text="Can't find your issue or have a suggestion?" Margin="0,0,0,10"
+                                   Foreground="#bbbbbb" FontFamily="Segoe UI"/>
+                        <TextBox Grid.Row="2" Background="#3c3c3c" Foreground="#dddddd" BorderThickness="1"
+                                 BorderBrush="#555555" AcceptsReturn="True" TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Auto" Height="100" FontFamily="Segoe UI"/>
+                        <Button Grid.Row="3" Content="Submit Feedback" Style="{StaticResource ButtonStyle}"
+                                HorizontalAlignment="Right" Margin="0,10,0,0"/>
                     </Grid>
                 </Border>
             </StackPanel>
@@ -122,6 +152,8 @@
             Grid.Row="2"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            Margin="0,0,20,20" />
+            Margin="0,0,20,20"
+            Foreground="#aaaaaa"
+            FontFamily="Segoe UI"/>
     </Grid>
 </UserControl>
