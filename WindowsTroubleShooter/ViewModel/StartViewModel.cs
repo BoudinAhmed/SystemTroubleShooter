@@ -16,8 +16,8 @@ namespace WindowsTroubleShooter.ViewModel
     {
 
         //-Declarations
-        public ICommand SwitchToDashboardCommand { get; set; }
-        public ICommand SwitchToProblemListCommand { get; set; }
+        public ICommand SwitchToHomeCommand { get; set; }
+        public ICommand SwitchToSystemOverviewCommand { get; set; }
         public ICommand SwitchToSettingsCommand { get; set; }
         public ICommand SwitchToAboutCommand { get; set; }
 
@@ -33,7 +33,7 @@ namespace WindowsTroubleShooter.ViewModel
         }
 
 
-        private ViewModelBase _currentContentViewModel = new DashboardViewModel();
+        private ViewModelBase _currentContentViewModel = new SystemOverviewViewModel();
 
         public ViewModelBase CurrentContentViewModel
         {
@@ -42,58 +42,51 @@ namespace WindowsTroubleShooter.ViewModel
             {
                 SetProperty(ref _currentContentViewModel, value);
                 // Subscribe to event when switching to DashboardViewModel
-                if (_currentContentViewModel is DashboardViewModel dashboardViewModel)
-                {
-                    dashboardViewModel.RequestNavigateToProblemList -= DashboardViewModel_RequestNavigateToProblemList;
-                    dashboardViewModel.RequestNavigateToProblemList += DashboardViewModel_RequestNavigateToProblemList;
-                }
+                
             }
         }
 
         public StartViewModel() 
         {
 
-            _currentContentViewModel = new DashboardViewModel();
+            _currentContentViewModel = new HomeViewModel();
             UpdateSelectedView(_currentContentViewModel);
 
             //Navigation commands
-            SwitchToDashboardCommand = new RelayCommand(SwitchToDashboard);
-            SwitchToProblemListCommand = new RelayCommand(SwitchToProblemList);
+            SwitchToHomeCommand = new RelayCommand(SwitchToHome);
+            SwitchToSystemOverviewCommand = new RelayCommand(SwitchToSystemOverview);
             SwitchToSettingsCommand = new RelayCommand(SwitchToSettings);
             SwitchToAboutCommand = new RelayCommand(SwitchToAbout);
 
-            if (CurrentContentViewModel is DashboardViewModel dashboardViewModel)
-            {
-            
-                dashboardViewModel.RequestNavigateToProblemList += DashboardViewModel_RequestNavigateToProblemList;
-            }
+           
         
             
 
         }
 
 
-        private void SwitchToDashboard()
+        private void SwitchToHome()
         {
-            if (CurrentContentViewModel is not DashboardViewModel)
+            if (CurrentContentViewModel is not HomeViewModel)
             {
 
-                CurrentContentViewModel = new DashboardViewModel();
+                CurrentContentViewModel = new HomeViewModel();
                 UpdateSelectedView(CurrentContentViewModel);
 
             }
         }
 
-        private void SwitchToProblemList()
+        private void SwitchToSystemOverview()
         {
-            if (CurrentContentViewModel is not ProblemListViewModel)
+            if (CurrentContentViewModel is not SystemOverviewViewModel)
             {
-                
-                    CurrentContentViewModel = new ProblemListViewModel();
-                    UpdateSelectedView(CurrentContentViewModel);
-                    
+
+                CurrentContentViewModel = new SystemOverviewViewModel();
+                UpdateSelectedView(CurrentContentViewModel);
+
             }
         }
+
         private void SwitchToSettings()
         {
             if (CurrentContentViewModel is not SettingsViewModel)
@@ -115,21 +108,17 @@ namespace WindowsTroubleShooter.ViewModel
 
             }
         }
-        private void DashboardViewModel_RequestNavigateToProblemList(object sender, EventArgs e)
-        {
-            CurrentContentViewModel = new ProblemListViewModel();
-            UpdateSelectedView(CurrentContentViewModel);
-        }
+        
 
         private void UpdateSelectedView(object currentControl)
         {
-            if (currentControl is DashboardViewModel)
+            if (currentControl is SystemOverviewViewModel)
             {
-                SelectedView = "Dashboard";
+                SelectedView = "SystemOverview";
             }
-            else if (currentControl is ProblemListViewModel)
+            else if (currentControl is HomeViewModel)
             {
-                SelectedView = "ProblemList";
+                SelectedView = "Home";
             }
             else if (currentControl is SettingsViewModel)
             {

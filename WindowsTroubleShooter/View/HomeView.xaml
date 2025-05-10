@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock
-                Text="Problem List"
+                Text="Windows Troubleshooter"
                 Grid.Column="0"
                 Margin="20,30,20,35"
                 FontSize="22"
@@ -35,8 +35,8 @@
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="View History" VerticalAlignment="Center" />
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE81C;" VerticalAlignment="Center" Margin="5,0,0,0" />
+                            <TextBlock Text="Quick Scan" VerticalAlignment="Center" />
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE721;" VerticalAlignment="Center" Margin="5,0,0,0" />
                         </StackPanel>
                     </DataTemplate>
                 </Button.ContentTemplate>
@@ -107,7 +107,7 @@
 
                         <TextBlock Text="Suggest an Issue" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
 
-                        <TextBlock Grid.Row="1" Text="Please provide feedback or suggest a new issue to be added to the list." Margin="0,0,0,10" Foreground="#bbbbbb"/>
+                        <TextBlock Grid.Row="1" Text="Can't find your issue or have a suggestion?" Margin="0,0,0,10" Foreground="#bbbbbb"/>
 
                         <TextBox Grid.Row="2" Background="#3c3c3c" Foreground="#dddddd" BorderThickness="1" BorderBrush="#555555" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100"/>
 

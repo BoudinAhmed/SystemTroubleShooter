@@ -18,13 +18,13 @@ namespace WindowsTroubleShooter.Test
         {
             // Arrange
             var viewModel = new StartViewModel();
-            viewModel.SwitchToProblemListCommand.Execute(null); // Navigate away
+            viewModel.SwitchToHomeCommand.Execute(null); // Navigate away
 
             // Act
-            viewModel.SwitchToDashboardCommand.Execute(null); // Switch back to Dashboard
+            viewModel.SwitchToSystemOverviewCommand.Execute(null); // Switch back to Dashboard
 
             // Assert
-            Assert.IsType<DashboardViewModel>(viewModel.CurrentContentViewModel);
+            Assert.IsType<SystemOverviewViewModel>(viewModel.CurrentContentViewModel);
             Assert.Equal("Dashboard", viewModel.SelectedView);
         }
 
@@ -35,10 +35,10 @@ namespace WindowsTroubleShooter.Test
             var viewModel = new StartViewModel();
 
             // Act
-            viewModel.SwitchToProblemListCommand.Execute(null); // Switch to ProblemList
+            viewModel.SwitchToHomeCommand.Execute(null); // Switch to ProblemList
 
             // Assert
-            Assert.IsType<ProblemListViewModel>(viewModel.CurrentContentViewModel);
+            Assert.IsType<HomeViewModel>(viewModel.CurrentContentViewModel);
             Assert.Equal("ProblemList", viewModel.SelectedView);
         }
 

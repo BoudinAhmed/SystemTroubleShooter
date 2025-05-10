@@ -10,7 +10,7 @@ using WindowsTroubleShooter.ViewModel;
 
 namespace WindowsTroubleShooter.ViewModel
 {
-    public class ProblemListViewModel : ViewModelBase
+    public class HomeViewModel : ViewModelBase
     {
 
         //Declaration
@@ -35,7 +35,7 @@ namespace WindowsTroubleShooter.ViewModel
         }
 
 
-        public ProblemListViewModel()
+        public HomeViewModel()
         {
             _issueItems = new ObservableCollection<IssueItemViewModel>();
 
