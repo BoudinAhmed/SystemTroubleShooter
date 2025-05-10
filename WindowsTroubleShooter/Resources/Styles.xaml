@@ -159,7 +159,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="SystemOverview"/>
-                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Dashboard"/>
+                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="SystemOverview"/>
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="border" Property="Background" Value="#505050"/>
                         </MultiDataTrigger>
@@ -167,7 +167,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="Home"/>
-                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="ProblemList"/>
+                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Home"/>
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="border" Property="Background" Value="#505050"/>
                         </MultiDataTrigger>
@@ -180,6 +180,14 @@
                             <Setter TargetName="border" Property="Background" Value="#505050"/>
                         </MultiDataTrigger>
 
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding DataContext.SelectedView, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="About"/>
+                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="About"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="#505050"/>
+                        </MultiDataTrigger>
+                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

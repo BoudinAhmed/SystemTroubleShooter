@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,7 +8,6 @@ using System.Windows.Media.Animation;
 using WindowsTroubleShooter.Helpers;
 using WindowsTroubleShooter.Helpers.Commands;
 using WindowsTroubleShooter.Model;
-using WindowsTroubleShooter.View;
 
 namespace WindowsTroubleShooter.ViewModel
 {
