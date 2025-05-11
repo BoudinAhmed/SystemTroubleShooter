@@ -94,11 +94,7 @@ namespace WindowsTroubleShooter.ViewModel
             IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive", Description = "Map a network drive with letter and path", ImageSource = "\xE8CE", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Display Settings", Description = "Adjust screen resolution and scaling", ImageSource = "\xE7F4", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Bluetooth Devices", Description = "Pair or troubleshoot Bluetooth", ImageSource = "\xE702", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Printer Issues", Description = "Resolve problems with printers", ImageSource = "\xE74F", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "System Performance", Description = "Improve speed and responsiveness", ImageSource = "\xE8FE", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "File Explorer", Description = "Fix issues with file management", ImageSource = "\xE8B3", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Network Adapter", Description = "Troubleshoot network adapters", ImageSource = "\xE770", IssueType = new InternetTroubleshooter() });
-
+          
             // Add more issues as needed
         }
 
