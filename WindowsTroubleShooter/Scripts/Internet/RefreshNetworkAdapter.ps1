@@ -12,4 +12,5 @@ foreach ($adapter in $networkAdapters) {
 
     # Reenable the network adapter
     Enable-NetAdapter -Name $adapter.Name -Confirm:$false
-    Write-Output "Network adapter '$($adapter.Name
+    Write-Output "Network adapter '$($adapter.Name)' enabled"
+}

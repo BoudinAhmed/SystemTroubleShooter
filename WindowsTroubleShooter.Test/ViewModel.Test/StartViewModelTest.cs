@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WindowsTroubleShooter.View;
 using WindowsTroubleShooter.ViewModel;
 
-namespace WindowsTroubleShooter.Test
+namespace WindowsTroubleShooter.Test.ViewModel.Test
 {
 
 
