@@ -13,7 +13,8 @@ namespace WindowsTroubleShooter.Model
         private const string CheckAdaptersScriptPath = @"Scripts\\Internet\\IsNetworkAdaptersAvailable.ps1"; 
         private const string RefreshAdaptersScriptPath = @"Scripts\\Internet\\RefreshNetworkAdapter.ps1";
 
-
+        private string _networkadapter;
+        private List<TroubleshootingStep> _troubleshootingSteps;
 
         public InternetTroubleshooter()
         {
@@ -26,59 +27,38 @@ namespace WindowsTroubleShooter.Model
                 "Refreshing Network Adapter",
                 "Network Reset"
             };
-        }
 
-       
+            _troubleshootingSteps = new List<TroubleshootingStep>
+            {
+                new TroubleshootingStep {
+                    Description = "Checking Network Adapters Availability",
+                    ScriptPath = CheckAdaptersScriptPath,
+                    IsCritical = true // If adapters aren't available, can't proceed
+                },
+                new TroubleshootingStep {
+                    Description = "Refreshing Network Adapters",
+                    ScriptPath = RefreshAdaptersScriptPath,
+                    IsCritical = false
+                } 
+            };
+        }
 
         public override async Task<string> RunDiagnosticsAsync()
         {
-            StatusMessage = "Checking Internet Connection...";
-            await Task.Delay(2000);
 
-            var (output, error, exitCode) = await ExecutePowerShellScriptAsync(CheckAdaptersScriptPath);
-
-            if (exitCode != 0)
+            foreach (var step in _troubleshootingSteps)
             {
-                Debug.WriteLine($"PowerShell Execution Failed!");
-                Debug.WriteLine($"Exit Code: {exitCode}");
-                Debug.WriteLine($"Standard Output: {(string.IsNullOrWhiteSpace(output) ? "(empty)" : output)}");
-                Debug.WriteLine($"Standard Error: {(string.IsNullOrWhiteSpace(error) ? "(empty)" : error)}");
 
-                StatusMessage = $"Error: {exitCode} | Output: {output} | Error: {error}";
+                
+                (IsFixed, ResolutionMessage) =  await ExecuteTroubleshootingStepAsync(step);
 
-                await Task.Delay(2000);
-                return $"Error checking network adapters: {error}";
+                
+                if (step.IsCritical && !IsFixed)
+                    break;
+
+
             }
-
-            StatusMessage = "Refreshing Network Adapter...";
-            await Task.Delay(2000);
-
-            var (refreshOutput, refreshError, refreshExitCode) = await ExecutePowerShellScriptAsync(RefreshAdaptersScriptPath);
-
-            if (refreshExitCode != 0)
-            {
-                Debug.WriteLine($"PowerShell Execution Failed!");
-                Debug.WriteLine($"Exit Code: {refreshExitCode}");
-                Debug.WriteLine($"Standard Output: {(string.IsNullOrWhiteSpace(refreshOutput) ? "(empty)" : refreshOutput)}");
-                Debug.WriteLine($"Standard Error: {(string.IsNullOrWhiteSpace(refreshError) ? "(empty)" : refreshError)}");
-
-                StatusMessage = $"Error: Please try again later";
-                return $"Error refreshing network adapters: {refreshError}";
-            }
-
-            StatusMessage = "Network Reset...";
-            await Task.Delay(2000);
-
-            IsFixed = true; // Assume fix worked for now
-
-            if (IsFixed)
-            {
-                StatusMessage = "Internet Connection Fixed!";
-                await Task.Delay(2000);
-                return "Internet Connection Fixed";
-            }
-
-            return "Internet Connection failed";
+            return ResolutionMessage;
         }
     }
 }
