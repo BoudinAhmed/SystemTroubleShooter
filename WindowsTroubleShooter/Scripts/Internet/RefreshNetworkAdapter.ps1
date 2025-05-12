@@ -1,16 +1,11 @@
+#Get Adapter
+$adapter = Get-NetAdapter | Where-Object {$_.Status -eq 'Up' -and $_.HardwareInterface -eq $true}
+$adapterName = $adapter.Name
 
-# Geting all network adapters
-$networkAdapters = Get-NetAdapter
+Disable-NetAdapter -Name $adapterName -Confirm:$false
+Start-Sleep -Seconds 1
 
-foreach ($adapter in $networkAdapters) {
-    # Disable the network adapter
-    Disable-NetAdapter -Name $adapter.Name -Confirm:$false
-    Write-Output "Network adapter '$($adapter.Name)' disabled."
+# Enable the adapter
+Enable-NetAdapter -Name $adapterName -Confirm:$false
 
-    # Wait for a few seconds
-    Start-Sleep -Seconds 5
-
-    # Reenable the network adapter
-    Enable-NetAdapter -Name $adapter.Name -Confirm:$false
-    Write-Output "Network adapter '$($adapter.Name)' enabled"
-}
+Write-Output "Network adapter '$adapterName' restarted successfully."
