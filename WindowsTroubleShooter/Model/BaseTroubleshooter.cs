@@ -57,9 +57,8 @@ namespace WindowsTroubleShooter.Model
         protected async Task<(string StandardOutput, string StandardError, int ExitCode)> ExecutePowerShellScriptAsync(string relativeScriptPath, string arguments = "")
         {
             // Convert relative path to absolute path
-            string scriptPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativeScriptPath);
-
-            // Debugging: Log the resolved path
+            string executionDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string scriptPath = Path.GetFullPath(Path.Combine(executionDirectory, relativeScriptPath));
             Debug.WriteLine($"Resolved script path: {scriptPath}");
 
             if (!File.Exists(scriptPath))
@@ -71,10 +70,9 @@ namespace WindowsTroubleShooter.Model
             {
                 FileName = "powershell.exe",
                 Arguments = $"-ExecutionPolicy Bypass -NoProfile -NonInteractive -File \"{scriptPath}\" {arguments}",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = true,
-                Verb = "runas",
+                RedirectStandardOutput = true,  
+                RedirectStandardError = true,  
+                UseShellExecute = false,        
                 CreateNoWindow = true
             };
 
