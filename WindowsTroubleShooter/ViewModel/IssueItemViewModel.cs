@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using WindowsTroubleShooter.Helpers;
 using WindowsTroubleShooter.Helpers.Commands;
-using WindowsTroubleShooter.Model;
+using WindowsTroubleShooter.Model.Troubleshooter;
 
 namespace WindowsTroubleShooter.ViewModel
 {
