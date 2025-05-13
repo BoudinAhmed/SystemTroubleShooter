@@ -25,7 +25,7 @@ namespace WindowsTroubleShooter.Test.ViewModel.Test
 
             // Assert
             Assert.IsType<SystemOverviewViewModel>(viewModel.CurrentContentViewModel);
-            Assert.Equal("Dashboard", viewModel.SelectedView);
+            Assert.Equal("SystemOverview", viewModel.SelectedView);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace WindowsTroubleShooter.Test.ViewModel.Test
 
             // Assert
             Assert.IsType<HomeViewModel>(viewModel.CurrentContentViewModel);
-            Assert.Equal("ProblemList", viewModel.SelectedView);
+            Assert.Equal("Home", viewModel.SelectedView);
         }
 
         [Fact]

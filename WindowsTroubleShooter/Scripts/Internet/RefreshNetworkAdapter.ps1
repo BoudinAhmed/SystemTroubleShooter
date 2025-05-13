@@ -9,3 +9,4 @@ Start-Sleep -Seconds 1
 Enable-NetAdapter -Name $adapterName -Confirm:$false
 
 Write-Output "Network adapter '$adapterName' restarted successfully."
+
