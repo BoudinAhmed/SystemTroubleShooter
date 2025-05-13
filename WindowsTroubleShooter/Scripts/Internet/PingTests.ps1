@@ -1,4 +1,4 @@
-# Define the targets for ping tests
+﻿# Define the targets for ping tests
 $targets = @("127.0.0.1", "8.8.8.8", "google.com")
 
 # Get the default gateway dynamically
@@ -15,7 +15,9 @@ $failedPings = 0
 # Perform ping tests
 foreach ($target in $targets) {
     Write-Output "Pinging $target..."
-    $pingResult = Test-Connection -ComputerName $target -Count 4 -Quiet
+    
+    # Run Test-Connection and check if it returns a valid response
+    $pingResult = Test-Connection -ComputerName $target -Count 1 -ErrorAction SilentlyContinue
 
     if ($pingResult) {
         Write-Output "Ping to $target successful."

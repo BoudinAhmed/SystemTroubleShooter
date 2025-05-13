@@ -49,7 +49,7 @@ namespace WindowsTroubleShooter.Model
         public bool IsFixed { get; set; }
 
 
-        protected struct TroubleshootingStep
+        public struct TroubleshootingStep
         {
             public string Description;       
             public string ScriptPath;        
@@ -112,7 +112,7 @@ namespace WindowsTroubleShooter.Model
         public abstract Task<string> RunDiagnosticsAsync();
 
 
-        protected async Task<(bool IsSuccess, string Message)> ExecuteTroubleshootingStepAsync(TroubleshootingStep step)
+        protected virtual async Task<(bool IsSuccess, string Message)> ExecuteTroubleshootingStepAsync(TroubleshootingStep step)
         {
             StatusMessage = $"{step.Description}";
             Debug.WriteLine($"Executing Step: {step.Description}");
