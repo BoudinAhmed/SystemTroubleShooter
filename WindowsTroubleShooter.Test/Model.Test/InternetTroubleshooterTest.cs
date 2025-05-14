@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsTroubleShooter.Model;
+using WindowsTroubleShooter.Model.Troubleshooter;
 
 namespace WindowsTroubleShooter.Test.Model
 {

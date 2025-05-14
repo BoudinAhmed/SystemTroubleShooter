@@ -147,9 +147,12 @@ namespace WindowsTroubleShooter.ViewModel
         {
             if (CanAddNetworkDrive())
             {
+                // Replace double backslashes entered by the user with single backslashes
+                string correctedPath = NewDrivePath?.Replace(@"\\", @"\");
+
                 var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
-                updatedDrives.Add(NewDriveLetter, NewDrivePath);
-                ConfiguredNetworkDrives = updatedDrives; // This will trigger SaveSettings and UpdateAvailableDriveLetters
+                updatedDrives.Add(NewDriveLetter, correctedPath);
+                ConfiguredNetworkDrives = updatedDrives;
 
                 NewDriveLetter = null;
                 NewDrivePath = string.Empty;
@@ -188,7 +191,14 @@ namespace WindowsTroubleShooter.ViewModel
                     var savedSettings = JsonSerializer.Deserialize<SettingsData>(jsonString);
                     if (savedSettings != null)
                     {
-                        ConfiguredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
+                        var loadedDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
+
+                        // Fix 1: Ensure all values are non-null, replace nulls with empty string
+                        ConfiguredNetworkDrives = loadedDrives.ToDictionary(
+                            kvp => kvp.Key,
+                            kvp => kvp.Value?.Replace(@"\\", @"\") ?? string.Empty
+                        );
+
                         PreferredDns = savedSettings.PreferredDns;
                         AlternateDns = savedSettings.AlternateDns;
                         PauseUpdates = savedSettings.PauseUpdates;
@@ -209,7 +219,8 @@ namespace WindowsTroubleShooter.ViewModel
                         PauseUpdates = false;
                         ActiveHoursStart = "09:00";
                         ActiveHoursEnd = "17:00";
-                        SelectedOutputDevice = null; // Or some default
+                        // Fix 2: Assign a default OutputDevice instead of null
+                        SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
                     }
                 }
                 catch (Exception ex)
@@ -223,7 +234,8 @@ namespace WindowsTroubleShooter.ViewModel
                     PauseUpdates = false;
                     ActiveHoursStart = "09:00";
                     ActiveHoursEnd = "17:00";
-                    SelectedOutputDevice = null;
+                    // Fix 3: Assign a default OutputDevice instead of null
+                    SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
                 }
             }
             else
@@ -236,7 +248,8 @@ namespace WindowsTroubleShooter.ViewModel
                 PauseUpdates = false;
                 ActiveHoursStart = "09:00";
                 ActiveHoursEnd = "17:00";
-                SelectedOutputDevice = null;
+                // Fix 4: Assign a default OutputDevice instead of null
+                SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
             }
         }
 

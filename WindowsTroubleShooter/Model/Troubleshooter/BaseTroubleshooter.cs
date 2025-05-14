@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace WindowsTroubleShooter.Model
+namespace WindowsTroubleShooter.Model.Troubleshooter
 {
     public abstract class BaseTroubleshooter : INotifyPropertyChanged
     {
