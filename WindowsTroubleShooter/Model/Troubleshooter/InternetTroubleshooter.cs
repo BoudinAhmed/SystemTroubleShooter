@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Threading; // Add this using directive
+using System.Windows.Threading;
 
-namespace WindowsTroubleShooter.Model
+namespace WindowsTroubleShooter.Model.Troubleshooter
 {
     public class InternetTroubleshooter : BaseTroubleshooter
     {

@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Model\BaseTroubleshooter.cs" />
+    <Compile Include="Model\Troubleshooter\BaseTroubleshooter.cs" />
     <Compile Include="Model\HistoryEntryModel.cs" />
-    <Compile Include="Model\InternetTroubleshooter.cs" />
-    <Compile Include="Model\NetworkDriveModel.cs" />
+    <Compile Include="Model\Troubleshooter\InternetTroubleshooter.cs" />
+    <Compile Include="Model\Troubleshooter\NetworkDriveTroubleshooter.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Scripts\NetworkDrive\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Internet\RefreshNetworkAdapter.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\NetworkDrive\MapNetworkDrive.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

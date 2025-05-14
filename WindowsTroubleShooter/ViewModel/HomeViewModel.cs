@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Data;
-using WindowsTroubleShooter.Model;
+using WindowsTroubleShooter.Model.Troubleshooter;
 
 
 
@@ -91,7 +91,7 @@ namespace WindowsTroubleShooter.ViewModel
             IssueItems.Add(new IssueItemViewModel { Title = "Internet Connection", Description = "Fix problems with connecting to the internet", ImageSource = "\xE701", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Windows Update", Description = "Resolve problem with windows update", ImageSource = "\xE895", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Sound", Description = "Fix problems with playing audio", ImageSource = "\xE767", IssueType = new InternetTroubleshooter() });
-            IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive", Description = "Map a network drive with letter and path", ImageSource = "\xE8CE", IssueType = new InternetTroubleshooter() });
+            IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive", Description = "Map a network drive with letter and path", ImageSource = "\xE8CE", IssueType = new NetworkDriveTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Display Settings", Description = "Adjust screen resolution and scaling", ImageSource = "\xE7F4", IssueType = new InternetTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Bluetooth Devices", Description = "Pair or troubleshoot Bluetooth", ImageSource = "\xE702", IssueType = new InternetTroubleshooter() });
           
