@@ -60,6 +60,8 @@ namespace WindowsTroubleShooter.Model.Troubleshooter
                     string jsonString = File.ReadAllText(_settingsFilePath);
                     var savedSettings = JsonSerializer.Deserialize<SettingsData>(jsonString);
 
+
+
                     if (savedSettings?.NetworkDrives != null || savedSettings?.NetworkDrives.Count > 0)
                         ConfiguredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
                         
@@ -91,6 +93,7 @@ namespace WindowsTroubleShooter.Model.Troubleshooter
 
         public override async Task<string> RunDiagnosticsAsync()
         {
+
             string jsonString = File.ReadAllText(_settingsFilePath);
 
             foreach (var step in _troubleshootingSteps)

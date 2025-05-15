@@ -147,11 +147,9 @@ namespace WindowsTroubleShooter.ViewModel
         {
             if (CanAddNetworkDrive())
             {
-                // Replace double backslashes entered by the user with single backslashes
-                string correctedPath = NewDrivePath?.Replace(@"\\", @"\");
 
                 var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
-                updatedDrives.Add(NewDriveLetter, correctedPath);
+                updatedDrives.Add(NewDriveLetter, NewDrivePath);
                 ConfiguredNetworkDrives = updatedDrives;
 
                 NewDriveLetter = null;
@@ -191,13 +189,9 @@ namespace WindowsTroubleShooter.ViewModel
                     var savedSettings = JsonSerializer.Deserialize<SettingsData>(jsonString);
                     if (savedSettings != null)
                     {
-                        var loadedDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
-
-                        // Fix 1: Ensure all values are non-null, replace nulls with empty string
-                        ConfiguredNetworkDrives = loadedDrives.ToDictionary(
-                            kvp => kvp.Key,
-                            kvp => kvp.Value?.Replace(@"\\", @"\") ?? string.Empty
-                        );
+                        
+                      
+                        ConfiguredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
 
                         PreferredDns = savedSettings.PreferredDns;
                         AlternateDns = savedSettings.AlternateDns;
