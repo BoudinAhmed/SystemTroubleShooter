@@ -1,4 +1,4 @@
-# Windows Troubleshooter
+# System Troubleshooter
 
 As someone who enjoys fixing IT issues and always looks for opportunities to automate with PowerShell, the concept of building a troubleshooter app for common or company-specific problems was very appealing. Throughout this project, I have applied my years of practical IT experience and it has also significantly deepened my passion and love for programming.
 
@@ -14,7 +14,7 @@ This software is a helpful desktop utility built with **C#** and the **WPF** fra
 * **Internet Troubleshooting**: Automatically diagnose and suggest fixes for common internet connection problems.
 * **Sound Issue Diagnostics**: Walk through steps to identify and resolve audio playback or recording issues.
 * **Network Drive Management**: Easily troubleshoot problems with connecting to and accessing your mapped network drives.
-* **Update Status Checker**: Quickly verify the status of Windows Updates and guide you through potential issues.
+* **Update Status Checker**: Quickly verify the status of System Updates and guide you through potential issues.
 * **Modular and Extensible**: Designed with a modular architecture, making it easy to add support for even more troubleshooting scenarios in the future.
 * **MVVM Architecture**: Leverages the Model-View-ViewModel pattern for a clear separation of concerns, enhancing maintainability and testability.
 * **Customizable and Adaptable**: The MVVM structure allows for easy addition of new troubleshooting modules and corresponding UI elements.
@@ -50,6 +50,6 @@ This software is a helpful desktop utility built with **C#** and the **WPF** fra
     ```
 2.  **Open in Visual Studio**: Navigate to the cloned directory and open the `.sln` file in Visual Studio.
 3.  **Build the Solution**: Use the default build configuration in Visual Studio.
-4.  **Run the Application**: Press `Ctrl+F5` or click the "Start" button to launch the Windows Troubleshooter.
+4.  **Run the Application**: Press `Ctrl+F5` or click the "Start" button to launch the System Troubleshooter.
 
 Feel free to give any feedback
