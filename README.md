@@ -1,4 +1,4 @@
-# System Troubleshooter
+# System TroubleShooter
 
 As someone who enjoys fixing IT issues and always looks for opportunities to automate with PowerShell, the concept of building a troubleshooter app for common or company-specific problems was very appealing. Throughout this project, I have applied my years of practical IT experience and it has also significantly deepened my passion and love for programming.
 
