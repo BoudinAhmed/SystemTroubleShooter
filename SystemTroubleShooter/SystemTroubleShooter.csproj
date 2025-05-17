@@ -37,6 +37,7 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Scripts\NetworkDrive\" />
+    <Folder Include="ViewModel\UserControl\" />
   </ItemGroup>
 
   <ItemGroup>
