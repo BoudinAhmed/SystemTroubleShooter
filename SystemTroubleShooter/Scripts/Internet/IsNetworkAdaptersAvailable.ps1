@@ -9,7 +9,7 @@ if($adapter.Count -eq 0){
 }
 
 
-Write-Output "Active adapters found: $($adapter.name -join ', ')"
+Write-Output $adapter.name
 }
 catch{
 	Write-Host $_.Exception.Message
