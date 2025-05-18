@@ -1,13 +1,15 @@
 #Get Adapter
 $adapter = Get-NetAdapter | Where-Object {$_.Status -eq 'Up' -and $_.HardwareInterface -eq $true}
 $adapterName = $adapter.Name
+$ipConfig = Get-NetIPConfiguration -InterfaceAlias $adapterName -ErrorAction SilentlyContinue
 
-Disable-NetAdapter -Name $adapterName -Confirm:$false
-Start-Sleep -Seconds 1
+Disable-NetAdapter -Name $adapterName -Confirm: $false
+Write-Output = $ipConfig 
 
 # Enable the adapter
 Enable-NetAdapter -Name $adapterName -Confirm:$false
-Start-Sleep -Seconds 3
+Write-Output = $ipConfig 
+Write-Output "Reinitializing $adapterName"
+Start-Sleep -Seconds 10
 
-Write-Output "Network adapter '$adapterName' restarted successfully."
 

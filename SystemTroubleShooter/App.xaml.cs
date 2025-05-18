@@ -29,9 +29,9 @@ namespace SystemTroubleShooter
             NavigationService = new NavigationService();
 
             // Start the app with the first view
-            var firstView = new ResultWindowView
+            var firstView = new StartView
             {
-               // DataContext = new StartViewModel()
+                DataContext = new StartViewModel()
             };
             firstView.Show();
         }
