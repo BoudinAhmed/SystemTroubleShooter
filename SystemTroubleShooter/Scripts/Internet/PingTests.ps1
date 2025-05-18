@@ -29,9 +29,9 @@ foreach ($target in $targets) {
 
 # Final result
 if ($failedPings -eq 0) {
-    Write-Output "RESULT: SUCCESS"
+    
     exit 0
 } else {
-    Write-Output "RESULT: FAILURE"
+    
     exit 1
 }
