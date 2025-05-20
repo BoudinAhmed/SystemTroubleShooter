@@ -51,6 +51,9 @@
     <None Update="Scripts\NetworkDrive\MapNetworkDrive.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Scripts\Sound\Check-Restart-AudioServices.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

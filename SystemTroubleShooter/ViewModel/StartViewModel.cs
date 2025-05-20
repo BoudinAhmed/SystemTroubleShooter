@@ -19,7 +19,7 @@ namespace SystemTroubleShooter.ViewModel
 
         private string _selectedView;
 
-        public string SelectedView
+        public string? SelectedView
         {
             get => _selectedView;
             set => SetProperty(ref _selectedView, value);

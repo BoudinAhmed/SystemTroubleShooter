@@ -14,8 +14,8 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         private const string _refreshAdaptersScriptPath = @"Scripts\\Internet\\RefreshNetworkAdapter.ps1";
         private const string _pingScriptPath = @"Scripts\\Internet\\PingTests.ps1";
 
-        private string _networkadapter;
-        private List<TroubleshootingStep> _troubleshootingSteps;
+        private readonly string _networkadapter;
+        private readonly List<TroubleshootingStep> _troubleshootingSteps;
 
         public InternetTroubleshooter()
         {
@@ -31,17 +31,17 @@ namespace SystemTroubleShooter.Model.Troubleshooter
 
             _troubleshootingSteps = new List<TroubleshootingStep>
             {
-                new TroubleshootingStep {
+                new() {
                     Description = "Checking Network Adapters Availability",
                     ScriptPath = _checkAdaptersScriptPath,
                     IsCritical = true // If adapters aren't available, can't proceed
                 },
-                new TroubleshootingStep {
+                new() {
                     Description = "Refreshing Network Adapters",
                     ScriptPath = _refreshAdaptersScriptPath,
                     IsCritical = false
                 },
-                new TroubleshootingStep {
+                new() {
                     Description = "Verifying Connection",
                     ScriptPath = _pingScriptPath,
                     IsCritical = true // if can't ping, troubleshooting failed
