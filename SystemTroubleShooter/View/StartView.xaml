@@ -53,7 +53,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Image Width="20" Height="20" Margin="10,5,18,5"/>
+                    <Image Source="/Assets/logo.jpg"  Width="40" Height="40" Margin="10,5,18,5"/>
                     <TextBlock Text="Troubleshooter" Foreground="#dddddd" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1"/>
                     <Button Style="{StaticResource TitleBarButtonStyle}" Content="&#xE921;" FontFamily="Segoe MDL2 Assets" Grid.Column="2" Click="MinimizeWindow"/>
                     <Button Style="{StaticResource TitleBarButtonStyle}" Content="&#xE922;" FontFamily="Segoe MDL2 Assets" Grid.Column="3" Click="MaximizeRestoreWindow"/>
