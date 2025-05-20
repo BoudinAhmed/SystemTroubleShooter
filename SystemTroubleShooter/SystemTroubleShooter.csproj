@@ -9,13 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Assets\**" />
     <Compile Remove="Model\**" />
-    <EmbeddedResource Remove="Assets\**" />
     <EmbeddedResource Remove="Model\**" />
-    <None Remove="Assets\**" />
     <None Remove="Model\**" />
-    <Page Remove="Assets\**" />
     <Page Remove="Model\**" />
   </ItemGroup>
 
@@ -24,12 +20,14 @@
     <Compile Include="Model\HistoryEntryModel.cs" />
     <Compile Include="Model\Troubleshooter\InternetTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\NetworkDriveTroubleshooter.cs" />
+    <Compile Include="Model\Troubleshooter\SoundTroubleshooter.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.31.0" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="System.Management" Version="9.0.4" />
     <PackageReference Include="Unity" Version="5.11.10" />
   </ItemGroup>
