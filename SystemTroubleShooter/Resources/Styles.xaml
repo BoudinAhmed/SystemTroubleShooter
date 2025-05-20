@@ -210,10 +210,10 @@
                                         <ControlTemplate TargetType="{x:Type Thumb}">
                                             <Border Background="DarkGray" CornerRadius="2">
                                                 <Border.Width>
-                                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Track}}"/>
                                                 </Border.Width>
                                                 <Border.Height>
-                                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                    <Binding Path="ViewportSize" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Track}}"/>
                                                 </Border.Height>
                                             </Border>
                                         </ControlTemplate>
@@ -246,6 +246,6 @@
         </Setter>
     </Style>
 
-    
+
 
 </ResourceDictionary>
