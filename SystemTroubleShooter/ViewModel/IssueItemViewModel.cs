@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using SystemTroubleShooter.Helpers;
 using SystemTroubleShooter.Helpers.Commands;
+using SystemTroubleShooter.Interfaces;
 using SystemTroubleShooter.Model.Troubleshooter;
 
 namespace SystemTroubleShooter.ViewModel
@@ -22,6 +24,9 @@ namespace SystemTroubleShooter.ViewModel
         private Border _associatedBorder;
         private bool _isTroubleshooting;
         private string _troubleshootingStatus;
+
+        // To display audiodevices view
+        private readonly IAudioDeviceDisplayService _audioDeviceDisplayService;
 
 
         // Gets or sets a value indicating whether the buttons are visible.
@@ -108,10 +113,13 @@ namespace SystemTroubleShooter.ViewModel
         public IssueItemViewModel()
         {
             _navigationService = new NavigationService();
+            _audioDeviceDisplayService = new AudioDeviceDisplayService(); // Assign the injected service
+
             ItemClickedCommand = new RelayCommand(OnItemClicked);
             ItemCancelClickedCommand = new RelayCommand(OnItemCancelClicked);
             ItemTroubleshootClickedCommand = new RelayCommand(OnItemTroubleshootClicked);
         }
+        
 
         private void OnItemClicked(object obj)
         {
@@ -177,12 +185,23 @@ namespace SystemTroubleShooter.ViewModel
             _currentIssue = this.IssueType;
             _currentIssue.PropertyChanged += IssueStatusChanged;
 
-            Task diagnosticsTask = Task.Run(async () =>  await _currentIssue.RunDiagnosticsAsync());
+
+            if (_currentIssue is SoundTroubleshooter soundTroubleshooter)
+            {
+
+                List<string> allAudioDevices = await soundTroubleshooter.GetAllAudioDevicesAsync();
+                List<string> outputDevices = allAudioDevices; // Placeholder
+                List<string> inputDevices = new List<string>(); // Placeholder
+
+                _audioDeviceDisplayService.DisplayAudioDevices(outputDevices, inputDevices);
+
+            }
+            
+                Task diagnosticsTask = Task.Run(async () => await _currentIssue.RunDiagnosticsAsync());
+            
 
             await diagnosticsTask;
-               
-               
-            
+
             if (diagnosticsTask.IsCompleted)
             {
                 
