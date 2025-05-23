@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SystemTroubleShooter\SystemTroubleShooter.csproj" />
-    <ProjectReference Include="..\WindowsTroubleShooter\SystemTroubleShooter.csproj" />
   </ItemGroup>
 
 </Project>

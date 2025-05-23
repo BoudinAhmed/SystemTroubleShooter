@@ -16,6 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\headphone_3d.png" />
+    <None Remove="Assets\studio_microphone_3d.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="Model\Troubleshooter\BaseTroubleshooter.cs" />
     <Compile Include="Model\HistoryEntryModel.cs" />
     <Compile Include="Model\Troubleshooter\InternetTroubleshooter.cs" />
@@ -36,6 +41,15 @@
     <Folder Include="Properties\" />
     <Folder Include="Scripts\NetworkDrive\" />
     <Folder Include="ViewModel\UserControl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\headphone_3d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\studio_microphone_3d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
