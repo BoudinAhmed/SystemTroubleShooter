@@ -1,0 +1,51 @@
+name: WPF CI Build
+
+on:
+  push:
+    branches:
+      - main # Or 'master', depending on your main branch name
+  pull_request:
+    branches:
+      - main # Or 'master'
+
+env:
+  # Path to your solution file (adjust if different)
+  SOLUTION_FILE_PATH: 'SystemTroubleShooter.sln'
+  # Build configuration
+  BUILD_CONFIGURATION: 'Release' # Use 'Release' for production-ready builds
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest # WPF apps require a Windows environment
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x' # Specifies .NET 6.x
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.SOLUTION_FILE_PATH }}
+
+    - name: Build application
+      run: dotnet build ${{ env.SOLUTION_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+    - name: Run XUnit tests
+      # Assumes your test project is part of the solution and can be found by `dotnet test`
+      run: dotnet test ${{ env.SOLUTION_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --verbosity normal
+
+    - name: Publish application artifact
+      # This step packages your compiled WPF application
+      run: |
+        $projectPath = Join-Path (Split-Path -Parent "${{ env.SOLUTION_FILE_PATH }}") "SystemTroubleShooter.csproj" # Adjust if your main WPF project has a different name
+        $outputDir = "build_output"
+        dotnet publish $projectPath --configuration ${{ env.BUILD_CONFIGURATION }} --output $outputDir /p:UseAppHost=true
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: SystemTroubleShooter-WPF-App
+        path: build_output/ # This is the directory created by dotnet publish
