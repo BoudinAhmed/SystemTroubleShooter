@@ -12,6 +12,8 @@ namespace SystemTroubleShooter.ViewModel
 {
     public class SoundDevicesViewModel : INotifyPropertyChanged
     {
+        private bool _hasAnimationsPlayed = false;
+
         private ObservableCollection<string> _devices;
         public ObservableCollection<string> Devices
         {
@@ -70,6 +72,10 @@ namespace SystemTroubleShooter.ViewModel
 
         private void TriggerAnimations()
         {
+            if (_hasAnimationsPlayed == true)
+                return;
+
+            
             
             var window = Application.Current.Windows.OfType<SoundDevicesView>().FirstOrDefault();
             if (window != null)
@@ -82,8 +88,11 @@ namespace SystemTroubleShooter.ViewModel
                 var buttonsMoveUpStoryboard = (Storyboard)window.FindResource("ButtonsMoveUp");
                 buttonsMoveUpStoryboard.Begin(window);
 
-               
                 
+                var FadeInListViewStoryboard = (Storyboard)window.FindResource("FadeInListView");
+                FadeInListViewStoryboard.Begin(window);
+
+                _hasAnimationsPlayed = true;
                 IsContentVisible = true;
             }
         }
