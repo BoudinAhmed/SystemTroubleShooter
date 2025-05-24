@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using NAudio.CoreAudioApi;
+
 
 namespace SystemTroubleShooter.Model.Troubleshooter
 {
@@ -14,7 +14,7 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         private const string _checkAudioServices = @"Scripts\\Sound\\Check-Restart-AudioServices.ps1";
         private const string _getAllAudioDevices = @"Scripts\\Sound\\GetAllAudioDevices.ps1";
         private readonly List<TroubleshootingStep> _troubleshootingSteps;
-        private readonly string _preferredAudioDevice; 
+        
         public SoundTroubleshooter() 
         {
             
@@ -53,36 +53,6 @@ namespace SystemTroubleShooter.Model.Troubleshooter
             return devices;
         }
 
-        public static float GetMasterVolumeNAudio()
-        {
-            // Releases COM objects correctly and to ensure Dispose is called
-            using var enumerator = new MMDeviceEnumerator();
-            using var device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-            if (device != null && device.AudioEndpointVolume != null)
-            {
-                float volume = device.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
-                return volume;
-            }
-            return -1f;
-        }
-
-        public static bool IsMasterVolumeMutedNAudio()
-        {
-
-            // Releases COM objects correctly and to ensure Dispose is called
-            using var enumerator = new MMDeviceEnumerator();
-            using var device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-            if (device != null && device.AudioEndpointVolume != null)
-            {
-                bool muted = device.AudioEndpointVolume.Mute;
-                return muted;
-            }
-            // Todo: Handle device or volume control is not available
-
-
-
-            throw new InvalidOperationException("Could not retrieve default audio device or its volume control.");
-        }
 
 
         public override async Task<string> RunDiagnosticsAsync()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace SystemTroubleShooter.ViewModel
         private BaseTroubleshooter _currentIssue;
         private bool _areButtonsVisible;
         private bool _isTextVisible = true;
-        private Border _associatedBorder;
+        private Border? _associatedBorder;
         private bool _isTroubleshooting;
         private string _troubleshootingStatus;
 
@@ -92,9 +93,9 @@ namespace SystemTroubleShooter.ViewModel
         }
 
         // Gets or sets properties for all elements of an item.
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ImageSource { get; set; }
+        public string Title { get; set; } = "new Issue Title";
+        public string Description { get; set; } = "new Issue Description";
+        public string ImageSource { get; set; } = "xE9CE;";
         public BaseTroubleshooter IssueType { get; set; }
         public bool IsItemSelected { get; set; }
 
@@ -129,7 +130,7 @@ namespace SystemTroubleShooter.ViewModel
             }
 
             //The animation to be played when the item is clicked.
-            AssociatedBorder = obj as Border;
+            AssociatedBorder = (Border)obj;
             if (AssociatedBorder == null) return;
 
             var fadeOutStoryboard = AssociatedBorder.Resources["FadeOut"] as Storyboard;
@@ -146,7 +147,7 @@ namespace SystemTroubleShooter.ViewModel
 
         private void OnItemCancelClicked(object obj)
         {
-            AssociatedBorder = obj as Border;
+            AssociatedBorder = (Border)obj;
             if (AssociatedBorder == null) return;
 
             var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
@@ -217,7 +218,7 @@ namespace SystemTroubleShooter.ViewModel
                  IsTroubleshooting = false;
 
                 // The animation to reset to inital state
-                AssociatedBorder = obj as Border;
+                AssociatedBorder = (Border)obj;
                 if (AssociatedBorder == null) return;
 
                 var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
@@ -272,7 +273,7 @@ namespace SystemTroubleShooter.ViewModel
             if (AssociatedBorder == null) return;
 
             var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
-            var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
+            var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard ?? throw new ArgumentNullException(nameof(Storyboard), "resetStoryboard cannot be null."); ;
 
             if (fadeInStoryboard == null) return;
 

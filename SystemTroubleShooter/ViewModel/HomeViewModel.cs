@@ -15,8 +15,6 @@ namespace SystemTroubleShooter.ViewModel
 
         //Declaration
         private string _version;
-        private IssueItemViewModel _lastClickedItem;
-        private Border _lastClickedBorder;
         private ObservableCollection<IssueItemViewModel> _issueItems; // This holds the full, original list
 
         // New fields for Search and Filtering
