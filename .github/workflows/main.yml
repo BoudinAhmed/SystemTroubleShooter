@@ -3,16 +3,16 @@ name: WPF CI Build
 on:
   push:
     branches:
-      - main # Or 'master', depending on your main branch name
+      - main 
   pull_request:
     branches:
-      - main # Or 'master'
+      - main 
 
 env:
-  # Path to your solution file (adjust if different)
+  
   SOLUTION_FILE_PATH: 'SystemTroubleShooter.sln'
   # Build configuration
-  BUILD_CONFIGURATION: 'Release' # Use 'Release' for production-ready builds
+  BUILD_CONFIGURATION: 'Release' 
 
 jobs:
   build-and-test:
@@ -40,7 +40,7 @@ jobs:
     - name: Publish application artifact
       # This step packages your compiled WPF application
       run: |
-        $projectPath = Join-Path (Split-Path -Parent "${{ env.SOLUTION_FILE_PATH }}") "SystemTroubleShooter.csproj" # Adjust if your main WPF project has a different name
+        $projectPath = Join-Path "SystemTroubleShooter/SystemTroubleShooter/SystemTroubleShooter.csproj"
         $outputDir = "build_output"
         dotnet publish $projectPath --configuration ${{ env.BUILD_CONFIGURATION }} --output $outputDir /p:UseAppHost=true
 
@@ -48,4 +48,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: SystemTroubleShooter-WPF-App
-        path: build_output/ # This is the directory created by dotnet publish
+        path: build_output/ 
