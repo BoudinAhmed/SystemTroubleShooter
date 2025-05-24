@@ -19,7 +19,7 @@ namespace SystemTroubleShooter
     /// </summary>
     public partial class App : Application
     {
-        public static NavigationService NavigationService { get; private set; }
+        public static NavigationService? NavigationService { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {

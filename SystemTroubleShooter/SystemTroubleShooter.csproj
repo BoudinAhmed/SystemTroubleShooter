@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,11 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.31.0" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
-    <PackageReference Include="NAudio" Version="2.2.1" />
-    <PackageReference Include="System.Management" Version="9.0.4" />
+    <PackageReference Include="System.Management" Version="9.0.5" />
     <PackageReference Include="Unity" Version="5.11.10" />
   </ItemGroup>
 
