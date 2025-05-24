@@ -40,7 +40,7 @@ jobs:
     - name: Publish application artifact
       # This step packages your compiled WPF application
       run: |
-        $projectPath = "SystemTroubleShooter/SystemTroubleShooter/SystemTroubleShooter.csproj"
+        $projectPath = "SystemTroubleShooter/SystemTroubleShooter.csproj"
         $outputDir = "build_output"
         dotnet publish $projectPath --configuration ${{ env.BUILD_CONFIGURATION }} --output $outputDir /p:UseAppHost=true
 
