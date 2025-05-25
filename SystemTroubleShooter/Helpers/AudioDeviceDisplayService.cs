@@ -18,7 +18,7 @@ namespace SystemTroubleShooter.Helpers
         public void DisplayAudioDevices(List<string> outputDevices, List<string> inputDevices)
         {
             var audioDeviceView = new SoundDevicesView();
-            audioDeviceView.DataContext = new SoundDevicesViewModel();
+            audioDeviceView.DataContext = new SoundDevicesViewModel(outputDevices, inputDevices);
             audioDeviceView.Show();
            
         }
