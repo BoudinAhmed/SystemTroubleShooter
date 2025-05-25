@@ -6,9 +6,9 @@ namespace SystemTroubleShooter.ViewModel
 {
     public class AboutViewModel : ViewModelBase
     {
-        private string _version;
+        private string? _version;
 
-        public string Version
+        public string? Version
         {
             get =>  _version; 
             set => SetProperty(ref _version, value);
@@ -21,7 +21,10 @@ namespace SystemTroubleShooter.ViewModel
         private void LoadVersionInfo()
         {
             // Hardcoded for now but will load it from assembly info
-            Version = "Version 2.0.1";
+            if (Version is not null)
+                Version = "Version 2.0.1";
+
+            else Version = "Version x.x.x";
         }
     }
 }

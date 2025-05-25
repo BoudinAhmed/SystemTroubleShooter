@@ -13,17 +13,17 @@ namespace SystemTroubleShooter.ViewModel
     {
 
         // --- Backing Fields ---
-        private string _machineName;
-        private string _osVersion;
-        private string _currentUser;
-        private string _systemStatus;
-        private string _ipAddress;
-        private string _version;
-        private string _processorName;
-        private string _installedRAM;
-        private string _cpuUsage;
-        private string _ramUsage;
-        private ObservableCollection<HistoryEntryModel> _historyEntries;
+        private string? _machineName;
+        private string? _osVersion;
+        private string? _currentUser;
+        private string? _systemStatus;
+        private string? _ipAddress;
+        private string? _version;
+        private string? _processorName;
+        private string? _installedRAM;
+        private string? _cpuUsage;
+        private string? _ramUsage;
+        private ObservableCollection<HistoryEntryModel>? _historyEntries;
         private ObservableCollection<string> _selectedIssues = new ObservableCollection<string>();
 
        
@@ -40,37 +40,37 @@ namespace SystemTroubleShooter.ViewModel
         // --- Public Properties Binding ---
 
         // Properties for Top System Info
-        public string MachineName
+        public string? MachineName
         {
             get => _machineName;
             private set => SetProperty(ref _machineName, value);
         }
 
-        public string OSVersion
+        public string? OSVersion
         {
             get => _osVersion;
             private set => SetProperty(ref _osVersion, value);
         }
 
-        public string CurrentUser
+        public string? CurrentUser
         {
             get => _currentUser;
             private set => SetProperty(ref _currentUser, value);
         }
 
-        public string SystemStatus
+        public string? SystemStatus
         {
             get => _systemStatus;
             private set => SetProperty(ref _systemStatus, value);
         }
 
-        public string IpAddress
+        public string? IpAddress
         {
             get => _ipAddress;
             private set => SetProperty(ref _ipAddress, value);
         }
 
-        public string Version
+        public string? Version
         {
             get => _version;
             set => SetProperty(ref _version, value);
@@ -78,32 +78,32 @@ namespace SystemTroubleShooter.ViewModel
 
 
         // Public Property for History
-        public ObservableCollection<HistoryEntryModel> HistoryEntries
+        public ObservableCollection<HistoryEntryModel>? HistoryEntries
         {
             get => _historyEntries;
             set => SetProperty(ref _historyEntries, value);
         }
 
         // New Public Properties for Specifications and Resources
-        public string ProcessorName
+        public string? ProcessorName
         {
             get => _processorName;
             private set => SetProperty(ref _processorName, value);
         }
 
-        public string InstalledRAM
+        public string? InstalledRAM
         {
             get => _installedRAM;
             private set => SetProperty(ref _installedRAM, value);
         }
 
-        public string CpuUsage
+        public string? CpuUsage
         {
             get => _cpuUsage;
             private set => SetProperty(ref _cpuUsage, value);
         }
 
-        public string RamUsage
+        public string? RamUsage
         {
             get => _ramUsage;
             private set => SetProperty(ref _ramUsage, value);
@@ -310,12 +310,12 @@ namespace SystemTroubleShooter.ViewModel
         private void LoadHistory()
         {
             // Will pull from cache file eventually
-            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddHours(-1), IssueDescription = "Internet issue not access browser", ResolutionStatus = "Fixed" });
-            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-1), IssueDescription = "Sound driver needed reinstall", ResolutionStatus = "Fixed" });
-            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-2), IssueDescription = "Windows Update stuck", ResolutionStatus = "Pending" });
+            HistoryEntries?.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddHours(-1), IssueDescription = "Internet issue not access browser", ResolutionStatus = "Fixed" });
+            HistoryEntries?.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-1), IssueDescription = "Sound driver needed reinstall", ResolutionStatus = "Fixed" });
+            HistoryEntries?.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-2), IssueDescription = "Windows Update stuck", ResolutionStatus = "Pending" });
             // Add more dummy data for testing appearance if needed
-            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddHours(-5), IssueDescription = "Application X crashing", ResolutionStatus = "Fixed" });
-            HistoryEntries.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-3), IssueDescription = "High CPU usage detected", ResolutionStatus = "Investigating" });
+            HistoryEntries?.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddHours(-5), IssueDescription = "Application X crashing", ResolutionStatus = "Fixed" });
+            HistoryEntries?.Add(new HistoryEntryModel { Timestamp = DateTime.Now.AddDays(-3), IssueDescription = "High CPU usage detected", ResolutionStatus = "Investigating" });
         }
 
         private void LoadVersionInfo()

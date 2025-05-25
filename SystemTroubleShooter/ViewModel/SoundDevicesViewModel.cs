@@ -14,8 +14,8 @@ namespace SystemTroubleShooter.ViewModel
     {
         private bool _hasAnimationsPlayed = false;
 
-        private ObservableCollection<string> _devices;
-        public ObservableCollection<string> Devices
+        private ObservableCollection<string>? _devices;
+        public ObservableCollection<string>? Devices
         {
             get { return _devices; }
             set
@@ -50,6 +50,9 @@ namespace SystemTroubleShooter.ViewModel
 
         private void LoadDevices(string deviceType)
         {
+            if(Devices is null)
+                Devices = new ObservableCollection<string>();
+
             // Clear existing devices
             Devices.Clear();
 

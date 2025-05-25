@@ -14,17 +14,17 @@ namespace SystemTroubleShooter.ViewModel
     {
 
         //Declaration
-        private string _version;
+        private string? _version;
         private ObservableCollection<IssueItemViewModel> _issueItems; // This holds the full, original list
 
         // New fields for Search and Filtering
-        private string _searchQuery;
-        private ICollectionView _filteredIssueItems; // The view that the UI binds to
+        private string? _searchQuery;
+        private ICollectionView? _filteredIssueItems; // The view that the UI binds to
 
 
         // --- Public Properties Binding --- //
 
-        public string Version
+        public string? Version
         {
             get => _version;
             set => SetProperty(ref _version, value);
@@ -39,7 +39,7 @@ namespace SystemTroubleShooter.ViewModel
         }
 
         // This is the property the search TextBox will bind to
-        public string SearchQuery
+        public string? SearchQuery
         {
              get => _searchQuery;
              set
@@ -47,13 +47,13 @@ namespace SystemTroubleShooter.ViewModel
                  if (SetProperty(ref _searchQuery, value))
                  {
                      // Refresh the filtered view whenever the search query changes
-                     FilteredIssueItems.Refresh();
+                     FilteredIssueItems?.Refresh();
                  }
              }
          }
 
          // This is the property the ItemsControl will bind to
-         public ICollectionView FilteredIssueItems
+         public ICollectionView? FilteredIssueItems
          {
              get => _filteredIssueItems;
              private set => SetProperty(ref _filteredIssueItems, value);

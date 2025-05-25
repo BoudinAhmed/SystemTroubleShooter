@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,8 +20,8 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         private readonly string _settingsFilePath;
         private List<TroubleshootingStep> _troubleshootingSteps;
 
-        private Dictionary<string, string> _configuredNetworkDrives;
-        public Dictionary<string, string> ConfiguredNetworkDrives
+        private Dictionary<string, string>? _configuredNetworkDrives;
+        public Dictionary<string, string>? ConfiguredNetworkDrives
         {
             get => _configuredNetworkDrives;
             set { _configuredNetworkDrives = value; }
@@ -38,12 +37,13 @@ namespace SystemTroubleShooter.Model.Troubleshooter
 
             GetNetworkDrivesFromCache();
 
+            Dictionary<string, string>? configuredNetworkDrives = ConfiguredNetworkDrives ?? new Dictionary<string, string>(); ;
             _troubleshootingSteps = new List<TroubleshootingStep>
             {
                 new TroubleshootingStep {
                     Description = "Mapping Network Drive",
                     ScriptPath = _mapNetworkDriveScriptPath,
-                    ScriptArguments = string.Join(";", ConfiguredNetworkDrives.Select(kvp => $"{kvp.Key},{kvp.Value}")),
+                    ScriptArguments = string.Join(";", configuredNetworkDrives.Select(kvp => $"{kvp.Key},{kvp.Value}")),
                     IsCritical = false // If one fails, we can still try the next one
                 }
             };
@@ -62,7 +62,7 @@ namespace SystemTroubleShooter.Model.Troubleshooter
 
 
 
-                    if (savedSettings?.NetworkDrives != null || savedSettings?.NetworkDrives.Count > 0)
+                    if (savedSettings?.NetworkDrives != null || savedSettings?.NetworkDrives?.Count > 0)
                         ConfiguredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
                         
                     
@@ -105,7 +105,7 @@ namespace SystemTroubleShooter.Model.Troubleshooter
                    break;
                 
             }
-            return ResolutionMessage;
+            return ResolutionMessage ?? "try what you were doing again";
 
         }
 

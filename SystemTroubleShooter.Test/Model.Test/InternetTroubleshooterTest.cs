@@ -16,7 +16,8 @@ namespace SystemTroubleShooter.Test.Model
         {
             var field = typeof(InternetTroubleshooter).GetField("_troubleshootingSteps",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            return field?.GetValue(troubleshooter) as List<BaseTroubleshooter.TroubleshootingStep>;
+            return field?.GetValue(troubleshooter) as List<BaseTroubleshooter.TroubleshootingStep> 
+                ?? new List<BaseTroubleshooter.TroubleshootingStep>();
         }
 
         [Fact]

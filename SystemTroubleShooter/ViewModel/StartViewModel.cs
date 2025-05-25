@@ -1,7 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
-using SystemTroubleShooter.ViewModel;
+using SystemTroubleShooter.Helpers.Commands;
 
 namespace SystemTroubleShooter.ViewModel
 {
@@ -14,10 +13,10 @@ namespace SystemTroubleShooter.ViewModel
         public ICommand SwitchToSettingsCommand { get; set; }
         public ICommand SwitchToAboutCommand { get; set; }
 
-        private IssueItemViewModel _lastClickedItem;
-        private Border _lastClickedBorder;
+        private IssueItemViewModel? _lastClickedItem;
+        private Border? _lastClickedBorder;
 
-        private string _selectedView;
+        private string? _selectedView;
 
         public string? SelectedView
         {
@@ -26,9 +25,9 @@ namespace SystemTroubleShooter.ViewModel
         }
 
 
-        private ViewModelBase _currentContentViewModel;
+        private ViewModelBase? _currentContentViewModel;
 
-        public ViewModelBase CurrentContentViewModel
+        public ViewModelBase? CurrentContentViewModel
         {
             get { return _currentContentViewModel; }
             set
@@ -58,7 +57,7 @@ namespace SystemTroubleShooter.ViewModel
         }
 
 
-        private void SwitchToHome()
+        private void SwitchToHome(object? o)
         {
             if (CurrentContentViewModel is not HomeViewModel)
             {
@@ -69,7 +68,7 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
-        private void SwitchToSystemOverview()
+        private void SwitchToSystemOverview(object? o)
         {
             if (CurrentContentViewModel is not SystemOverviewViewModel)
             {
@@ -80,7 +79,7 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
-        private void SwitchToSettings()
+        private void SwitchToSettings(object? o)
         {
             if (CurrentContentViewModel is not SettingsViewModel)
             {
@@ -91,7 +90,7 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
-        private void SwitchToAbout()
+        private void SwitchToAbout(object? o)
         {
             if (CurrentContentViewModel is not AboutViewModel)
             {
