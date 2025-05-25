@@ -6,7 +6,8 @@ using System.Windows.Media.Animation;
 using System.Windows;
 using SystemTroubleShooter.View;
 using System.Linq;
-using SystemTroubleShooter.Helpers.Commands; // Required for Storyboard
+using SystemTroubleShooter.Helpers.Commands;
+using System.Collections.Generic; // Required for Storyboard
 
 namespace SystemTroubleShooter.ViewModel
 {
@@ -26,6 +27,9 @@ namespace SystemTroubleShooter.ViewModel
         }
 
         private bool _isContentVisible;
+        private List<string>? outputDevices;
+        private List<string>? inputDevices;
+
         public bool IsContentVisible
         {
             get { return _isContentVisible; }
@@ -48,6 +52,18 @@ namespace SystemTroubleShooter.ViewModel
             LoadInputDevicesCommand = new RelayCommand(param => LoadDevices("Input"));
         }
 
+        public SoundDevicesViewModel(List<string> outputDevices, List<string> inputDevices)
+        {
+            this.outputDevices = outputDevices;
+            this.inputDevices = inputDevices;
+
+            Devices = new ObservableCollection<string>();
+            IsContentVisible = false; // Initially hidden
+
+            LoadOutputDevicesCommand = new RelayCommand(param => LoadDevices("Output"));
+            LoadInputDevicesCommand = new RelayCommand(param => LoadDevices("Input"));
+        }
+
         private void LoadDevices(string deviceType)
         {
             if(Devices is null)
@@ -57,16 +73,23 @@ namespace SystemTroubleShooter.ViewModel
             Devices.Clear();
 
             // Simulate loading devices
-            if (deviceType == "Output")
+            if (deviceType == "Input")
             {
-                Devices.Add("Realtek High Definition Audio");
-                Devices.Add("NVIDIA Output (NVIDIA High Definition Audio)");
-                Devices.Add("USB Speakers");
+                if (inputDevices is not null && inputDevices.Count != 0)
+                    foreach(var device in inputDevices)
+                    Devices?.Add(device);
+
+                else
+                    Devices.Add("No input device found");
             }
             else // Input
             {
-                Devices.Add("Microphone (Realtek High Definition Audio)");
-                Devices.Add("Webcam Microphone");
+                if (outputDevices is not null && outputDevices.Count != 0)
+                    foreach (var device in outputDevices)
+                        Devices?.Add(device);
+
+                else
+                    Devices.Add("No output device found");
             }
 
             // Trigger animations

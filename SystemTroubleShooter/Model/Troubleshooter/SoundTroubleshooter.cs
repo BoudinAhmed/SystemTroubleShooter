@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 
@@ -29,39 +30,56 @@ namespace SystemTroubleShooter.Model.Troubleshooter
             };
         }
 
-        public async Task<List<string>> GetAllAudioDevicesAsync()
+        public async Task<(List<string> InputDevices, List<string> OutputDevices)> GetAllAudioDevicesAsync()
         {
-            List<string> devices = new List<string>();
-            // Execute the script and get its output
+            List<string> inputDevices = new List<string>();
+            List<string> outputDevices = new List<string>();
+
+            // _getAllAudioDevices should be the full path to your updated PowerShell script file.
             var (standardOutput, standardError, exitCode) = await ExecutePowerShellScriptAsync(_getAllAudioDevices);
 
             if (exitCode == 0 && !string.IsNullOrWhiteSpace(standardOutput))
             {
-                // Split the output by new lines.
-                // Remove empty entries which might occur due to extra newlines.
-                devices = standardOutput.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.RemoveEmptyEntries)
-                                        .Select(device => device.Trim()) // Trim whitespace from each device name
-                                        .ToList();
+                try
+                {
+                    // Deserialize the JSON string into your AudioDeviceLists object
+                    var deviceLists = JsonSerializer.Deserialize<AudioDeviceLists>(standardOutput);
+
+                    if (deviceLists != null)
+                    {
+                        // Assign the parsed lists, handling potential nulls from deserialization if properties weren't in JSON
+                        inputDevices = deviceLists.InputDevices ?? new List<string>();
+                        outputDevices = deviceLists.OutputDevices ?? new List<string>();
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    // Log JSON parsing errors. This is crucial if the PowerShell output isn't what's expected.
+                    Debug.WriteLine($"JSON Deserialization Error in GetAllAudioDevicesSeparatedAsync: {ex.Message}");
+                    Debug.WriteLine($"Raw PowerShell Output that caused error: {standardOutput}");
+                }
             }
-            else if (exitCode != 0)
+            else // Handle cases where PowerShell script failed or returned no output
             {
-                // Log the error or handle it as appropriate
-                Debug.WriteLine($"Error getting audio devices. Exit Code: {exitCode}");
-                Debug.WriteLine($"Error Output: {standardError}");
-                // Optionally, you could throw an exception or return an empty list with a status message.
+                Debug.WriteLine($"PowerShell script error or no output in GetAllAudioDevicesSeparatedAsync. Exit Code: {exitCode}");
+                Debug.WriteLine($"PowerShell Error Output: {standardError}");
+                // You might want to return empty lists or throw an exception here depending on desired error handling.
             }
-            return devices;
+
+            // Return the tuple of separated lists
+            return (inputDevices, outputDevices);
         }
 
 
 
         public override async Task<string> RunDiagnosticsAsync()
         {
-            List<string> audioDevices = await GetAllAudioDevicesAsync();
-            if (audioDevices.Any())
+            (List<string> InputDevices, List<string> OutputDevices) = await GetAllAudioDevicesAsync();
+
+            if (InputDevices.Any())
             {
                 DetailedLog += "Available Audio Devices:" + Environment.NewLine;
-                foreach (var deviceName in audioDevices)
+                foreach (var deviceName in InputDevices)
                 {
                     Debug.WriteLine(deviceName);
                     DetailedLog += $"- {deviceName}{Environment.NewLine}";
@@ -73,13 +91,20 @@ namespace SystemTroubleShooter.Model.Troubleshooter
             }
 
 
-            foreach (var step in _troubleshootingSteps)
+            /*foreach (var step in _troubleshootingSteps)
             {
                 (IsFixed, ResolutionMessage) = await ExecuteTroubleshootingStepAsync(step);
-            }
+            }*/
 
 
             return "te";
         }
     }
+
+    public class AudioDeviceLists
+    {
+        public List<string>? InputDevices { get; set; }
+        public List<string>? OutputDevices { get; set; }
+    }
+
 }

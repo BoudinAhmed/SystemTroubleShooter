@@ -198,11 +198,10 @@ namespace SystemTroubleShooter.ViewModel
             if (_currentIssue is SoundTroubleshooter soundTroubleshooter)
             {
 
-                List<string> allAudioDevices = await soundTroubleshooter.GetAllAudioDevicesAsync();
-                List<string> outputDevices = allAudioDevices; // Placeholder
-                List<string> inputDevices = new List<string>(); // Placeholder
+                (List<string> InputDevices, List<string> OutputDevices) = await soundTroubleshooter.GetAllAudioDevicesAsync();
+                
 
-                _audioDeviceDisplayService.DisplayAudioDevices(outputDevices, inputDevices);
+                _audioDeviceDisplayService.DisplayAudioDevices(OutputDevices, InputDevices);
 
             }
             
