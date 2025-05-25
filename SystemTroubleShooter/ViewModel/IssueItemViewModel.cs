@@ -19,12 +19,12 @@ namespace SystemTroubleShooter.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private BaseTroubleshooter _currentIssue;
+        private BaseTroubleshooter? _currentIssue;
         private bool _areButtonsVisible;
         private bool _isTextVisible = true;
         private Border? _associatedBorder;
         private bool _isTroubleshooting;
-        private string _troubleshootingStatus;
+        private string? _troubleshootingStatus;
 
         // To display audiodevices view
         private readonly IAudioDeviceDisplayService _audioDeviceDisplayService;
@@ -73,7 +73,7 @@ namespace SystemTroubleShooter.ViewModel
         }
 
         // Gets or sets a value for troubleshooting status message
-        public string TroubleshootingStatus
+        public string? TroubleshootingStatus
         {
             get => _troubleshootingStatus;
             set
@@ -86,7 +86,7 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
         // Gets or sets the associated border element.
-        public Border AssociatedBorder
+        public Border? AssociatedBorder
         {
             get => _associatedBorder;
             set => _associatedBorder = value;
@@ -96,7 +96,7 @@ namespace SystemTroubleShooter.ViewModel
         public string Title { get; set; } = "new Issue Title";
         public string Description { get; set; } = "new Issue Description";
         public string ImageSource { get; set; } = "xE9CE;";
-        public BaseTroubleshooter IssueType { get; set; }
+        public BaseTroubleshooter? IssueType { get; set; }
         public bool IsItemSelected { get; set; }
 
         // Handle the navigation to the next view.
@@ -122,7 +122,7 @@ namespace SystemTroubleShooter.ViewModel
         }
         
 
-        private void OnItemClicked(object obj)
+        private void OnItemClicked(object? obj)
         {
             //Not to interupt the troubleshooting process
             if (IsTroubleshooting) {
@@ -130,7 +130,9 @@ namespace SystemTroubleShooter.ViewModel
             }
 
             //The animation to be played when the item is clicked.
-            AssociatedBorder = (Border)obj;
+            if(obj is not null) 
+            AssociatedBorder = (Border)obj ;
+
             if (AssociatedBorder == null) return;
 
             var fadeOutStoryboard = AssociatedBorder.Resources["FadeOut"] as Storyboard;
@@ -145,9 +147,11 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
-        private void OnItemCancelClicked(object obj)
+        private void OnItemCancelClicked(object? obj)
         {
-            AssociatedBorder = (Border)obj;
+            if (obj is not null)
+                AssociatedBorder = (Border)obj;
+
             if (AssociatedBorder == null) return;
 
             var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
@@ -169,21 +173,25 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
-        private void IssueStatusChanged(object sender, PropertyChangedEventArgs e)
+        private void IssueStatusChanged(object? sender, PropertyChangedEventArgs e)
         {
             // Check if the property that changed is StatusMessage.
             if (e.PropertyName == nameof(BaseTroubleshooter.StatusMessage))
             {
+                if(_currentIssue != null && _currentIssue.StatusMessage != null)
                 TroubleshootingStatus = _currentIssue.StatusMessage;
             }
         }
 
-        private async void OnItemTroubleshootClicked(object obj)
+        private async void OnItemTroubleshootClicked(object? obj)
         {
             AreButtonsVisible = false;
             IsTroubleshooting = true;
             TroubleshootingStatus = "Starting...";
             _currentIssue = this.IssueType;
+
+            if(_currentIssue == null) return;
+
             _currentIssue.PropertyChanged += IssueStatusChanged;
 
 
@@ -218,7 +226,9 @@ namespace SystemTroubleShooter.ViewModel
                  IsTroubleshooting = false;
 
                 // The animation to reset to inital state
-                AssociatedBorder = (Border)obj;
+                if (obj is not null)
+                    AssociatedBorder = (Border)obj;
+
                 if (AssociatedBorder == null) return;
 
                 var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;

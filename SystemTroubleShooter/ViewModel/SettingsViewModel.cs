@@ -28,15 +28,15 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
-        private string _newDriveLetter;
-        public string NewDriveLetter
+        private string? _newDriveLetter;
+        public string? NewDriveLetter
         {
             get => _newDriveLetter;
             set => SetProperty(ref _newDriveLetter, value);
         }
 
-        private string _newDrivePath;
-        public string NewDrivePath
+        private string? _newDrivePath;
+        public string? NewDrivePath
         {
             get => _newDrivePath;
             set => SetProperty(ref _newDrivePath, value);
@@ -72,8 +72,8 @@ namespace SystemTroubleShooter.ViewModel
             set => SetProperty(ref _availableOutputDevices, value);
         }
 
-        private OutputDevice _selectedOutputDevice;
-        public OutputDevice SelectedOutputDevice
+        private OutputDevice? _selectedOutputDevice;
+        public OutputDevice? SelectedOutputDevice
         {
             get => _selectedOutputDevice;
             set => SetProperty(ref _selectedOutputDevice, value);
@@ -128,8 +128,9 @@ namespace SystemTroubleShooter.ViewModel
             CancelSettingsCommand = new RelayCommand(o => LoadSettings()); // Cancel reloads last saved state
             AddNetworkDriveCommand = new RelayCommand(o => AddNetworkDrive(), o => CanAddNetworkDrive());
             RemoveNetworkDriveCommand = new RelayCommand(
-                param => RemoveNetworkDrive((string)param), // Execute action casts object to string
-                param => CanRemoveNetworkDrive((string)param) // CanExecute predicate casts object to string
+                param => { if (param is string drivepath) 
+                        RemoveNetworkDrive((drivepath)); }, // Execute action casts object to string
+                param => param is string drivePath && CanRemoveNetworkDrive((string)param) // CanExecute predicate casts object to string
             );
 
             // Initialize other settings properties with default values / load them
@@ -147,12 +148,13 @@ namespace SystemTroubleShooter.ViewModel
         {
             if (CanAddNetworkDrive())
             {
+                if(NewDriveLetter is null || NewDrivePath is null) return;
 
                 var updatedDrives = new Dictionary<string, string>(ConfiguredNetworkDrives);
                 updatedDrives.Add(NewDriveLetter, NewDrivePath);
                 ConfiguredNetworkDrives = updatedDrives;
 
-                NewDriveLetter = null;
+                NewDriveLetter = "";
                 NewDrivePath = string.Empty;
             }
         }
@@ -193,11 +195,11 @@ namespace SystemTroubleShooter.ViewModel
                       
                         ConfiguredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
 
-                        PreferredDns = savedSettings.PreferredDns;
-                        AlternateDns = savedSettings.AlternateDns;
+                        PreferredDns = savedSettings.PreferredDns ?? "0.0.0.0";
+                        AlternateDns = savedSettings.AlternateDns ?? "0.0.0.0";
                         PauseUpdates = savedSettings.PauseUpdates;
-                        ActiveHoursStart = savedSettings.ActiveHoursStart;
-                        ActiveHoursEnd = savedSettings.ActiveHoursEnd;
+                        ActiveHoursStart = savedSettings.ActiveHoursStart ?? "00:00";
+                        ActiveHoursEnd = savedSettings.ActiveHoursEnd ?? "00:00";
                         // Todo: load SelectedOutputDevice based on some identifier
                         // For example, if SettingsData stores the DeviceName:
                         // SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault(d => d.DeviceName == savedSettings.SelectedOutputDeviceName);
@@ -208,12 +210,11 @@ namespace SystemTroubleShooter.ViewModel
                         ConfiguredNetworkDrives = new Dictionary<string, string>();
                         UpdateAvailableDriveLetters();
                         // To initialize other properties to default values
-                        PreferredDns = string.Empty;
-                        AlternateDns = string.Empty;
+                        PreferredDns = "0.0.0.0";
+                        AlternateDns = "0.0.0.0";
                         PauseUpdates = false;
                         ActiveHoursStart = "09:00";
                         ActiveHoursEnd = "17:00";
-                        // Fix 2: Assign a default OutputDevice instead of null
                         SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
                     }
                 }
@@ -297,19 +298,19 @@ namespace SystemTroubleShooter.ViewModel
     // Model for SettingsData 
     public class SettingsData
     {
-        public string PreferredDns { get; set; }
-        public string AlternateDns { get; set; }
-        public Dictionary<string, string> NetworkDrives { get; set; }
+        public string? PreferredDns { get; set; }
+        public string? AlternateDns { get; set; }
+        public Dictionary<string, string>? NetworkDrives { get; set; }
         public bool PauseUpdates { get; set; }
-        public string ActiveHoursStart { get; set; }
-        public string ActiveHoursEnd { get; set; }
+        public string? ActiveHoursStart { get; set; }
+        public string? ActiveHoursEnd { get; set; }
         // public string SelectedOutputDeviceName { get; set; } // If I choose to store by name
     }
 
     // Model for OutputDevice 
     public class OutputDevice
     {
-        public string DeviceName { get; set; }
+        public string? DeviceName { get; set; }
         // other properties to be added
     }
 }

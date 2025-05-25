@@ -14,7 +14,6 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         private const string _refreshAdaptersScriptPath = @"Scripts\\Internet\\RefreshNetworkAdapter.ps1";
         private const string _pingScriptPath = @"Scripts\\Internet\\PingTests.ps1";
 
-        private readonly string _networkadapter;
         private readonly List<TroubleshootingStep> _troubleshootingSteps;
 
         public InternetTroubleshooter()
@@ -64,7 +63,7 @@ namespace SystemTroubleShooter.Model.Troubleshooter
 
 
             }
-            return ResolutionMessage;
+            return ResolutionMessage ?? "try what you were doing with the internet again";
         }
     }
 }

@@ -12,10 +12,10 @@ namespace SystemTroubleShooter.Model.Troubleshooter
     public abstract class BaseTroubleshooter : INotifyPropertyChanged
     {
         // Backing field for StatusMessage
-        private string _statusMessage;
+        private string? _statusMessage;
 
         // Public property with INotifyPropertyChanged implementation
-        public string StatusMessage
+        public string? StatusMessage
         {
             get => _statusMessage;
             set
@@ -33,8 +33,8 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         }
 
         // Property to hold detailed log output that the UI can bind to
-        private string _detailedLog;
-        public string DetailedLog
+        private string? _detailedLog;
+        public string? DetailedLog
         {
             get => _detailedLog;
             set
@@ -52,7 +52,7 @@ namespace SystemTroubleShooter.Model.Troubleshooter
 
 
         // INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -61,11 +61,11 @@ namespace SystemTroubleShooter.Model.Troubleshooter
 
 
         // Public properties
-        public string IssueType { get; set; }
-        public string Detail { get; set; }
+        public string? IssueType { get; set; }
+        public string? Detail { get; set; }
         public List<string> TaskList { get; set; } = new List<string>(); // Initialize TaskList
         public DateTime TimeStamp { get; set; }
-        public string ResolutionMessage { get; set; }
+        public string? ResolutionMessage { get; set; }
         public bool IsFixed { get; set; }
 
 
@@ -82,8 +82,8 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         protected async Task<(string StandardOutput, string StandardError, int ExitCode)> ExecutePowerShellScriptAsync(
             string relativeScriptPath,
             string arguments = "",
-            Action<string> onOutputDataReceived = null, // Action to call for each line of standard output in the ps script
-            Action<string> onErrorDataReceived = null)  // Action to call for each line of standard output in the ps script
+            Action<string>? onOutputDataReceived = null, // Action to call for each line of standard output in the ps script
+            Action<string>? onErrorDataReceived = null)  // Action to call for each line of standard output in the ps script
         {
             // Convert relative path to absolute path
             string executionDirectory = AppDomain.CurrentDomain.BaseDirectory;

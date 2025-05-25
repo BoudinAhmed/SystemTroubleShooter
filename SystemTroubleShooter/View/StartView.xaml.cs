@@ -22,7 +22,7 @@ namespace SystemTroubleShooter.View
     /// </summary>
     public partial class StartView : Window
     {
-        private readonly StartViewModel _issueSelectedViewModel;
+        
         public StartView()
         {
             InitializeComponent();
