@@ -135,6 +135,7 @@ namespace SystemTroubleShooter.ViewModel
 
             if (AssociatedBorder == null) return;
 
+            //Title and Description fade out first
             var fadeOutStoryboard = AssociatedBorder.Resources["FadeOut"] as Storyboard;
             if (fadeOutStoryboard == null) return;
 
@@ -185,12 +186,20 @@ namespace SystemTroubleShooter.ViewModel
 
         private async void OnItemTroubleshootClicked(object? obj)
         {
-            AreButtonsVisible = false;
+            
+            AreButtonsVisible = false; //Buttons (Cancel/Trouble) visibility on issueItem
             IsTroubleshooting = true;
             TroubleshootingStatus = "Starting...";
             _currentIssue = this.IssueType;
 
-            if(_currentIssue == null) return;
+            if (_currentIssue == null) 
+            {
+                TroubleshootingStatus = "Coming soon - Under Development";
+                await Task.Delay(5000);
+                ResetIssueItemAnimation(obj);
+                return; 
+            
+            }
 
             _currentIssue.PropertyChanged += IssueStatusChanged;
 
@@ -199,9 +208,11 @@ namespace SystemTroubleShooter.ViewModel
             {
 
                 (List<string> InputDevices, List<string> OutputDevices) = await soundTroubleshooter.GetAllAudioDevicesAsync();
-                
 
-                _audioDeviceDisplayService.DisplayAudioDevices(OutputDevices, InputDevices);
+                TroubleshootingStatus = "Please select a device...";
+                string? userSelectedDevice = await _audioDeviceDisplayService.SelectAudioDeviceAsync(OutputDevices, InputDevices);
+
+                soundTroubleshooter.SelectedDevice = userSelectedDevice;
 
             }
             
@@ -225,30 +236,35 @@ namespace SystemTroubleShooter.ViewModel
                  IsTroubleshooting = false;
 
                 // The animation to reset to inital state
-                if (obj is not null)
-                    AssociatedBorder = (Border)obj;
-
-                if (AssociatedBorder == null) return;
-
-                var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
-                var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
-
-                if (fadeInStoryboard == null || resetStoryboard == null) return;
-
-                resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
-                resetStoryboard.Begin(AssociatedBorder);
-
-                IsItemSelected = false;
-                IsTextVisible = true;
-                AreButtonsVisible = false;
-                IsTroubleshooting = false;
-
-                if (Application.Current.MainWindow?.DataContext is StartViewModel startViewModel)
-                {
-                    startViewModel.ListenToNextClicked(this, AssociatedBorder);
-                }
+                ResetIssueItemAnimation(obj);
             }
             
+        }
+
+        public void ResetIssueItemAnimation(object? obj)
+        {
+            if (obj is not null)
+                AssociatedBorder = (Border)obj;
+
+            if (AssociatedBorder == null) return;
+
+            var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
+            var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
+
+            if (fadeInStoryboard == null || resetStoryboard == null) return;
+
+            resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
+            resetStoryboard.Begin(AssociatedBorder);
+
+            IsItemSelected = false;
+            IsTextVisible = true;
+            AreButtonsVisible = false;
+            IsTroubleshooting = false;
+
+            if (Application.Current.MainWindow?.DataContext is StartViewModel startViewModel)
+            {
+                startViewModel.ListenToNextClicked(this, AssociatedBorder);
+            }
         }
 
         // Shows the buttons associated with the issue item.
@@ -261,7 +277,7 @@ namespace SystemTroubleShooter.ViewModel
 
         private void StartButtonAnimation(object sender)
         {
-            Reset();
+            ResetIssueItemAnimation(sender);
             if (!(sender is Border border)) return;
 
             var buttonAnimationStoryboard = border.Resources["ButtonAnimation"] as Storyboard;
@@ -276,7 +292,7 @@ namespace SystemTroubleShooter.ViewModel
         }
 
         // Resets the issue item to its initial state (title and description shown only).
-        public void Reset()
+        public void ResetIssueItem()
         {
             if (IsTextVisible || !AreButtonsVisible) return;
             if (AssociatedBorder == null) return;

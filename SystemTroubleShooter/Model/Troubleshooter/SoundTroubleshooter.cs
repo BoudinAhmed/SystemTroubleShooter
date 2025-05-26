@@ -14,6 +14,11 @@ namespace SystemTroubleShooter.Model.Troubleshooter
     {
         private const string _checkAudioServices = @"Scripts\\Sound\\Check-Restart-AudioServices.ps1";
         private const string _getAllAudioDevices = @"Scripts\\Sound\\GetAllAudioDevices.ps1";
+
+        private string? _selectedDevice;
+
+        public string? SelectedDevice { get => _selectedDevice; set => _selectedDevice = value; }
+
         private readonly List<TroubleshootingStep> _troubleshootingSteps;
         
         public SoundTroubleshooter() 
@@ -76,25 +81,11 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         {
             (List<string> InputDevices, List<string> OutputDevices) = await GetAllAudioDevicesAsync();
 
-            if (InputDevices.Any())
-            {
-                DetailedLog += "Available Audio Devices:" + Environment.NewLine;
-                foreach (var deviceName in InputDevices)
-                {
-                    Debug.WriteLine(deviceName);
-                    DetailedLog += $"- {deviceName}{Environment.NewLine}";
-                }
-            }
-            else
-            {
-                DetailedLog += "No audio devices found via PowerShell script." + Environment.NewLine;
-            }
 
-
-            /*foreach (var step in _troubleshootingSteps)
+            foreach (var step in _troubleshootingSteps)
             {
                 (IsFixed, ResolutionMessage) = await ExecuteTroubleshootingStepAsync(step);
-            }*/
+            }
 
 
             return "te";

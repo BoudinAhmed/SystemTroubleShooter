@@ -7,7 +7,8 @@ using System.Windows;
 using SystemTroubleShooter.View;
 using System.Linq;
 using SystemTroubleShooter.Helpers.Commands;
-using System.Collections.Generic; // Required for Storyboard
+using System.Collections.Generic;
+using System; // Required for Storyboard
 
 namespace SystemTroubleShooter.ViewModel
 {
@@ -26,6 +27,18 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
+        private string? _selectedDevice;
+        public string? SelectedDevice
+        {
+            get { return _selectedDevice; }
+            set
+            {
+                _selectedDevice = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private bool _isContentVisible;
         private List<string>? outputDevices;
         private List<string>? inputDevices;
@@ -42,6 +55,14 @@ namespace SystemTroubleShooter.ViewModel
 
         public ICommand LoadOutputDevicesCommand { get; private set; }
         public ICommand LoadInputDevicesCommand { get; private set; }
+        public ICommand ConfirmCommand { get; private set; }
+        public ICommand CancelCommand { get; private set; }
+
+        public Action<bool?>? CloseWindowAction { get; set; }
+
+        public string? ConfirmedDevice { get; private set; } // To store the confirmed device
+        private const string NoInputDeviceFoundMessage = "No input device found";
+        private const string NoOutputDeviceFoundMessage = "No output device found";
 
         public SoundDevicesViewModel()
         {
@@ -50,6 +71,8 @@ namespace SystemTroubleShooter.ViewModel
 
             LoadOutputDevicesCommand = new RelayCommand(param => LoadDevices("Output"));
             LoadInputDevicesCommand = new RelayCommand(param => LoadDevices("Input"));
+            ConfirmCommand = new RelayCommand(ExecuteConfirm, CanExecuteConfirm);
+            CancelCommand = new RelayCommand(ExecuteCancel);
         }
 
         public SoundDevicesViewModel(List<string> outputDevices, List<string> inputDevices)
@@ -62,6 +85,28 @@ namespace SystemTroubleShooter.ViewModel
 
             LoadOutputDevicesCommand = new RelayCommand(param => LoadDevices("Output"));
             LoadInputDevicesCommand = new RelayCommand(param => LoadDevices("Input"));
+            ConfirmCommand = new RelayCommand(ExecuteConfirm, CanExecuteConfirm);
+            CancelCommand = new RelayCommand(ExecuteCancel);
+        }
+
+        bool blockbutton = false;
+        private bool CanExecuteConfirm(object? parameter)
+        {
+            return !string.IsNullOrEmpty(SelectedDevice) &&
+                   SelectedDevice != NoInputDeviceFoundMessage &&
+                   SelectedDevice != NoOutputDeviceFoundMessage;
+        }
+
+        private void ExecuteConfirm(object? parameter)
+        {
+            ConfirmedDevice = SelectedDevice;
+            CloseWindowAction?.Invoke(true); // true for confirmed
+        }
+
+        private void ExecuteCancel(object? parameter)
+        {
+            ConfirmedDevice = null;
+            CloseWindowAction?.Invoke(false); // false for cancelled
         }
 
         private void LoadDevices(string deviceType)
@@ -92,8 +137,11 @@ namespace SystemTroubleShooter.ViewModel
                     Devices.Add("No output device found");
             }
 
-            // Trigger animations
-            TriggerAnimations();
+            if (!_hasAnimationsPlayed)
+                TriggerAnimations();
+
+
+            IsContentVisible = true;
         }
 
         private void TriggerAnimations()
@@ -118,8 +166,10 @@ namespace SystemTroubleShooter.ViewModel
                 var FadeInListViewStoryboard = (Storyboard)window.FindResource("FadeInListView");
                 FadeInListViewStoryboard.Begin(window);
 
+                var fadeInConfirmCancelPanelStoryboard = (Storyboard)window.FindResource("FadeInConfirmCancelPanel");
+                fadeInConfirmCancelPanelStoryboard.Begin(window);
+
                 _hasAnimationsPlayed = true;
-                IsContentVisible = true;
             }
         }
 
