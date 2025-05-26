@@ -23,7 +23,7 @@ This software is a helpful desktop utility built with **C#** and the **WPF** fra
 
 ## 🖼️ Screenshots
 
-![Screenshot of Home View](assets/TroubleshooterScreenshot.png)
+![Screenshot of Home View](SystemTroubleShooter/Assets/TroubleshooterScreenshot.png)
 *Get started here! This view offers clear navigation to the various troubleshooting options.*
 
 
