@@ -21,16 +21,11 @@ This software is a helpful desktop utility built with **C#** and the **WPF** fra
 
 ---
 
-## 🖼️ Screenshots (Coming Soon)
+## 🖼️ Screenshots
 
-![Screenshot of Start View](assets/start-view.png)
+![Screenshot of Home View](assets/TroubleshooterScreenshot.png)
 *Get started here! This view offers clear navigation to the various troubleshooting options.*
 
-![Screenshot of Troubleshooting View](assets/troubleshooting-view.png)
-*Follow along as the application diagnoses your system. This view displays real-time status messages and progress.*
-
-![Screenshot of Result View View](assets/Result-view.png)
-*See the outcome! This view presents the final diagnostic results and any suggested solutions.*
 
 ---
 
@@ -39,6 +34,7 @@ This software is a helpful desktop utility built with **C#** and the **WPF** fra
 * **C#**: The primary programming language.
 * **WPF (Windows Presentation Foundation)**: The framework for building the desktop user interface.
 * **MVVM (Model-View-ViewModel)**: The architectural pattern for structuring the application.
+* **PowerShell**: The code behind for enhanced repair-functions and diagnostics.
 
 ---
 
