@@ -1,4 +1,4 @@
-# System TroubleShooter
+# System TroubleShooter  [![WPF CI Build](https://github.com/BoudinDjama/SystemTroubleShooter/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/BoudinDjama/SystemTroubleShooter/actions/workflows/main.yml)
 
 As someone who enjoys fixing IT issues and always looks for opportunities to automate with PowerShell, the concept of building an app for common/company-specific problems was very appealing. Throughout this project, I have applied my years of IT experience. It has also significantly deepened my passion and love for programming.
 
