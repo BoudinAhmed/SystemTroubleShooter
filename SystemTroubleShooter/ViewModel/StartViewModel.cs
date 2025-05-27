@@ -134,7 +134,7 @@ namespace SystemTroubleShooter.ViewModel
         {
             if (_lastClickedItem != null && _lastClickedItem != clickedItem)
             {
-                _lastClickedItem.Reset();
+                _lastClickedItem.ResetIssueItem();
             }
 
             _lastClickedItem = clickedItem;

@@ -9,6 +9,6 @@ namespace SystemTroubleShooter.Interfaces
     public interface IAudioDeviceDisplayService
     {
         void DisplayAudioDevices(List<string> outputDevices, List<string> inputDevices);
-
+        Task<string?> SelectAudioDeviceAsync(List<string> outputDevices, List<string> inputDevices);
     }
 }
