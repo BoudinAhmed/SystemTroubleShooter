@@ -12,6 +12,7 @@ The System TroubleShooter is a desktop application aimed at automating the resol
 * **Sound Issue Diagnostics**: Walk through steps to identify and resolve audio playback or recording issues.
 * **Network Drive Management**: Easily accessing your mapped network drives.
 * **Update Status Checker**: Quickly verify the status of System Updates and guide you through potential issues.
+* **Bluetooth pairing and fixing**: Verify and fix bluetooth issues
 * **Modular and Extensible**: Designed with a modular architecture, making it easy to add support for even more troubleshooting scenarios in the future.
 * **MVVM Architecture**: Leverages the Model-View-ViewModel pattern for a clear separation of concerns, enhancing maintainability and testability.
 * **Customizable and Adaptable**: The MVVM structure allows for easy addition of new troubleshooting modules and corresponding UI elements.
