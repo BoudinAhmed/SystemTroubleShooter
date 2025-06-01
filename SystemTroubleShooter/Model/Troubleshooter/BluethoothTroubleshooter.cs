@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SystemTroubleShooter.Model.Troubleshooter
 {
-    internal class BluethoothTroubleshooter
+    public class BluethoothTroubleshooter
     {
+
     }
 }
