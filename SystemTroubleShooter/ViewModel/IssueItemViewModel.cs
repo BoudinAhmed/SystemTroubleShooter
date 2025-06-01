@@ -209,6 +209,8 @@ namespace SystemTroubleShooter.ViewModel
 
                 (List<string> InputDevices, List<string> OutputDevices) = await soundTroubleshooter.GetAllAudioDevicesAsync();
 
+
+
                 TroubleshootingStatus = "Please select a device...";
                 string? userSelectedDevice = await _audioDeviceDisplayService.SelectAudioDeviceAsync(OutputDevices, InputDevices);
 

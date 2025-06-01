@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="Model\Troubleshooter\BaseTroubleshooter.cs" />
     <Compile Include="Model\HistoryEntryModel.cs" />
+    <Compile Include="Model\Troubleshooter\BluethoothTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\InternetTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\NetworkDriveTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\SoundTroubleshooter.cs" />
@@ -38,6 +39,7 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Scripts\NetworkDrive\" />
+    <Folder Include="Scripts\Bluetooth\" />
     <Folder Include="ViewModel\UserControl\" />
   </ItemGroup>
 
