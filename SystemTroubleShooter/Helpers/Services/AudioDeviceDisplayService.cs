@@ -9,7 +9,7 @@ using SystemTroubleShooter.Interfaces;
 using SystemTroubleShooter.View;
 using SystemTroubleShooter.ViewModel;
 
-namespace SystemTroubleShooter.Helpers
+namespace SystemTroubleShooter.Helpers.Services
 {
     public class AudioDeviceDisplayService : IAudioDeviceDisplayService
     {
@@ -55,8 +55,10 @@ namespace SystemTroubleShooter.Helpers
 
         public void DisplayAudioDevices(List<string> outputDevices, List<string> inputDevices)
         {
-            var audioDeviceView = new SoundDevicesView();
-            audioDeviceView.DataContext = new SoundDevicesViewModel(outputDevices, inputDevices);
+            var audioDeviceView = new SoundDevicesView
+            {
+                DataContext = new SoundDevicesViewModel(outputDevices, inputDevices)
+            };
             audioDeviceView.Show();
            
         }

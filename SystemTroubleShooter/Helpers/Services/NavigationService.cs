@@ -9,7 +9,7 @@ using System.Windows;
 using SystemTroubleShooter.Interfaces;
 using SystemTroubleShooter.Model;
 
-namespace SystemTroubleShooter.Helpers
+namespace SystemTroubleShooter.Helpers.Services
 {
     public class NavigationService
     {

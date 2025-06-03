@@ -11,9 +11,13 @@
 
   <ItemGroup>
     <Compile Remove="Model\**" />
+    <Compile Remove="ViewModel\UserControl\**" />
     <EmbeddedResource Remove="Model\**" />
+    <EmbeddedResource Remove="ViewModel\UserControl\**" />
     <None Remove="Model\**" />
+    <None Remove="ViewModel\UserControl\**" />
     <Page Remove="Model\**" />
+    <Page Remove="ViewModel\UserControl\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +44,6 @@
     <Folder Include="Properties\" />
     <Folder Include="Scripts\NetworkDrive\" />
     <Folder Include="Scripts\Bluetooth\" />
-    <Folder Include="ViewModel\UserControl\" />
   </ItemGroup>
 
   <ItemGroup>
