@@ -40,8 +40,8 @@ namespace SystemTroubleShooter.ViewModel
 
 
         private bool _isContentVisible;
-        private List<string>? outputDevices;
-        private List<string>? inputDevices;
+        private readonly List<string>? outputDevices;
+        private readonly List<string>? inputDevices;
 
         public bool IsContentVisible
         {
@@ -89,7 +89,6 @@ namespace SystemTroubleShooter.ViewModel
             CancelCommand = new RelayCommand(ExecuteCancel);
         }
 
-        bool blockbutton = false;
         private bool CanExecuteConfirm(object? parameter)
         {
             return !string.IsNullOrEmpty(SelectedDevice) &&
@@ -111,8 +110,7 @@ namespace SystemTroubleShooter.ViewModel
 
         private void LoadDevices(string deviceType)
         {
-            if(Devices is null)
-                Devices = new ObservableCollection<string>();
+            Devices ??= new ObservableCollection<string>();
 
             // Clear existing devices
             Devices.Clear();

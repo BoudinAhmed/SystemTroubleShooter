@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using SystemTroubleShooter.Helpers;
 using SystemTroubleShooter.Helpers.Commands;
+using SystemTroubleShooter.Helpers.Services;
 using SystemTroubleShooter.Interfaces;
 using SystemTroubleShooter.Model.Troubleshooter;
 
@@ -26,8 +27,9 @@ namespace SystemTroubleShooter.ViewModel
         private bool _isTroubleshooting;
         private string? _troubleshootingStatus;
 
-        // To display audiodevices view
+        // Services To display views
         private readonly IAudioDeviceDisplayService _audioDeviceDisplayService;
+        private readonly IDialogService _dialogService;
 
 
         // Gets or sets a value indicating whether the buttons are visible.
@@ -99,8 +101,6 @@ namespace SystemTroubleShooter.ViewModel
         public BaseTroubleshooter? IssueType { get; set; }
         public bool IsItemSelected { get; set; }
 
-        // Handle the navigation to the next view.
-        private NavigationService _navigationService { get; set; }
 
         // Gets the command executed when the item is clicked.
         public ICommand ItemClickedCommand { get; }
@@ -113,8 +113,8 @@ namespace SystemTroubleShooter.ViewModel
 
         public IssueItemViewModel()
         {
-            _navigationService = new NavigationService();
             _audioDeviceDisplayService = new AudioDeviceDisplayService(); // Assign the injected service
+            _dialogService = new DialogService();
 
             ItemClickedCommand = new RelayCommand(OnItemClicked);
             ItemCancelClickedCommand = new RelayCommand(OnItemCancelClicked);
@@ -136,8 +136,7 @@ namespace SystemTroubleShooter.ViewModel
             if (AssociatedBorder == null) return;
 
             //Title and Description fade out first
-            var fadeOutStoryboard = AssociatedBorder.Resources["FadeOut"] as Storyboard;
-            if (fadeOutStoryboard == null) return;
+            if (AssociatedBorder.Resources["FadeOut"] is not Storyboard fadeOutStoryboard) return;
 
             fadeOutStoryboard.Completed += (sender, e) => StartButtonAnimation(AssociatedBorder);
             fadeOutStoryboard.Begin(AssociatedBorder);
@@ -155,10 +154,8 @@ namespace SystemTroubleShooter.ViewModel
 
             if (AssociatedBorder == null) return;
 
-            var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
-            var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
 
-            if (fadeInStoryboard == null || resetStoryboard == null) return;
+            if (AssociatedBorder.Resources["FadeIn"] is not Storyboard fadeInStoryboard || AssociatedBorder.Resources["ResetAnimation"] is not Storyboard resetStoryboard) return;
 
             resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
             resetStoryboard.Begin(AssociatedBorder);
@@ -234,6 +231,9 @@ namespace SystemTroubleShooter.ViewModel
                 {
                     TroubleshootingStatus = "Failed";
                 }
+                if(_currentIssue.ResolutionMessage is not null)
+                _dialogService.ShowCompletionMessageAsync(_currentIssue.ResolutionMessage);
+
                 await Task.Delay(2000);
                  IsTroubleshooting = false;
 
@@ -250,10 +250,8 @@ namespace SystemTroubleShooter.ViewModel
 
             if (AssociatedBorder == null) return;
 
-            var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
-            var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard;
 
-            if (fadeInStoryboard == null || resetStoryboard == null) return;
+            if (AssociatedBorder.Resources["FadeIn"] is not Storyboard fadeInStoryboard || AssociatedBorder.Resources["ResetAnimation"] is not Storyboard resetStoryboard) return;
 
             resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
             resetStoryboard.Begin(AssociatedBorder);
@@ -280,10 +278,9 @@ namespace SystemTroubleShooter.ViewModel
         private void StartButtonAnimation(object sender)
         {
             ResetIssueItemAnimation(sender);
-            if (!(sender is Border border)) return;
+            if (sender is not Border border) return;
 
-            var buttonAnimationStoryboard = border.Resources["ButtonAnimation"] as Storyboard;
-            if (buttonAnimationStoryboard == null)
+            if (border.Resources["ButtonAnimation"] is not Storyboard buttonAnimationStoryboard)
             {
                 Debug.WriteLine("Storyboard not found");
                 return;
@@ -299,10 +296,9 @@ namespace SystemTroubleShooter.ViewModel
             if (IsTextVisible || !AreButtonsVisible) return;
             if (AssociatedBorder == null) return;
 
-            var fadeInStoryboard = AssociatedBorder.Resources["FadeIn"] as Storyboard;
             var resetStoryboard = AssociatedBorder.Resources["ResetAnimation"] as Storyboard ?? throw new ArgumentNullException(nameof(Storyboard), "resetStoryboard cannot be null."); ;
 
-            if (fadeInStoryboard == null) return;
+            if (AssociatedBorder.Resources["FadeIn"] is not Storyboard fadeInStoryboard) return;
 
             resetStoryboard.Completed += (sender, e) => fadeInStoryboard.Begin(AssociatedBorder);
             resetStoryboard.Begin(AssociatedBorder);

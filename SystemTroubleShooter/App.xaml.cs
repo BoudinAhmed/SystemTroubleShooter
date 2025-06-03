@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Unity;
-using SystemTroubleShooter.Helpers;
 using SystemTroubleShooter.Interfaces;
 using SystemTroubleShooter.View;
 using SystemTroubleShooter.ViewModel;
+using SystemTroubleShooter.Helpers.Services;
 
 namespace SystemTroubleShooter
 {
