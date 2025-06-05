@@ -1,0 +1,72 @@
+name: "CodeQL Advanced Security Scan"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    # A weekly scan on Saturday at 8:44 PM UTC
+    - cron: '44 20 * * 6'
+env:
+  # --- Solution and Build Configuration (for CodeQL's build monitoring) ---
+  SOLUTION_FILE_PATH: 'SystemTroubleShooter.sln'
+  BUILD_CONFIGURATION: 'Release'
+  
+jobs:
+  codeql-security-scan:
+    name: Analyze (${{ matrix.language }})
+    # Windows runnerfor .Net WPF
+    runs-on: windows-latest 
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          
+          - language: csharp
+            build-mode: manual # Changed from 'none' to 'manual'
+       
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Setup .NET SDK required for building WPF application
+    - name: Setup .NET 6 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x' 
+        
+    # Initializes the CodeQL scan.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+        
+
+    # For compiled languages like C#.
+    # CodeQL needs to monitor the actual build process.
+    - name: Build C# application for CodeQL analysis
+      
+      if: matrix.build-mode == 'manual'
+      shell: pwsh # PowerShell for Windows runner for consistency
+      run: |
+        $solutionPath = "SystemTroubleShooter.sln"
+        $buildConfiguration = "Release" 
+        
+        # Restore dependencies before building
+        dotnet restore $solutionPath
+
+        # Build solution. CodeQL monitors this build.
+        dotnet build $solutionPath --configuration $buildConfiguration --no-restore
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
