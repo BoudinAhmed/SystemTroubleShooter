@@ -19,15 +19,12 @@ namespace SystemTroubleShooter
     /// </summary>
     public partial class App : Application
     {
-        public static NavigationService? NavigationService { get; private set; }
-
+        
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // Initialize the Navigation Service
-            NavigationService = new NavigationService();
-
+            
             // Start the app with the first view
             var firstView = new StartView
             {
