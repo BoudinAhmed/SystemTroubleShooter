@@ -119,7 +119,7 @@
                 <StackPanel>
                     <TextBlock Text="Installed RAM:" FontWeight="SemiBold" Margin="0,0,0,5"
                                FontFamily="Segoe UI" Foreground="#dddddd"/>
-                    <TextBlock Text="{Binding InstalledRAM, FallbackValue='Loading...'}"
+                    <TextBlock Text="{Binding RamUsageDisplay, FallbackValue='Loading...'}"
                                FontFamily="Segoe UI" Foreground="#dddddd"
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
                 </StackPanel>
@@ -132,7 +132,7 @@
                 <StackPanel>
                     <TextBlock Text="CPU Usage:" FontWeight="SemiBold" Margin="0,0,0,5"
                                FontFamily="Segoe UI" Foreground="#dddddd"/>
-                    <TextBlock Text="{Binding CpuUsage, FallbackValue='--%'}"
+                    <TextBlock Text="{Binding CpuUsageDisplay, FallbackValue='--%'}"
                                FontFamily="Segoe UI" Foreground="#dddddd"/>
                 </StackPanel>
             </Border>
@@ -141,9 +141,9 @@
                     BorderBrush="#444444" BorderThickness="1"
                     Padding="15" Margin="10,10,0,0">
                 <StackPanel>
-                    <TextBlock Text="RAM Usage:" FontWeight="SemiBold" Margin="0,0,0,5"
+                    <TextBlock Text="DISK Space:" FontWeight="SemiBold" Margin="0,0,0,5"
                                FontFamily="Segoe UI" Foreground="#dddddd"/>
-                    <TextBlock Text="{Binding RamUsage, FallbackValue='--%'}"
+                    <TextBlock Text="{Binding FreeDiskSpaceDisplay, FallbackValue='--%'}"
                                FontFamily="Segoe UI" Foreground="#dddddd"/>
                 </StackPanel>
             </Border>

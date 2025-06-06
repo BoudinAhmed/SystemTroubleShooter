@@ -2,14 +2,14 @@
 using System.Collections.ObjectModel;
 using System.Net.NetworkInformation;
 using SystemTroubleShooter.Model;
-using System.Management; // Needed for WMI (e.g., getting total RAM)
-using System.Diagnostics; // Needed for PerformanceCounter (for CPU/RAM usage - more advanced)
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 
 namespace SystemTroubleShooter.ViewModel
 {
 
-    public class SystemOverviewViewModel : ViewModelBase // will implementing IDisposable if decide to use PerformanceCounter/Timer
+    public class SystemOverviewViewModel : ViewModelBase
     {
 
         // --- Backing Fields ---
@@ -20,21 +20,21 @@ namespace SystemTroubleShooter.ViewModel
         private string? _ipAddress;
         private string? _version;
         private string? _processorName;
-        private string? _installedRAM;
-        private string? _cpuUsage;
-        private string? _ramUsage;
-        private ObservableCollection<HistoryEntryModel>? _historyEntries;
-        private ObservableCollection<string> _selectedIssues = new ObservableCollection<string>();
 
-       
+        private readonly string _systemInformationScript = @"Scripts\SystemInformation\SystemInfoScript.ps1";
+        private SystemInformationModel? _currentSystemInfo;
+        private ObservableCollection<HistoryEntryModel>? _historyEntries;
         
+
+
+
         // To add soon for real-time resource usage
         // private PerformanceCounter _cpuCounter;
         // private PerformanceCounter _ramCounter; // Or other memory counters
         // private DispatcherTimer _updateTimer;
 
 
-        
+
 
 
         // --- Public Properties Binding ---
@@ -76,6 +76,25 @@ namespace SystemTroubleShooter.ViewModel
             set => SetProperty(ref _version, value);
         }
 
+        // Public Property for Current System Information
+        public SystemInformationModel? CurrentSystemInfo
+        {
+            get => _currentSystemInfo;
+            set
+            {
+                // Only update and notify if the new value is different
+                if (!Equals(_currentSystemInfo, value))
+                {
+                    if(value is not null)
+                    _currentSystemInfo = value;
+                    OnPropertyChanged();
+                    // Also notify that CPUUsage and RamUsage (now derived from CurrentSystemInfo) have changed
+                    OnPropertyChanged(nameof(CpuUsageDisplay));
+                    OnPropertyChanged(nameof(RamUsageDisplay));
+                    OnPropertyChanged(nameof(FreeDiskSpaceDisplay));
+                }
+            }
+        }
 
         // Public Property for History
         public ObservableCollection<HistoryEntryModel>? HistoryEntries
@@ -91,29 +110,20 @@ namespace SystemTroubleShooter.ViewModel
             private set => SetProperty(ref _processorName, value);
         }
 
-        public string? InstalledRAM
-        {
-            get => _installedRAM;
-            private set => SetProperty(ref _installedRAM, value);
-        }
+        
 
-        public string? CpuUsage
-        {
-            get => _cpuUsage;
-            private set => SetProperty(ref _cpuUsage, value);
-        }
-
-        public string? RamUsage
-        {
-            get => _ramUsage;
-            private set => SetProperty(ref _ramUsage, value);
-        }
+        // Display properties for CPU, RAM, Disk Space derived from CurrentSystemInfo
+        // These provide formatted strings for UI binding
+        public string CpuUsageDisplay => CurrentSystemInfo != null ? $"{CurrentSystemInfo.CpuUsagePercentage:F1}%" : "-- %";
+        public string RamUsageDisplay => CurrentSystemInfo != null ? $"{CurrentSystemInfo.RamUsagePercentage:F1}%" : "-- %";
+        public string FreeDiskSpaceDisplay => CurrentSystemInfo != null ?
+            $"{CurrentSystemInfo.FreeDiskSpaceGB-CurrentSystemInfo.DiskSpaceTotalGB} GB" : "-- GB";
 
 
         // --- Constructor ---
         public SystemOverviewViewModel()
-        {
-           
+        {   
+
             HistoryEntries = new ObservableCollection<HistoryEntryModel>();
 
             // Load data / Set initial values
@@ -128,173 +138,43 @@ namespace SystemTroubleShooter.ViewModel
 
         }
 
-        // For PerformanceCounter/Timer, implement IDisposable sample for future
-        /*
-        private bool disposed = false;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    _updateTimer?.Stop();
-                    _updateTimer = null;
-                    _cpuCounter?.Dispose();
-                    _cpuCounter = null;
-                    _ramCounter?.Dispose();
-                    _ramCounter = null;
-                }
-                disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        */
+        
   
 
         // --- Data Loading Methods ---
 
-        private void LoadSystemInfo()
+        private async void LoadSystemInfo()
         {
+            //For getting System Resources
+            CurrentSystemInfo = new SystemInformationModel();
+
             // Fetch basic system info
             MachineName = Environment.MachineName;
             OSVersion = Environment.OSVersion.VersionString;
             CurrentUser = Environment.UserName;
             IpAddress = GetLocalIPAddress() ?? "N/A";
 
-            // To load Specifications (basic examples)
-            // might need WMI or other APIs.
             ProcessorName = Environment.Is64BitOperatingSystem ? "64-bit Processor Detected" : "32-bit Processor Detected";
-            // A better way to get the actual name requires WMI (System.Management)
-            // Example: GetProcessorNameWmi();
+            
 
-            InstalledRAM = GetTotalPhysicalMemory() ?? "N/A"; // Use the helper method
-
-            // Load initial Resource Usage (will implement UpdateResourceUsage for live data)
-            UpdateResourceUsage();
+            // Load PowerShell data asynchronously
+            await LoadResourceUsageAsync();
         }
 
-        // Helper method to get total physical memory using WMI (requires System.Management)
-        private string GetTotalPhysicalMemory()
+        private async Task LoadResourceUsageAsync()
         {
-            try
+            // Run the PowerShell script on a background thread to prevent UI freezing
+            await Task.Run(() =>
             {
-                using (var searcher = new ManagementObjectSearcher("SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"))
-                {
-                    foreach (var item in searcher.Get())
-                    {
-                        var memoryBytes = Convert.ToUInt64(item["TotalPhysicalMemory"]);
-                        // Convert bytes to GB
-                        var memoryGB = Math.Round((double)memoryBytes / 1024 / 1024 / 1024, 2);
-                        return $"{memoryGB} GB";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions (e.g., WMI not available, permissions)
-                Debug.WriteLine($"Error getting total physical memory via WMI: {ex.Message}");
-            }
-            return "N/A"; // Fallback value
+                SystemInformationModel systemInfoFetcher = new SystemInformationModel();
+                // Update CurrentSystemInfo property, which will trigger UI update
+                if (_systemInformationScript is not null)
+                CurrentSystemInfo = systemInfoFetcher.GetSystemStats(_systemInformationScript);
+            });
+
+            
         }
-
-        // Helper method for Processor Name using WMI with System.Management
-        /*
-        private string GetProcessorNameWmi()
-        {
-             try
-            {
-                using (var searcher = new ManagementObjectSearcher("SELECT Name FROM Win32_Processor"))
-                {
-                    foreach (var item in searcher.Get())
-                    {
-                         return item["Name"]?.ToString() ?? "N/A";
-                    }
-                }
-            }
-             catch (Exception ex)
-            {
-                 Debug.WriteLine($"Error getting processor name via WMI: {ex.Message}");
-            }
-            return "N/A"; // Fallback
-        }
-        */
-
-
-        // Method to update resource usage (Will need to implement PerformanceCounter logic for live data)
-        private void UpdateResourceUsage()
-        {
-            // TODO: Implement actual CPU and RAM usage fetching using PerformanceCounter
-            // This requires adding PerformanceCounter instances, updating them periodically
-            // using a timer (e.g., DispatcherTimer), and disposing them properly.
-            // It might also require running the application as administrator
-            // depending on system configuration and how PerformanceCounters are set up.
-
-            // --- Placeholder values ---
-            // Could show application-specific memory usage relatively easily:
-            long currentProcessMemory = Environment.WorkingSet;
-            RamUsage = $"{Math.Round((double)currentProcessMemory / 1024 / 1024, 2)} MB (App)"; // Example App Memory
-
-            // Getting total system CPU/RAM usage percentage is more complex without PerformanceCounter
-            CpuUsage = "-- %"; // Placeholder
-            // RamUsage = "-- %"; // Placeholder for system-wide RAM percentage
-
-            // If using PerformanceCounter and Timer:
-            /*
-            try
-            {
-                if(_cpuCounter != null) CpuUsage = $"{Math.Round(_cpuCounter.NextValue(), 1)}%";
-                // If using Memory\Available MBytes:
-                // if(_ramCounter != null) RamUsage = $"{Math.Round(_ramCounter.NextValue(), 1)} MB Available";
-                // If calculating percentage of total RAM:
-                // if (_ramCounter != null && InstalledRAM != "N/A") { ... calculate percentage ... }
-
-            }
-            catch (Exception ex)
-            {
-                 Debug.WriteLine($"Error updating resource usage: {ex.Message}");
-                 CpuUsage = "Error";
-                 RamUsage = "Error";
-            }
-            */
-        }
-
-        // Maybe: Method to initialize Performance Counters and Timer
-        /*
-        private void InitializeResourceMonitor()
-        {
-             try
-             {
-                 _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-                 // Choose appropriate memory counter:
-                 // "Memory", "Available MBytes"
-                 // "Memory", "% Committed Bytes In Use"
-                 _ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-
-
-                 _updateTimer = new DispatcherTimer();
-                 _updateTimer.Interval = TimeSpan.FromSeconds(1); // Update frequency
-                 _updateTimer.Tick += (s, e) => UpdateResourceUsage(); // Call update method on tick
-
-                 // Read initial values (first read is often 0)
-                 _cpuCounter.NextValue();
-                 _ramCounter.NextValue();
-
-                 _updateTimer.Start();
-             }
-             catch (Exception ex)
-             {
-                 // Handle exceptions if Performance Counters are not available or permissions are denied
-                 Debug.WriteLine($"Failed to initialize performance counters: {ex.Message}");
-                 CpuUsage = "N/A (Perf Counter Error)";
-                 RamUsage = "N/A (Perf Counter Error)";
-             }
-        }
-        */
+        
 
 
         private void UpdateSystemStatus()

@@ -3,7 +3,6 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -26,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Model\SystemInformationModel.cs" />
     <Compile Include="Model\Troubleshooter\BaseTroubleshooter.cs" />
     <Compile Include="Model\HistoryEntryModel.cs" />
     <Compile Include="Model\Troubleshooter\BluethoothTroubleshooter.cs" />
@@ -36,7 +36,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.31.0" />
-    <PackageReference Include="System.Management" Version="9.0.5" />
     <PackageReference Include="Unity" Version="5.11.10" />
   </ItemGroup>
 
@@ -44,6 +43,7 @@
     <Folder Include="Properties\" />
     <Folder Include="Scripts\NetworkDrive\" />
     <Folder Include="Scripts\Bluetooth\" />
+    <Folder Include="Scripts\SystemInformation\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +72,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Sound\GetAllAudioDevices.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\SystemInformation\SystemInfoScript.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
