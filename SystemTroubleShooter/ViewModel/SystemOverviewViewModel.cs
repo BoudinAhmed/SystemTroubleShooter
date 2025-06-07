@@ -4,12 +4,13 @@ using System.Net.NetworkInformation;
 using SystemTroubleShooter.Model;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Windows.Threading;
 
 
 namespace SystemTroubleShooter.ViewModel
 {
 
-    public class SystemOverviewViewModel : ViewModelBase
+    public class SystemOverviewViewModel : ViewModelBase, IDisposable
     {
 
         // --- Backing Fields ---
@@ -24,7 +25,7 @@ namespace SystemTroubleShooter.ViewModel
         private readonly string _systemInformationScript = @"Scripts\SystemInformation\SystemInfoScript.ps1";
         private SystemInformationModel? _currentSystemInfo;
         private ObservableCollection<HistoryEntryModel>? _historyEntries;
-        
+        private readonly DispatcherTimer _updateTimer;
 
 
 
@@ -128,13 +129,19 @@ namespace SystemTroubleShooter.ViewModel
 
             // Load data / Set initial values
             LoadSystemInfo(); 
-            UpdateSystemStatus();
             LoadHistory();
             LoadVersionInfo();
 
-            // TODO: Implement timer or event listener to call UpdateSystemStatus() and UpdateResourceUsage() periodically
-            // If I decide to use PerformanceCounter for resources, initialize counters and timer here
-            // InitializeResourceMonitor();
+            // Timer to call UpdateSystemData() 
+            _updateTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(2)
+            };
+
+            _updateTimer.Tick += UpdateSystemDataAsync;
+
+            _updateTimer.Start();
+            UpdateSystemDataAsync(null, EventArgs.Empty);
 
         }
 
@@ -176,16 +183,34 @@ namespace SystemTroubleShooter.ViewModel
         }
         
 
-
-        private void UpdateSystemStatus()
+        private async void UpdateSystemDataAsync(object? sender, EventArgs e)
         {
-            // Determine network status
-            bool isOnline = NetworkInterface.GetIsNetworkAvailable();
-            SystemStatus = isOnline ? "Online" : "Offline";
-            // if consider adding other system health checks here
+            // --- Update System Status ---
+            SystemStatus = NetworkInterface.GetIsNetworkAvailable() ? "Online" : "Offline";
+
+            // --- Update Resources using script on a background thread ---
+            try
+            {
+                var systemInfoFetcher = new SystemInformationModel();
+
+                // Pushes the script execution to a background thread
+                var newInfo = await Task.Run(() => systemInfoFetcher.GetSystemStats(_systemInformationScript));
+
+                // Once await completes, we are back on the UI thread and can safely update properties.
+                _currentSystemInfo = newInfo;
+
+                // Notify the UI the changes
+                OnPropertyChanged(nameof(CpuUsageDisplay));
+                OnPropertyChanged(nameof(RamUsageDisplay));
+                OnPropertyChanged(nameof(FreeDiskSpaceDisplay));
+            }
+            catch (Exception ex)
+            {
+                // For potential errors from the script
+                Debug.WriteLine($"Error updating system data from script: {ex.Message}");
+            }
         }
 
-        
 
         private void LoadHistory()
         {
@@ -224,6 +249,11 @@ namespace SystemTroubleShooter.ViewModel
                 Debug.WriteLine($"Error retrieving IP address: {ex.Message}");
                 return "Error Retrieving IP";
             }
+        }
+        public void Dispose()
+        {
+            // Stop timer when view model is disposed
+            _updateTimer.Stop();
         }
     }
 }
