@@ -35,7 +35,7 @@ namespace SystemTroubleShooter.Model.Troubleshooter
             };
         }
 
-        public async Task<(List<string> InputDevices, List<string> OutputDevices)> GetAllAudioDevicesAsync()
+        public virtual async Task<(List<string> InputDevices, List<string> OutputDevices)> GetAllAudioDevicesAsync()
         {
             List<string> inputDevices = new List<string>();
             List<string> outputDevices = new List<string>();
