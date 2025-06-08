@@ -120,7 +120,16 @@ namespace SystemTroubleShooter.ViewModel
             ItemCancelClickedCommand = new RelayCommand(OnItemCancelClicked);
             ItemTroubleshootClickedCommand = new RelayCommand(OnItemTroubleshootClicked);
         }
-        
+
+        public IssueItemViewModel(IAudioDeviceDisplayService audioDeviceDisplayService, IDialogService dialogService)
+        {
+            _audioDeviceDisplayService = audioDeviceDisplayService;
+            _dialogService = dialogService;
+
+            ItemClickedCommand = new RelayCommand(OnItemClicked);
+            ItemCancelClickedCommand = new RelayCommand(OnItemCancelClicked);
+            ItemTroubleshootClickedCommand = new RelayCommand(OnItemTroubleshootClicked);
+        }
 
         private void OnItemClicked(object? obj)
         {

@@ -10,7 +10,7 @@ using SystemTroubleShooter.Model.Troubleshooter;
 
 namespace SystemTroubleShooter.Test.Model
 {
-    public class InternetTroubleshooterTest
+    public class InternetTroubleshooterTests
     {
         private List<BaseTroubleshooter.TroubleshootingStep> GetTroubleshootingSteps(InternetTroubleshooter troubleshooter)
         {
