@@ -37,7 +37,8 @@ namespace SystemTroubleShooter.Model.Troubleshooter
 
             GetNetworkDrivesFromCache();
 
-            Dictionary<string, string>? configuredNetworkDrives = ConfiguredNetworkDrives ?? new Dictionary<string, string>(); ;
+            Dictionary<string, string>? configuredNetworkDrives = ConfiguredNetworkDrives ?? new Dictionary<string, string>(); 
+
             _troubleshootingSteps = new List<TroubleshootingStep>
             {
                 new TroubleshootingStep {
@@ -51,7 +52,7 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         }
 
 
-        public virtual void GetNetworkDrivesFromCache()
+        public void GetNetworkDrivesFromCache()
         {
             if (File.Exists(_settingsFilePath))
             {
@@ -95,6 +96,13 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         {
 
             string jsonString = File.ReadAllText(_settingsFilePath);
+
+            if(jsonString == null)
+            {
+                ResolutionMessage = "Go to Settings";
+                return "failed";
+            }
+
 
             foreach (var step in _troubleshootingSteps)
             {

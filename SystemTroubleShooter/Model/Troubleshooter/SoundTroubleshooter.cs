@@ -85,10 +85,14 @@ namespace SystemTroubleShooter.Model.Troubleshooter
             foreach (var step in _troubleshootingSteps)
             {
                 (IsFixed, ResolutionMessage) = await ExecuteTroubleshootingStepAsync(step);
+                if (!IsFixed && step.IsCritical)
+                    break;
             }
 
+            if(IsFixed)
+            ResolutionMessage = "Audio services restarted and output device verified. No further issues detected."; // Override the powershell debug response
 
-            return "te";
+            return "";
         }
     }
 

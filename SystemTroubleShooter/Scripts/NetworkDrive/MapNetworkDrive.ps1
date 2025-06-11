@@ -5,6 +5,11 @@ param(
 
 Write-Host "Received drives string: $($drivesString)"
 
+if ([string]::IsNullOrWhiteSpace($drivesString)) {
+    Write-Warning "No network drive information provided (parameter is null or empty)."
+    return 1
+}
+
 if ($drivesString) {
     $drivePairs = $drivesString.Split(';')
     foreach ($pair in $drivePairs) {
