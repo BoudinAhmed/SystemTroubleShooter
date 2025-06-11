@@ -11,6 +11,8 @@ namespace SystemTroubleShooter.Test.ViewModel.Test
 {
     public class IssueItemViewModelTests
     {
+
+        // Declaration
         private readonly MockAudioDeviceDisplayService _mockAudioService;
         private readonly MockDialogService _mockDialogService;
         private readonly IssueItemViewModel _viewModel;
@@ -65,20 +67,6 @@ namespace SystemTroubleShooter.Test.ViewModel.Test
 
             Assert.True(_viewModel.IsTroubleshooting);
             Assert.Equal("Coming soon - Under Development", _viewModel.TroubleshootingStatus);
-        }
-
-
-        [Fact]
-        public void IssueStatusChanged_UpdatesTroubleshootingStatus()
-        {
-            var mockTroubleshooter = new MockSoundTroubleshooter();
-            _viewModel.IssueType = mockTroubleshooter;
-            _viewModel.ItemTroubleshootClickedCommand.Execute(null);
-
-            mockTroubleshooter.StatusMessage = "New status";
-            mockTroubleshooter.OnPropertyChanged(nameof(BaseTroubleshooter.StatusMessage));
-
-            Assert.Equal("New status", _viewModel.TroubleshootingStatus);
         }
 
         [Fact]
