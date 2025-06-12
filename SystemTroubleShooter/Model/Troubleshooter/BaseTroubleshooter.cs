@@ -170,22 +170,31 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         // Orchestrates troubleshooting steps and handles real-time output.
         protected virtual async Task<(bool IsSuccess, string Message)> ExecuteTroubleshootingStepAsync(TroubleshootingStep step)
         {
-            // Set initial status message for the step
             StatusMessage = $"{step.Description}...";
-            
-
             Debug.WriteLine($"Executing Step: {step.Description}");
             await Task.Delay(100); // Small delay to allow UI update before script
 
+            // This variable will hold the specific final message from the script
+            string? finalResultMessageFromScript = null;
+            const string finalMessagePrefix = "FINAL:";
 
             // --- Define Actions for Real-Time Output/Error ---
             Action<string> handleOutput = (data) =>
             {
                 Dispatcher.CurrentDispatcher.Invoke(() =>
                 {
-                    DetailedLog += data + Environment.NewLine;
-                    StatusMessage = data;
-                    
+                    // Check for our special prefix to identify the final message
+                    if (data.StartsWith(finalMessagePrefix, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // This is our designated final message. Store it for the pop-up.
+                        finalResultMessageFromScript = data.Substring(finalMessagePrefix.Length);
+                    }
+                    else
+                    {
+                        // This is an intermediate status update.
+                        DetailedLog += data + Environment.NewLine;
+                        StatusMessage = data; // Update the live status message in the UI
+                    }
                 });
             };
 
@@ -194,50 +203,43 @@ namespace SystemTroubleShooter.Model.Troubleshooter
                 Dispatcher.CurrentDispatcher.Invoke(() =>
                 {
                     DetailedLog += "ERROR: " + data + Environment.NewLine;
-
                 });
             };
 
-
-            // Execute the PowerShell script for the step in real tim
+            // Execute the PowerShell script for the step
             var (finalOutput, finalError, exitCode) = await ExecutePowerShellScriptAsync(
                 step.ScriptPath,
                 step.ScriptArguments,
-                onOutputDataReceived: handleOutput, // Pass the output 
-                onErrorDataReceived: handleError   // Pass the error 
+                onOutputDataReceived: handleOutput,
+                onErrorDataReceived: handleError
             );
 
             // --- After the script finishes ---
-
             Debug.WriteLine($"  Script: {step.ScriptPath}");
-            Debug.WriteLine($"  Arguments: {step.ScriptArguments}");
             Debug.WriteLine($"  Exit Code: {exitCode}");
-            Debug.WriteLine($"  Output: {(string.IsNullOrWhiteSpace(finalOutput) ? "(empty)" : finalOutput)}");
-            Debug.WriteLine($"  Error: {(string.IsNullOrWhiteSpace(finalError) ? "(empty)" : finalError)}");
-
 
             bool isSuccess = (exitCode == 0);
             string resultMessage;
 
             if (!isSuccess)
             {
-                // Update StatusMessage to indicate failure after script exit
                 StatusMessage = $"{step.Description} Failed (Code: {exitCode}).";
                 Debug.WriteLine($"  Step Failed: {step.Description}");
-                // Construct the result message including captured output or error
-                resultMessage = $"Error during '{step.Description}'. Exit Code: {exitCode}.\nError Output:\n{finalError}\nStandard Output:\n{finalOutput}";
-
+                // On failure, construct a detailed error message for the pop-up
+                resultMessage = finalResultMessageFromScript ?? $"Error during '{step.Description}'. Exit Code: {exitCode}.\nError Output:\n{finalError}";
             }
             else
             {
-                // Update StatusMessage to indicate success after script exit
                 StatusMessage = $"{step.Description} Completed Successfully.";
                 Debug.WriteLine($"  Step Succeeded: {step.Description}");
 
-                resultMessage = $"'{step.Description}' Successful.\n\nDetails:\n{finalOutput}"; // Include full output details
+                // Use the captured final message if it exists. Otherwise, use a generic success message.
+                resultMessage = !string.IsNullOrEmpty(finalResultMessageFromScript)
+                    ? finalResultMessageFromScript
+                    : $"'{step.Description}' completed successfully.";
             }
 
-            // Return the overall success orfailure 
+            // Return the success status and the carefully constructed result message for the pop-up
             return (isSuccess, resultMessage);
         }
     }

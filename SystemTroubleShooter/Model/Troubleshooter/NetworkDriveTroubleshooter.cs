@@ -92,15 +92,17 @@ namespace SystemTroubleShooter.Model.Troubleshooter
         
         }
 
-        public override async Task<string> RunDiagnosticsAsync()
+        public override async Task<string>  RunDiagnosticsAsync()
         {
 
             string jsonString = File.ReadAllText(_settingsFilePath);
 
-            if(jsonString == null)
+            if(ConfiguredNetworkDrives == null || ConfiguredNetworkDrives.Count < 1)
             {
-                ResolutionMessage = "Go to Settings";
-                return "failed";
+                ResolutionMessage = "No valid Network Drive information detected. \n" +
+                    "\nTo continue, please go to the App's settings and manually add the necessary network drive.";
+
+                return "";
             }
 
 
