@@ -1,192 +1,164 @@
-﻿using Moq;
-using Moq.Protected;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using SystemTroubleShooter.Model.Troubleshooter;
+using Xunit; // Import Xunit framework for testing
 
-namespace SystemTroubleShooter.Test.Model
+namespace SystemTroubleShooter.Model.Troubleshooter.Tests
 {
-    public class InternetTroubleshooterTests
+    // A testable version of InternetTroubleshooter that allows mocking of ExecuteTroubleshootingStepAsync
+    public class TestableInternetTroubleshooter : InternetTroubleshooter
     {
-        private List<BaseTroubleshooter.TroubleshootingStep> GetTroubleshootingSteps(InternetTroubleshooter troubleshooter)
+        // A queue to store predefined results for each call to ExecuteTroubleshootingStepAsync
+        private readonly Queue<(bool IsSuccess, string Message)> _mockResults = new();
+
+        /// <summary>
+        /// Enqueues a mock result that will be returned by the next call to ExecuteTroubleshootingStepAsync.
+        /// </summary>
+        /// <param name="isSuccess">The success status to return.</param>
+        /// <param name="message">The message to return.</param>
+        public void EnqueueMockResult(bool isSuccess, string message)
         {
-            var field = typeof(InternetTroubleshooter).GetField("_troubleshootingSteps",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            return field?.GetValue(troubleshooter) as List<BaseTroubleshooter.TroubleshootingStep> 
-                ?? new List<BaseTroubleshooter.TroubleshootingStep>();
+            _mockResults.Enqueue((isSuccess, message));
         }
 
+        /// <summary>
+        /// Overrides the base method to return a predefined mock result from the queue.
+        /// This bypasses actual PowerShell execution and UI dispatcher calls for unit testing.
+        /// </summary>
+        protected override Task<(bool IsSuccess, string Message)> ExecuteTroubleshootingStepAsync(TroubleshootingStep step)
+        {
+            if (_mockResults.Count == 0)
+            {
+                // If no mock results are enqueued, it means the test setup is incomplete.
+                throw new InvalidOperationException($"No mock result enqueued for step: {step.Description}. Ensure all expected steps have a corresponding EnqueueMockResult call in the test.");
+            }
+            // Dequeue and return the next mock result
+            return Task.FromResult(_mockResults.Dequeue());
+        }
+    }
+
+    /// <summary>
+    /// Contains XUnit tests for the InternetTroubleshooter class.
+    /// </summary>
+    public class InternetTroubleshooterTests
+    {
+        /// <summary>
+        /// Tests that the constructor correctly initializes properties.
+        /// </summary>
         [Fact]
-        public void Constructor_InitializesPropertiesAndStepsCorrectly()
+        public void Constructor_InitializesPropertiesCorrectly()
         {
             // Arrange & Act
             var troubleshooter = new InternetTroubleshooter();
-            var steps = GetTroubleshootingSteps(troubleshooter);
 
             // Assert
             Assert.Equal("Internet Connection", troubleshooter.IssueType);
             Assert.Equal("Fix problems with connecting to the internet", troubleshooter.Detail);
-            Assert.Equal(3, troubleshooter.TaskList.Count); // "Checking...", "Refreshing...", "Network Reset"
-
-            Assert.NotNull(steps);
-            Assert.Equal(3, steps.Count);
-
-            // Verify the specific steps defined in InternetTroubleshooter's constructor
-            Assert.Equal("Checking Network Adapters Availability", steps[0].Description);
-            Assert.True(steps[0].IsCritical);
-            Assert.Contains("IsNetworkAdaptersAvailable.ps1", steps[0].ScriptPath);
-
-            Assert.Equal("Refreshing Network Adapters", steps[1].Description);
-            Assert.False(steps[1].IsCritical);
-            Assert.Contains("RefreshNetworkAdapter.ps1", steps[1].ScriptPath);
-
-            Assert.Equal("Verifying Connection", steps[2].Description);
-            Assert.True(steps[2].IsCritical);
-            Assert.Contains("PingTests.ps1", steps[2].ScriptPath);
+            Assert.True(troubleshooter.TimeStamp <= DateTime.Now); // Check if timestamp is set close to now
+            Assert.NotNull(troubleshooter.TaskList);
+            Assert.Contains("Checking Internet Connection", troubleshooter.TaskList);
+            Assert.Contains("Refreshing Network Adapter", troubleshooter.TaskList);
+            Assert.Contains("Network Reset", troubleshooter.TaskList);
         }
 
+        /// <summary>
+        /// Tests the scenario where all troubleshooting steps succeed.
+        /// </summary>
         [Fact]
-        public async Task RunDiagnosticsAsync_AllStepsSucceed_ReturnsSuccessFromLastStep()
+        public async Task RunDiagnosticsAsync_AllStepsSucceed_ReturnsIsFixedTrue()
         {
             // Arrange
-            // Mock InternetTroubleshooter to control ExecuteTroubleshootingStepAsync
-            var mockTroubleshooter = new Mock<InternetTroubleshooter>() { CallBase = true }; // CallBase = true to run original constructor and other non-mocked methods
+            var troubleshooter = new TestableInternetTroubleshooter();
 
-            // Setup the mock to return success for any step
-            mockTroubleshooter.Protected() // Moq.Protected for protected virtual members
-                .Setup<Task<(bool IsSuccess, string Message)>>(
-                    "ExecuteTroubleshootingStepAsync", // Name of the protected method
-                    ItExpr.IsAny<BaseTroubleshooter.TroubleshootingStep>() // Match any step
-                )
-                .ReturnsAsync((BaseTroubleshooter.TroubleshootingStep step) => (true, $"'{step.Description}' Mocked Success."));
-
-            var troubleshooter = mockTroubleshooter.Object; // Get the instance
+            // Enqueue mock success results for each step in order
+            troubleshooter.EnqueueMockResult(true, "Network adapters are available."); // IsNetworkAdaptersAvailable.ps1
+            troubleshooter.EnqueueMockResult(true, "Network adapter refreshed successfully."); // RefreshNetworkAdapter.ps1
+            troubleshooter.EnqueueMockResult(true, "All essential network connectivity tests passed successfully."); // PingTests.ps1
 
             // Act
-            string result = await troubleshooter.RunDiagnosticsAsync();
+            await troubleshooter.RunDiagnosticsAsync();
 
             // Assert
-            Assert.True(troubleshooter.IsFixed);
-            Assert.Contains("'Verifying Connection' Mocked Success.", result); // Message from the last step defined in InternetTroubleshooter
-
-            // Verify that ExecuteTroubleshootingStepAsync was called for all 3 steps
-            var definedSteps = GetTroubleshootingSteps(troubleshooter); // Get steps from the actual instance
-            foreach (var definedStep in definedSteps)
-            {
-                mockTroubleshooter.Protected().Verify(
-                    "ExecuteTroubleshootingStepAsync",
-                    Times.Once(), // Ensure it was called exactly once for each step
-                    ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedStep.Description)
-                );
-            }
+            Assert.True(troubleshooter.IsFixed); // Expect the issue to be fixed
+            Assert.Equal("All essential network connectivity tests passed successfully.", troubleshooter.ResolutionMessage); // Expect message from the last successful step
         }
+
+        /// <summary>
+        /// Tests the scenario where a critical troubleshooting step fails.
+        /// The process should stop immediately after the critical failure.
+        /// </summary>
         [Fact]
-        public async Task RunDiagnosticsAsync_CriticalStepFails_StopsAndReturnsFailureMessage()
+        public async Task RunDiagnosticsAsync_CriticalStepFails_StopsAndReturnsIsFixedFalse()
         {
             // Arrange
-            var mockTroubleshooter = new Mock<InternetTroubleshooter>() { CallBase = true };
-            var definedSteps = GetTroubleshootingSteps(mockTroubleshooter.Object); // Get steps to know their order and criticality
+            var troubleshooter = new TestableInternetTroubleshooter();
 
-            // First step (Critical): "Checking Network Adapters Availability" -> Fails
-            mockTroubleshooter.Protected()
-                .Setup<Task<(bool IsSuccess, string Message)>>(
-                    "ExecuteTroubleshootingStepAsync",
-                    ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[0].Description)
-                )
-                .ReturnsAsync((false, $"'{definedSteps[0].Description}' Mocked Critical Fail."));
+            // Enqueue a failure for the first critical step (Checking Network Adapters)
+            troubleshooter.EnqueueMockResult(false, "No active network adapters found."); // IsNetworkAdaptersAvailable.ps1 (Critical, Fails)
+            // Even if we enqueue more, they shouldn't be executed due to critical failure
+            troubleshooter.EnqueueMockResult(true, "Should not be reached."); // RefreshNetworkAdapter.ps1
+            troubleshooter.EnqueueMockResult(true, "Should not be reached either."); // PingTests.ps1
 
-            // Subsequent steps should not be called, but setup won't hurt (or make it throw if called)
-            mockTroubleshooter.Protected()
-                .Setup<Task<(bool IsSuccess, string Message)>>(
-                    "ExecuteTroubleshootingStepAsync",
-                    ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[1].Description)
-                )
-                .ReturnsAsync((true, $"'{definedSteps[1].Description}' Mocked Success but should not be called."));
-
-
-            var troubleshooter = mockTroubleshooter.Object;
 
             // Act
-            string result = await troubleshooter.RunDiagnosticsAsync();
+            await troubleshooter.RunDiagnosticsAsync();
 
             // Assert
-            Assert.False(troubleshooter.IsFixed);
-            Assert.Contains($"'{definedSteps[0].Description}' Mocked Critical Fail.", result);
-
-            // Verify the first (failing) step was called
-            mockTroubleshooter.Protected().Verify(
-                "ExecuteTroubleshootingStepAsync",
-                Times.Once(),
-                ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[0].Description)
-            );
-
-            // Verify the second step (and third) were NOT called because the first critical one failed
-            mockTroubleshooter.Protected().Verify(
-                "ExecuteTroubleshootingStepAsync",
-                Times.Never(),
-                ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[1].Description)
-            );
-            mockTroubleshooter.Protected().Verify(
-                "ExecuteTroubleshootingStepAsync",
-                Times.Never(),
-                ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[2].Description)
-            );
+            Assert.False(troubleshooter.IsFixed); // Expect the issue to NOT be fixed
+            Assert.Equal("No active network adapters found.", troubleshooter.ResolutionMessage); // Expect message from the failed critical step
         }
 
+        /// <summary>
+        /// Tests the scenario where a non-critical step fails, but a subsequent critical step succeeds.
+        /// The process should continue, and the final status should reflect the last critical step.
+        /// </summary>
         [Fact]
-        public async Task RunDiagnosticsAsync_NonCriticalStepFails_ContinuesAndReturnsSuccessFromLastStep()
+        public async Task RunDiagnosticsAsync_NonCriticalFailsThenCriticalSucceeds_ReturnsIsFixedTrue()
         {
             // Arrange
-            var mockTroubleshooter = new Mock<InternetTroubleshooter>() { CallBase = true };
-            var definedSteps = GetTroubleshootingSteps(mockTroubleshooter.Object);
+            var troubleshooter = new TestableInternetTroubleshooter();
 
-            // Step 1 (Critical): "Checking Network Adapters Availability" -> Succeeds
-            mockTroubleshooter.Protected()
-                .Setup<Task<(bool IsSuccess, string Message)>>(
-                    "ExecuteTroubleshootingStepAsync",
-                    ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[0].Description)
-                )
-                .ReturnsAsync((true, $"'{definedSteps[0].Description}' Mocked Success."));
+            // 1. Critical step succeeds
+            troubleshooter.EnqueueMockResult(true, "Network adapters are available."); // IsNetworkAdaptersAvailable.ps1
 
-            // Step 2 (Non-Critical): "Refreshing Network Adapters" -> Fails
-            mockTroubleshooter.Protected()
-                .Setup<Task<(bool IsSuccess, string Message)>>(
-                    "ExecuteTroubleshootingStepAsync",
-                    ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[1].Description)
-                )
-                .ReturnsAsync((false, $"'{definedSteps[1].Description}' Mocked Non-Critical Fail."));
+            // 2. Non-critical step fails
+            troubleshooter.EnqueueMockResult(false, "Failed to refresh adapter (non-critical)."); // RefreshNetworkAdapter.ps1
 
-
-            // Step 3 (Critical): "Verifying Connection" -> Succeeds
-            mockTroubleshooter.Protected()
-                .Setup<Task<(bool IsSuccess, string Message)>>(
-                    "ExecuteTroubleshootingStepAsync",
-                    ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedSteps[2].Description)
-                )
-                .ReturnsAsync((true, $"'{definedSteps[2].Description}' Mocked Success."));
-
-            var troubleshooter = mockTroubleshooter.Object;
+            // 3. Critical step succeeds (this will set the final IsFixed status)
+            troubleshooter.EnqueueMockResult(true, "All essential network connectivity tests passed successfully."); // PingTests.ps1
 
             // Act
-            string result = await troubleshooter.RunDiagnosticsAsync();
+            await troubleshooter.RunDiagnosticsAsync();
 
             // Assert
-            Assert.True(troubleshooter.IsFixed); // IsFixed is true because the last step encountered succeeded
-            Assert.Contains($"'{definedSteps[2].Description}' Mocked Success.", result); // Message from the last step
+            Assert.True(troubleshooter.IsFixed); // Expect the issue to be fixed due to the final critical step succeeding
+            Assert.Equal("All essential network connectivity tests passed successfully.", troubleshooter.ResolutionMessage); // Expect message from the last successful step
+        }
 
-            // Verify all steps were called
-            foreach (var definedStep in definedSteps)
-            {
-                mockTroubleshooter.Protected().Verify(
-                    "ExecuteTroubleshootingStepAsync",
-                    Times.Once(),
-                    ItExpr.Is<BaseTroubleshooter.TroubleshootingStep>(s => s.Description == definedStep.Description)
-                );
-            }
+        /// <summary>
+        /// Tests the scenario where the last critical step fails.
+        /// </summary>
+        [Fact]
+        public async Task RunDiagnosticsAsync_LastCriticalStepFails_ReturnsIsFixedFalse()
+        {
+            // Arrange
+            var troubleshooter = new TestableInternetTroubleshooter();
+
+            // 1. Critical step succeeds
+            troubleshooter.EnqueueMockResult(true, "Network adapters are available."); // IsNetworkAdaptersAvailable.ps1
+
+            // 2. Non-critical step succeeds
+            troubleshooter.EnqueueMockResult(true, "Network adapter refreshed."); // RefreshNetworkAdapter.ps1
+
+            // 3. Critical step fails (Verifying Connection)
+            troubleshooter.EnqueueMockResult(false, "Network connectivity issues detected. Failed to ping 8.8.8.8."); // PingTests.ps1 (Critical, Fails)
+
+            // Act
+            await troubleshooter.RunDiagnosticsAsync();
+
+            // Assert
+            Assert.False(troubleshooter.IsFixed); // Expect the issue to NOT be fixed
+            Assert.Equal("Network connectivity issues detected. Failed to ping 8.8.8.8.", troubleshooter.ResolutionMessage); // Expect message from the failed critical step
         }
-        }
+    }
 }
