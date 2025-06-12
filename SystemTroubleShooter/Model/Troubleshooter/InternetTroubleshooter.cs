@@ -58,12 +58,12 @@ namespace SystemTroubleShooter.Model.Troubleshooter
                 (IsFixed, ResolutionMessage) =  await ExecuteTroubleshootingStepAsync(step);
 
                 
-                if (step.IsCritical && !IsFixed)
+                if (!IsFixed && step.IsCritical)
                     break;
 
 
             }
-            return ResolutionMessage ?? "try what you were doing with the internet again";
+            return "";
         }
     }
 }
