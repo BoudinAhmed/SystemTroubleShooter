@@ -32,6 +32,7 @@
     <Compile Include="Model\Troubleshooter\InternetTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\NetworkDriveTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\SoundTroubleshooter.cs" />
+    <Compile Include="Model\Troubleshooter\WindowsUpdateTroubleshooter.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +44,7 @@
     <Folder Include="Properties\" />
     <Folder Include="Scripts\NetworkDrive\" />
     <Folder Include="Scripts\Bluetooth\" />
+    <Folder Include="Scripts\WindowsUpdate\" />
     <Folder Include="Scripts\SystemInformation\" />
   </ItemGroup>
 
@@ -75,6 +77,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\SystemInformation\SystemInfoScript.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\WindowsUpdate\Clear-WindowsUpdateCache.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
