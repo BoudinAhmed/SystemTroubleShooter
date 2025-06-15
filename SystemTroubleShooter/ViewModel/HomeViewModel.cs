@@ -91,7 +91,7 @@ namespace SystemTroubleShooter.ViewModel
             IssueItems.Add(new IssueItemViewModel { Title = "Sound", Description = "Fix problems with playing audio", ImageSource = "\xE767", IssueType = new SoundTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Map Network Drive", Description = "Map a network drive with letter and path", ImageSource = "\xE8CE", IssueType = new NetworkDriveTroubleshooter() });
             IssueItems.Add(new IssueItemViewModel { Title = "Display Settings", Description = "Adjust screen resolution and scaling", ImageSource = "\xE7F4" });
-            IssueItems.Add(new IssueItemViewModel { Title = "Bluetooth Devices", Description = "Pair or troubleshoot Bluetooth", ImageSource = "\xE702" });
+            IssueItems.Add(new IssueItemViewModel { Title = "Bluetooth Devices", Description = "Pair or troubleshoot Bluetooth", ImageSource = "\xE702", IssueType = new BluethoothTroubleshooter() });
             
 
         }

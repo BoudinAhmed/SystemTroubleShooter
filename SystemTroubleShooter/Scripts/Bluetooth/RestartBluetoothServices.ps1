@@ -59,7 +59,7 @@ ForEach ($serviceInfo in $bluetoothServices) {
     }
 }
 
-Write-Host "`n--- Bluetooth Service Check Complete ---" -ForegroundColor Yellow
+Write-Host "FINAL:Bluetooth Service Check Complete" -ForegroundColor Yellow
 
 # Note about HidBth and BluetoothUserService:
 Write-Host "`nImportant Note on 'HidBth':" -ForegroundColor Cyan
