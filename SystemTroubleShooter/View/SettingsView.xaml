@@ -113,7 +113,7 @@
                     <StackPanel>
                         <TextBlock Text="Sound Settings" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
                         <TextBlock Text="Preferred Output Device:" Margin="0,5,0,5"/>
-                        <ComboBox ItemsSource="{Binding AvailableOutputDevices}" SelectedItem="{Binding SelectedOutputDevice}" DisplayMemberPath="DeviceName" Background="#333333" Foreground="#dddddd" BorderBrush="#555555" BorderThickness="1" Padding="5"/>
+                        <ComboBox ItemsSource="{Binding AvailableOutputDevices}" SelectedItem="{Binding SelectedOutputDevice}" Text="{Binding SelectedOutputDeviceName}" DisplayMemberPath="DeviceName" Background="#333333" Foreground="Black" BorderBrush="#555555" BorderThickness="1" Padding="5"/>
                     </StackPanel>
                 </Border>
 
