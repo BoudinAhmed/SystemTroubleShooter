@@ -198,6 +198,7 @@ namespace SystemTroubleShooter.ViewModel
             TroubleshootingStatus = "Starting...";
             _currentIssue = this.IssueType;
 
+            // Exit if there are no model for that troubleshooting issue
             if (_currentIssue == null) 
             {
                 TroubleshootingStatus = "Coming soon - Under Development";

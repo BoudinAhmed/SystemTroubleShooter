@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using SystemTroubleShooter.ViewModel;
 
 
 namespace SystemTroubleShooter.Model.Troubleshooter
@@ -75,7 +76,26 @@ namespace SystemTroubleShooter.Model.Troubleshooter
             return (inputDevices, outputDevices);
         }
 
-
+        public async Task<List<OutputDevice>> GetOutputDevicesAsync()
+        {
+            var (standardOutput, _, exitCode) = await ExecutePowerShellScriptAsync(_getAllAudioDevices);
+            if (exitCode == 0 && !string.IsNullOrWhiteSpace(standardOutput))
+            {
+                try
+                {
+                    var deviceLists = JsonSerializer.Deserialize<AudioDeviceLists>(standardOutput);
+                    if (deviceLists?.OutputDevices != null)
+                    {
+                        return deviceLists.OutputDevices.Select(name => new OutputDevice { DeviceName = name }).ToList();
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    Debug.WriteLine($"JSON Deserialization Error: {ex.Message}");
+                }
+            }
+            return new List<OutputDevice>();
+        }
 
         public override async Task<string> RunDiagnosticsAsync()
         {

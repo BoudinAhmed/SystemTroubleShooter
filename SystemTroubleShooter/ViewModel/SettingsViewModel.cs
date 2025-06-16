@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text.Json;
 using System.Windows.Input;
 using SystemTroubleShooter.Helpers.Commands;
+using SystemTroubleShooter.Model.Troubleshooter;
 
 namespace SystemTroubleShooter.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
         private readonly string _settingsFilePath;
+        private string? _savedDeviceName;
 
         // --- Properties Relevant to Network Drives ---
         private Dictionary<string, string> _configuredNetworkDrives;
@@ -50,14 +52,14 @@ namespace SystemTroubleShooter.ViewModel
         }
 
         // --- Properties Relevant to Internet Settings ---
-        private string _preferredDns;
+        private string _preferredDns = "0.0.0.0";
         public string PreferredDns
         {
             get => _preferredDns;
             set => SetProperty(ref _preferredDns, value);
         }
 
-        private string _alternateDns;
+        private string _alternateDns = "0.0.0.0";
         public string AlternateDns
         {
             get => _alternateDns;
@@ -65,6 +67,9 @@ namespace SystemTroubleShooter.ViewModel
         }
 
         // --- Properties Relevant to Sound Settings ---
+
+        private readonly SoundTroubleshooter _soundTroubleshooter;
+
         private ObservableCollection<OutputDevice> _availableOutputDevices;
         public ObservableCollection<OutputDevice> AvailableOutputDevices
         {
@@ -87,14 +92,14 @@ namespace SystemTroubleShooter.ViewModel
             set => SetProperty(ref _pauseUpdates, value);
         }
 
-        private string _activeHoursStart;
+        private string _activeHoursStart = "0.0.0.0";
         public string ActiveHoursStart
         {
             get => _activeHoursStart;
             set => SetProperty(ref _activeHoursStart, value);
         }
 
-        private string _activeHoursEnd;
+        private string _activeHoursEnd = "0.0.0.0";
         public string ActiveHoursEnd
         {
             get => _activeHoursEnd;
@@ -116,12 +121,11 @@ namespace SystemTroubleShooter.ViewModel
             _settingsFilePath = Path.Combine(appFolder, "settings.json");
 
             // Initialize collections
+            _soundTroubleshooter = new SoundTroubleshooter();
             _availableDriveLetters = new ObservableCollection<string>(GetInitialDriveLetters());
             _configuredNetworkDrives = new Dictionary<string, string>();
-            _availableOutputDevices = new ObservableCollection<OutputDevice>(); // Will populate this
-
-            // Load existing settings when the ViewModel is created
-            LoadSettings();
+            _availableOutputDevices = new ObservableCollection<OutputDevice>(); 
+           
 
             // Initialize Commands using RelayCommand
             SaveSettingsCommand = new RelayCommand(o => SaveSettings());
@@ -133,15 +137,9 @@ namespace SystemTroubleShooter.ViewModel
                 param => param is string drivePath && CanRemoveNetworkDrive((string)param) // CanExecute predicate casts object to string
             );
 
-            // Initialize other settings properties with default values / load them
-            _preferredDns = string.Empty;
-            _alternateDns = string.Empty;
-            _pauseUpdates = false;
-            _activeHoursStart = "09:00"; // Default start time
-            _activeHoursEnd = "17:00";    // Default end time
-
-            // Todo: implement how AvailableOutputDevices are fetched
-            // ex _availableOutputDevices = GetAvailableSoundDevices();
+            // Start loading process
+            LoadSettings();
+            LoadSoundDevicesAsync(); //LoadSettings() within method
         }
 
         private void AddNetworkDrive()
@@ -200,9 +198,7 @@ namespace SystemTroubleShooter.ViewModel
                         PauseUpdates = savedSettings.PauseUpdates;
                         ActiveHoursStart = savedSettings.ActiveHoursStart ?? "00:00";
                         ActiveHoursEnd = savedSettings.ActiveHoursEnd ?? "00:00";
-                        // Todo: load SelectedOutputDevice based on some identifier
-                        // For example, if SettingsData stores the DeviceName:
-                        // SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault(d => d.DeviceName == savedSettings.SelectedOutputDeviceName);
+                        _savedDeviceName = savedSettings.SelectedOutputDeviceName;
                         UpdateAvailableDriveLetters();
                     }
                     else
@@ -215,7 +211,7 @@ namespace SystemTroubleShooter.ViewModel
                         PauseUpdates = false;
                         ActiveHoursStart = "09:00";
                         ActiveHoursEnd = "17:00";
-                        SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
+                        SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault();
                     }
                 }
                 catch (Exception ex)
@@ -231,6 +227,8 @@ namespace SystemTroubleShooter.ViewModel
                     ActiveHoursEnd = "17:00";
                     // Fix 3: Assign a default OutputDevice instead of null
                     SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
+                   
+
                 }
             }
             else
@@ -243,8 +241,7 @@ namespace SystemTroubleShooter.ViewModel
                 PauseUpdates = false;
                 ActiveHoursStart = "09:00";
                 ActiveHoursEnd = "17:00";
-                // Fix 4: Assign a default OutputDevice instead of null
-                SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
+                SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault();
             }
         }
 
@@ -260,6 +257,7 @@ namespace SystemTroubleShooter.ViewModel
                     PauseUpdates = PauseUpdates,
                     ActiveHoursStart = ActiveHoursStart,
                     ActiveHoursEnd = ActiveHoursEnd,
+                    SelectedOutputDeviceName = SelectedOutputDevice?.DeviceName
                     // Will decide how to store the selected output device
                     // Maybe store the DeviceName:
                     // SelectedOutputDeviceName = SelectedOutputDevice?.DeviceName
@@ -273,6 +271,30 @@ namespace SystemTroubleShooter.ViewModel
             }
         }
 
+        // Load output sound devices 
+        private async void LoadSoundDevicesAsync()
+        {
+            var outputDevices = await _soundTroubleshooter.GetOutputDevicesAsync();
+
+
+            AvailableOutputDevices.Clear();
+            foreach (var device in outputDevices)
+            {
+                AvailableOutputDevices.Add(device);
+            }
+
+            // 2. Now that the list is populated, find and set the selected device
+            if (!string.IsNullOrEmpty(_savedDeviceName))
+            {
+                SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault(d => d.DeviceName == _savedDeviceName);
+            }
+
+            // 3. As a fallback, if no device was saved or the saved one is no longer present, select the first one.
+            if (SelectedOutputDevice == null)
+            {
+                SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault();
+            }
+        }
 
         // --- Helper Methods ---
         private void UpdateAvailableDriveLetters()
@@ -304,7 +326,7 @@ namespace SystemTroubleShooter.ViewModel
         public bool PauseUpdates { get; set; }
         public string? ActiveHoursStart { get; set; }
         public string? ActiveHoursEnd { get; set; }
-        // public string SelectedOutputDeviceName { get; set; } // If I choose to store by name
+        public string? SelectedOutputDeviceName { get; set; } 
     }
 
     // Model for OutputDevice 
