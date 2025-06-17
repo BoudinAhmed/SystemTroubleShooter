@@ -129,7 +129,7 @@ namespace SystemTroubleShooter.ViewModel
 
             // Initialize Commands using RelayCommand
             SaveSettingsCommand = new RelayCommand(o => SaveSettings());
-            CancelSettingsCommand = new RelayCommand(o => LoadSettings()); // Cancel reloads last saved state
+            CancelSettingsCommand = new RelayCommand(o => { LoadSettings(); LoadSoundDevicesAsync(); });
             AddNetworkDriveCommand = new RelayCommand(o => AddNetworkDrive(), o => CanAddNetworkDrive());
             RemoveNetworkDriveCommand = new RelayCommand(
                 param => { if (param is string drivepath) 
@@ -189,9 +189,9 @@ namespace SystemTroubleShooter.ViewModel
                     var savedSettings = JsonSerializer.Deserialize<SettingsData>(jsonString);
                     if (savedSettings != null)
                     {
-                        
-                      
-                        ConfiguredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
+
+
+                        _configuredNetworkDrives = savedSettings.NetworkDrives ?? new Dictionary<string, string>();
 
                         PreferredDns = savedSettings.PreferredDns ?? "0.0.0.0";
                         AlternateDns = savedSettings.AlternateDns ?? "0.0.0.0";
@@ -203,48 +203,35 @@ namespace SystemTroubleShooter.ViewModel
                     }
                     else
                     {
-                        ConfiguredNetworkDrives = new Dictionary<string, string>();
-                        UpdateAvailableDriveLetters();
-                        // To initialize other properties to default values
-                        PreferredDns = "0.0.0.0";
-                        AlternateDns = "0.0.0.0";
-                        PauseUpdates = false;
-                        ActiveHoursStart = "09:00";
-                        ActiveHoursEnd = "17:00";
-                        SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault();
+                        SetDefaultSettings();
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error loading settings: {ex.Message}");
-                    ConfiguredNetworkDrives = new Dictionary<string, string>();
-                    UpdateAvailableDriveLetters();
-                    // To initialize other properties to default values on error
-                    PreferredDns = string.Empty;
-                    AlternateDns = string.Empty;
-                    PauseUpdates = false;
-                    ActiveHoursStart = "09:00";
-                    ActiveHoursEnd = "17:00";
-                    // Fix 3: Assign a default OutputDevice instead of null
-                    SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault() ?? new OutputDevice { DeviceName = string.Empty };
-                   
+                    SetDefaultSettings();
+
 
                 }
             }
             else
             {
                 // Load default settings if the file doesn't exist
-                ConfiguredNetworkDrives = new Dictionary<string, string>();
-                UpdateAvailableDriveLetters();
-                PreferredDns = string.Empty;
-                AlternateDns = string.Empty;
-                PauseUpdates = false;
-                ActiveHoursStart = "09:00";
-                ActiveHoursEnd = "17:00";
-                SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault();
+                SetDefaultSettings();
             }
         }
 
+        private void SetDefaultSettings()
+        {
+            _configuredNetworkDrives = new Dictionary<string, string>();
+            PreferredDns = "0.0.0.0";
+            AlternateDns = "0.0.0.0";
+            PauseUpdates = false;
+            ActiveHoursStart = "09:00";
+            ActiveHoursEnd = "17:00";
+            _savedDeviceName = null;
+            SelectedOutputDevice = null;
+        }
         public virtual void SaveSettings()
         {
             try
@@ -258,9 +245,7 @@ namespace SystemTroubleShooter.ViewModel
                     ActiveHoursStart = ActiveHoursStart,
                     ActiveHoursEnd = ActiveHoursEnd,
                     SelectedOutputDeviceName = SelectedOutputDevice?.DeviceName
-                    // Will decide how to store the selected output device
-                    // Maybe store the DeviceName:
-                    // SelectedOutputDeviceName = SelectedOutputDevice?.DeviceName
+                    
                 };
                 string jsonString = JsonSerializer.Serialize(settingsToSave, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(_settingsFilePath, jsonString);
@@ -283,13 +268,11 @@ namespace SystemTroubleShooter.ViewModel
                 AvailableOutputDevices.Add(device);
             }
 
-            // 2. Now that the list is populated, find and set the selected device
             if (!string.IsNullOrEmpty(_savedDeviceName))
             {
                 SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault(d => d.DeviceName == _savedDeviceName);
             }
 
-            // 3. As a fallback, if no device was saved or the saved one is no longer present, select the first one.
             if (SelectedOutputDevice == null)
             {
                 SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault();
