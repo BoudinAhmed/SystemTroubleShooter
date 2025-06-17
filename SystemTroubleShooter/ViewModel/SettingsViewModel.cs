@@ -245,9 +245,7 @@ namespace SystemTroubleShooter.ViewModel
                     ActiveHoursStart = ActiveHoursStart,
                     ActiveHoursEnd = ActiveHoursEnd,
                     SelectedOutputDeviceName = SelectedOutputDevice?.DeviceName
-                    // Will decide how to store the selected output device
-                    // Maybe store the DeviceName:
-                    // SelectedOutputDeviceName = SelectedOutputDevice?.DeviceName
+                    
                 };
                 string jsonString = JsonSerializer.Serialize(settingsToSave, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(_settingsFilePath, jsonString);
@@ -270,13 +268,11 @@ namespace SystemTroubleShooter.ViewModel
                 AvailableOutputDevices.Add(device);
             }
 
-            // 2. Now that the list is populated, find and set the selected device
             if (!string.IsNullOrEmpty(_savedDeviceName))
             {
                 SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault(d => d.DeviceName == _savedDeviceName);
             }
 
-            // 3. As a fallback, if no device was saved or the saved one is no longer present, select the first one.
             if (SelectedOutputDevice == null)
             {
                 SelectedOutputDevice = AvailableOutputDevices.FirstOrDefault();
