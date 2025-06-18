@@ -23,6 +23,13 @@ namespace SystemTroubleShooter.View
         {
             InitializeComponent();
         }
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
 
         private void CloseWindow(object sender, RoutedEventArgs e)
         {

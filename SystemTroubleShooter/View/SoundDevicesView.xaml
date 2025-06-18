@@ -86,7 +86,7 @@
         <!--blablabla-->
     </Window.Resources>
 
-    <Border CornerRadius="10" Background="{Binding Background, ElementName=SoundDeviceWindow}" Padding="1">
+    <Border CornerRadius="10" Background="{Binding Background, ElementName=SoundDeviceWindow}" Padding="1" MouseLeftButtonDown="DragWindow">
         <Border.Effect>
             <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.5" Color="Black"/>
         </Border.Effect>
