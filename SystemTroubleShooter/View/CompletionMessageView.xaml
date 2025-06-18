@@ -48,7 +48,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Background="#3C3F41" CornerRadius="8,8,0,0">
+            <Border Grid.Row="0" Background="#3C3F41" CornerRadius="8,8,0,0" MouseLeftButtonDown="DragWindow">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

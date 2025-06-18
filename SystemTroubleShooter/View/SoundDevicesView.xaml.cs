@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace SystemTroubleShooter.View
 {
@@ -11,6 +12,14 @@ namespace SystemTroubleShooter.View
         {
             InitializeComponent();
         }
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
 
         // Optional: If you want to allow dragging the window (since WindowStyle="None")
         private void SoundDeviceWindow_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
