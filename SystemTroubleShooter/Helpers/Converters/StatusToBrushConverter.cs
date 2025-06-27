@@ -18,18 +18,18 @@ namespace SystemTroubleShooter.Helpers.Converters
                 case "online":
                 case "fixed":
                 case "success":
-                    return Brushes.LimeGreen; // Or a lighter green like #FF90EE90
+                    return Brushes.LimeGreen; 
                 case "offline":
                 case "failed":
-                    return Brushes.OrangeRed; // Or a color like #FFFF6347
+                    return Brushes.OrangeRed; 
                 case "pending":
                 case "running":
-                    return Brushes.Gold; // Or #FFFFD700
+                    return Brushes.Gold; 
                 case "info":
-                    return Brushes.LightSkyBlue; // Or #FF87CEFA
+                    return Brushes.LightSkyBlue; 
                 case "unknown":
                 default:
-                    return Brushes.Gray; // Or #FFAAAAAA
+                    return Brushes.Gray; 
             }
         }
 
