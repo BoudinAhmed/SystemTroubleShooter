@@ -29,14 +29,6 @@ namespace SystemTroubleShooter.ViewModel
 
 
 
-        // To add soon for real-time resource usage
-        // private PerformanceCounter _cpuCounter;
-        // private PerformanceCounter _ramCounter; // Or other memory counters
-        // private DispatcherTimer _updateTimer;
-
-
-
-
 
         // --- Public Properties Binding ---
 

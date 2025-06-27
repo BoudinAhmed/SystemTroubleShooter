@@ -28,7 +28,7 @@
     <Compile Include="Model\SystemInformationModel.cs" />
     <Compile Include="Model\Troubleshooter\BaseTroubleshooter.cs" />
     <Compile Include="Model\HistoryEntryModel.cs" />
-    <Compile Include="Model\Troubleshooter\BluethoothTroubleshooter.cs" />
+    <Compile Include="Model\Troubleshooter\BluetoothTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\InternetTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\NetworkDriveTroubleshooter.cs" />
     <Compile Include="Model\Troubleshooter\SoundTroubleshooter.cs" />
